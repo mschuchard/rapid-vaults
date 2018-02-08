@@ -1,0 +1,21 @@
+---
+exclude_paths:
+  - spec/fixtures
+
+TooManyStatements:
+  enabled: false
+
+NestedIterators:
+  enabled: false
+
+LongParameterList:
+  enabled: false
+
+UncommunicativeVariableName:
+  enabled: false
+
+DuplicateMethodCall:
+  enabled: false
+
+NilCheck:
+  enabled: false
