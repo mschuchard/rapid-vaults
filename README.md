@@ -15,11 +15,11 @@ Rapid Vaults is a gem that performs ad-hoc encryption and decryption of data beh
 
 ### Comparative Software
 
-Ansible-Vault is very similar to Rapid-Vaults. Both are streamlined and easy to use ad-hoc encryption and decryption tools. The two primary differences are that Rapid-Vaults has a Ruby API instead of a Python API and that Rapid-Vaults offers additional verification and defense layers. The API can also be considered similar to the high level recipes provided by PyCA's Cryptography.
+Ansible-Vault is very similar to Rapid-Vaults. Both are streamlined and easy to use ad-hoc encryption and decryption tools. The two primary differences are that Rapid Vaults has a Ruby API instead of a Python API and that Rapid Vaults offers additional verification and defense layers. The API can also be considered similar to the high level recipes provided by PyCA's Cryptography.
 
 ### Non-Comparative Software
 
-Rapid-Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid-Vaults relies upon AES-256-GCM or GPG. Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid-Vaults is a lightweight and narrowly focused tool.
+Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid Vaults relies upon AES-256-GCM or GPG. Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid Vaults is a lightweight and narrowly focused tool.
 
 ## Usage
 
@@ -48,7 +48,7 @@ options[:action] = :encrypt
 options[:file] = '/path/to/data.txt'
 options[:key] = '/path/to/cert.key'
 options[:nonce] = '/path/to/nonce.txt'
-encrypted_contents, tag = RapidVaults::API(options)
+encrypted_contents, tag = RapidVaults::API.main(options)
 ```
 
 #### Decrypt
@@ -62,7 +62,7 @@ options[:file] = '/path/to/data.txt'
 options[:key] = '/path/to/cert.key'
 options[:nonce] = '/path/to/nonce.txt'
 options[:tag] = '/path/to/tag.txt'
-decrypted_contents = RapidVaults::API(options)
+decrypted_contents = RapidVaults::API.main(options)
 ```
 
 ## Contributing

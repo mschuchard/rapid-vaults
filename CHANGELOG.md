@@ -1,5 +1,4 @@
 # Alpha
-- refactor tests for new org
 - refactor code for new org and modify/add tests
 - code passes tests
 

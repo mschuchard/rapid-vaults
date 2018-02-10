@@ -10,6 +10,15 @@ class RapidVaults
     attr_accessor :settings
   end
 
+  # main runner for software
+  def main
+    # process settings
+    self.class.process
+
+    # execute desired action via dynamic call
+    public_send("#{@settings[:action].capitalize}.main".to_sym)
+  end
+
   # method for processing the settings and inputs
   def self.process
     # check for problems with arguments
@@ -17,7 +26,7 @@ class RapidVaults
       raise 'File, key, and nonce arguments are required for encryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce)
     elsif @settings[:action] == :decrypt
       raise 'File, key, nonce, and tag arguments are required for decryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce) && @settings.key?(:tag)
-    else
+    elsif @settings[:action] != :generate
       raise 'Action must be one of generate, encrypt, or decrypt.'
     end
 

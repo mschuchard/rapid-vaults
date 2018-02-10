@@ -1,14 +1,11 @@
 class RapidVaults::API
   # lightweight api
-  def self.api(settings)
+  def self.main(settings)
     # establish settings and denote using api
-    @settings = settings
-    @settings[:ui] = :api
+    RapidVaults.settings = settings
+    RapidVaults.settings[:ui] = :api
 
-    # process settings
-    process
-
-    # execute desired action
-    public_send(@settings[:action])
+    # run RapidVaults with specified file
+    RapidVaults.new.main
   end
 end
