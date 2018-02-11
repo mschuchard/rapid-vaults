@@ -3,19 +3,19 @@ require_relative '../lib/rapid-vaults/encrypt'
 
 describe Encrypt do
   after(:all) do
-    %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
+    %w[tag.txt encrypted.txt].each { |file| File.delete(file) }
   end
 
   context '.encrypt' do
     it 'outputs an encrypted file with the key and nonce from the cli' do
       RapidVaults.instance_variable_set(:@settings, ui: :cli, file: "foo: bar\n", key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n")
-      RapidVaults.encrypt
+      Encrypt.main
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs an array of encrypted content and tag with the key and nonce from the api' do
       RapidVaults.instance_variable_set(:@settings, ui: :api, file: "foo: bar\n", key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n")
-      expect(RapidVaults.encrypt).to be_a(Array)
+      expect(Encrypt.main).to be_a(Array)
     end
   end
 end

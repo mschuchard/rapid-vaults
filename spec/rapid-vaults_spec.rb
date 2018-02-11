@@ -2,11 +2,7 @@ require_relative 'spec_helper'
 require_relative '../lib/rapid-vaults'
 
 describe RapidVaults do
-  after(:all) do
-    %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
-  end
-
-#  let(:rapidvaults) { RapidVaults.new('fixtures/foo.yml', 'fixtures/key.txt', 'fixtures/nonce.txt', 'fixtures/tag.txt') }
+  #  let(:rapidvaults) { RapidVaults.new('fixtures/foo.yml', 'fixtures/key.txt', 'fixtures/nonce.txt', 'fixtures/tag.txt') }
 
   context '.process' do
     it 'raises an error for a missing argument to encrypt' do
