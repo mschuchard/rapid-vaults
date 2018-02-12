@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require_relative '../lib/rapid-vaults/api'
+require_relative '../../lib/rapid-vaults/api'
 
 describe RapidVaults::API do
   context '.main' do

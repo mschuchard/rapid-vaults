@@ -1,3 +1,5 @@
+require_relative '../rapid-vaults'
+
 class RapidVaults::API
   # lightweight api
   def self.main(settings)

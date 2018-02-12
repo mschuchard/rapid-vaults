@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require_relative '../lib/rapid-vaults/generate'
+require_relative '../../lib/rapid-vaults/generate'
 
 describe RapidVaults do
   after(:all) do

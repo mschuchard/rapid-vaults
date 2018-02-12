@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require_relative '../lib/rapid-vaults/cli'
+require_relative '../../lib/rapid-vaults/cli'
 
 describe RapidVaults::CLI do
   context '.parse' do

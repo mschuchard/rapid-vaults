@@ -1,4 +1,7 @@
 require 'openssl'
+require_relative 'rapid-vaults/decrypt'
+require_relative 'rapid-vaults/encrypt'
+require_relative 'rapid-vaults/generate'
 
 # interfaces from cli/api, validates settings, and then distributes actions to appropriate classes
 class RapidVaults
@@ -34,7 +37,7 @@ class RapidVaults
     File.file?(@settings[:file]) ? @settings[:file] = File.read(@settings[:file]) : (raise 'Input file is not an existing file.')
     File.file?(@settings[:key]) ? @settings[:key] = File.read(@settings[:key]) : (raise 'Input key is not an existing file.')
     File.file?(@settings[:nonce]) ? @settings[:nonce] = File.read(@settings[:nonce]) : (raise 'Input nonce is not an existing file.')
-    return unless @settings.key?(:tag)
+    return unless @settings[:action] == :decrypt
     File.file?(@settings[:tag]) ? @settings[:tag] = File.read(@settings[:tag]) : (raise 'Input tag is not an existing file.')
   end
 end

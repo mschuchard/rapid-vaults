@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require_relative '../lib/rapid-vaults/encrypt'
+require_relative '../../lib/rapid-vaults/encrypt'
 
 describe Encrypt do
   after(:all) do

@@ -1,3 +1,5 @@
+require_relative '../rapid-vaults'
+
 class Generate
   # generates a key and nonce
   def self.main

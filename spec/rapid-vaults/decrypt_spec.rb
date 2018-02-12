@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
-require_relative '../lib/rapid-vaults/decrypt'
+require_relative '../../lib/rapid-vaults/decrypt'
 
 describe Decrypt do
   after(:all) do
-    %w[kdecrypted.txt].each { |file| File.delete(file) }
+    %w[decrypted.txt].each { |file| File.delete(file) }
   end
 
   context '.decrypt' do

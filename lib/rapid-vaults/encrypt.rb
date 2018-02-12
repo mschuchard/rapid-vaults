@@ -1,3 +1,5 @@
+require_relative '../rapid-vaults'
+
 class Encrypt
   # encrypts a string
   def self.main

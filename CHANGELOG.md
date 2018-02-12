@@ -1,5 +1,5 @@
 # Alpha
-- add/improve unit tests and system test
+- add/improve unit tests
 - code passes tests
 - improve code
 - deal with style warnings

@@ -1,3 +1,5 @@
+require_relative '../rapid-vaults'
+
 class RapidVaults::CLI
   # point of entry from executable
   def self.main(args)
