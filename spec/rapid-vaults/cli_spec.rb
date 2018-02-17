@@ -11,5 +11,9 @@ describe RapidVaults::CLI do
       RapidVaults::CLI.parse(%w[-d -f file.txt -k key.txt -n nonce.txt -t tag.txt])
       expect(RapidVaults.instance_variable_get(:@settings)).to eq(action: :decrypt, file: 'file.txt', key: 'key.txt', nonce: 'nonce.txt', tag: 'tag.txt')
     end
+    it 'correctly parses the arguments for generate' do
+      RapidVaults::CLI.parse(%w[-g])
+      expect(RapidVaults.instance_variable_get(:@settings)).to eq(action: :generate)
+    end
   end
 end

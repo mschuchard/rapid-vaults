@@ -16,6 +16,7 @@ describe Decrypt do
     it 'outputs decrypted content with the key, nonce, and tag from the api' do
       RapidVaults.instance_variable_set(:@settings, ui: :api, file: File.read('encrypted.txt'), key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n", tag: File.read('tag.txt'))
       expect(Decrypt.main).to be_a(String)
+      expect(Decrypt.main).to eq("foo: bar\n")
     end
     it 'raises an error for an invalid tag size' do
       RapidVaults.instance_variable_set(:@settings, file: File.read('encrypted.txt'), key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n", tag: "�a����e�O_H|�\n")

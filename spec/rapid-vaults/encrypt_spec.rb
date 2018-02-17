@@ -16,6 +16,8 @@ describe Encrypt do
     it 'outputs an array of encrypted content and tag with the key and nonce from the api' do
       RapidVaults.instance_variable_set(:@settings, ui: :api, file: "foo: bar\n", key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n")
       expect(Encrypt.main).to be_a(Array)
+      expect(Encrypt.main).to include(a(String))
+      expect(Encrypt.main.length).to eq(2)
     end
   end
 end

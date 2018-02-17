@@ -11,6 +11,8 @@ describe RapidVaults do
       Generate.main
       expect(File.file?('key.txt')).to be true
       expect(File.file?('nonce.txt')).to be true
+      expect(File.read('key.txt')).to be_a(String)
+      expect(File.read('nonce.txt')).to be_a(String)
     end
   end
 end

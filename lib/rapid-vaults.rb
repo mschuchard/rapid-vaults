@@ -1,4 +1,3 @@
-require 'openssl'
 require_relative 'rapid-vaults/decrypt'
 require_relative 'rapid-vaults/encrypt'
 require_relative 'rapid-vaults/generate'
