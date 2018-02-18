@@ -1,9 +1,15 @@
 require_relative '../spec_helper'
+require_relative '../../lib/rapid-vaults/encrypt'
 require_relative '../../lib/rapid-vaults/decrypt'
 
 describe Decrypt do
+  before(:all) do
+    RapidVaults.instance_variable_set(:@settings, ui: :cli, file: "foo: bar\n", key: "%+�R`��Znv���[�Sz�(�C`��m�\n", nonce: "y�[�H���K��\n")
+    Encrypt.main
+  end
+
   after(:all) do
-    %w[decrypted.txt].each { |file| File.delete(file) }
+    %w[tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
   end
 
   context '.decrypt' do

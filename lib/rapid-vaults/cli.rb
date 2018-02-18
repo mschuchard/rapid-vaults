@@ -5,8 +5,9 @@ class RapidVaults::CLI
   def self.main(args)
     # parse args in cli and denote using cli
     parse(args)
-    args.empty? ? (raise 'rapid-vaults: no file specified; try using --help') : RapidVaults.settings[:file] = args.first
-    RapidVaults.settings[:ui] = :cli
+    unless RapidVaults.settings[:action] == :generate
+      args.empty? ? (raise 'rapid-vaults: no file specified; try using --help') : RapidVaults.settings[:file] = args.first
+    end
 
     # run RapidVaults with specified file
     RapidVaults.new.main
@@ -19,6 +20,8 @@ class RapidVaults::CLI
 
     # show help message if no args specified
     args = %w[-h] if args.empty?
+
+    RapidVaults.settings[:ui] = :cli
 
     opt_parser = OptionParser.new do |opts|
       # usage

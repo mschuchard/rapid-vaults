@@ -15,20 +15,26 @@ class RapidVaults
   # main runner for software
   def main
     # process settings
-    self.class.process
+    self.class.process unless self.class.settings[:action] == :generate
 
     # execute desired action via dynamic call
-    public_send("#{@settings[:action].capitalize}.main".to_sym)
+    # public_send("#{self.class.settings[:action].capitalize}.main".to_sym)
+    case self.class.settings[:action]
+    when :generate then Generate.main
+    when :encrypt then Encrypt.main
+    when :decrypt then Decrypt.main
+    end
   end
 
   # method for processing the settings and inputs
   def self.process
     # check for problems with arguments
-    if @settings[:action] == :encrypt
+    case @settings[:action]
+    when :encrypt
       raise 'File, key, and nonce arguments are required for encryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce)
-    elsif @settings[:action] == :decrypt
+    when :decrypt
       raise 'File, key, nonce, and tag arguments are required for decryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce) && @settings.key?(:tag)
-    elsif @settings[:action] != :generate
+    else
       raise 'Action must be one of generate, encrypt, or decrypt.'
     end
 
