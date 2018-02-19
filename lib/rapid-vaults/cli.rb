@@ -21,6 +21,7 @@ class RapidVaults::CLI
     # show help message if no args specified
     args = %w[-h] if args.empty?
 
+    # specify cli being used
     RapidVaults.settings[:ui] = :cli
 
     opt_parser = OptionParser.new do |opts|

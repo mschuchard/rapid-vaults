@@ -14,15 +14,17 @@ class RapidVaults
 
   # main runner for software
   def main
+    # short circuit if we are generating
+    return Generate.main if self.class.settings[:action] == :generate
+
     # process settings
-    self.class.process unless self.class.settings[:action] == :generate
+    self.class.process
 
     # execute desired action via dynamic call
     # public_send("#{self.class.settings[:action].capitalize}.main".to_sym)
     case self.class.settings[:action]
-    when :generate then Generate.main
-    when :encrypt then Encrypt.main
-    when :decrypt then Decrypt.main
+    when :encrypt then Encrypt.main(self.class.settings)
+    when :decrypt then Decrypt.main(self.class.settings)
     end
   end
 

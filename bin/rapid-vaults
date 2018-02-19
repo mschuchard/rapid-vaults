@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require_relative '../lib/rapid-vaults/cli'
 
-exit RapidVaults::CLI.run(ARGV)
+exit RapidVaults::CLI.main(ARGV)
