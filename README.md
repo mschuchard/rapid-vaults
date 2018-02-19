@@ -38,7 +38,16 @@ Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl of
 
 ### API
 
-#### Encrypt
+#### Generate Key and Nonce
+
+```ruby
+require 'rapid-vaults'
+
+options = {}
+options[:action] = :generate
+```
+
+#### Encrypt with SSL
 
 ```ruby
 require 'rapid-vaults'
@@ -51,7 +60,7 @@ options[:nonce] = '/path/to/nonce.txt'
 encrypted_contents, tag = RapidVaults::API.main(options)
 ```
 
-#### Decrypt
+#### Decrypt with SSL
 
 ```ruby
 require 'rapid-vaults'

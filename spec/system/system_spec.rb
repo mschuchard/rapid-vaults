@@ -28,9 +28,7 @@ describe RapidVaults do
       expect(File.read('decrypted.txt')).to eq("foo: bar\n")
     end
   end
-end
 
-describe RapidVaults do
   context 'executed as a system from the API with settings and a file to be processed' do
     it 'generates key and nonce, encrypts a file, and then decrypts a file in order' do
       # generate and utilize files inside suitable directory
@@ -42,14 +40,15 @@ describe RapidVaults do
       expect(File.file?('nonce.txt')).to be true
 
       # generate encrypted file
-      RapidVaults::API.main(action: :encrypt, file: 'file.yaml', key: 'key.txt', nonce: 'nonce.txt')
-      expect(File.file?('tag.txt')).to be true
-      expect(File.file?('encrypted.txt')).to be true
+      encrypt, tag = RapidVaults::API.main(action: :encrypt, file: 'file.yaml', key: 'key.txt', nonce: 'nonce.txt')
+      expect(encrypt).to be_a(String)
+      expect(tag).to be_a(String)
 
       # generate decrypted file
-      RapidVaults::API.main(action: :decrypt, file: 'file.yaml', key: 'key.txt', nonce: 'nonce.txt', tag: 'tag.txt')
-      expect(File.file?('decrypted.txt')).to be true
-      expect(File.read('decrypted.txt')).to eq("foo: bar\n")
+      File.write('encrypted.txt', encrypt)
+      File.write('tag.txt', tag)
+      decrypt = RapidVaults::API.main(action: :decrypt, file: 'encrypted.txt', key: 'key.txt', nonce: 'nonce.txt', tag: 'tag.txt')
+      expect(decrypt).to eq("foo: bar\n")
     end
   end
 end
