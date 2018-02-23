@@ -1,5 +1,6 @@
 require_relative '../rapid-vaults'
 
+# provides a command line interface to interact with rapid vaults
 class RapidVaults::CLI
   # point of entry from executable
   def self.main(args)

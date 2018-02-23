@@ -1,5 +1,6 @@
 require_relative '../rapid-vaults'
 
+# provides an application programming interface to interact with rapid vaults
 class RapidVaults::API
   # lightweight api
   def self.main(settings)

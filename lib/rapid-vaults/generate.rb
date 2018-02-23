@@ -1,6 +1,7 @@
 require 'openssl'
 require_relative '../rapid-vaults'
 
+# generates files necessary for encryption and decryption
 class Generate
   # generates a key and nonce
   def self.main

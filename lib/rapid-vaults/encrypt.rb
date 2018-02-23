@@ -1,5 +1,6 @@
 require 'openssl'
 
+# encrypts strings using supplied encryption settings
 class Encrypt
   # encrypts a string
   def self.main(settings)
