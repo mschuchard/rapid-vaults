@@ -15,7 +15,7 @@ Rapid Vaults is a gem that performs ad-hoc encryption and decryption of data beh
 
 ### Comparative Software
 
-Ansible-Vault is very similar to Rapid-Vaults. Both are streamlined and easy to use ad-hoc encryption and decryption tools. The two primary differences are that Rapid Vaults has a Ruby API instead of a Python API and that Rapid Vaults offers additional verification and defense layers. The API can also be considered similar to the high level recipes provided by PyCA's Cryptography.
+Ansible-Vault is very similar to Rapid Vaults. Both are streamlined and easy to use ad-hoc encryption and decryption tools. The two primary differences are that Rapid Vaults has a Ruby API instead of a Python API and that Rapid Vaults offers additional verification and defense layers. The API can also be considered similar to the high level recipes provided by PyCA's Cryptography.
 
 ### Non-Comparative Software
 
@@ -45,6 +45,7 @@ require 'rapid-vaults'
 
 options = {}
 options[:action] = :generate
+key, nonce = RapidVaults::API.main(options)
 ```
 
 #### Encrypt with SSL

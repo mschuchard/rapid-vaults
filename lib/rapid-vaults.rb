@@ -15,7 +15,7 @@ class RapidVaults
   # main runner for software
   def main
     # short circuit if we are generating
-    return Generate.main if self.class.settings[:action] == :generate
+    return Generate.main(self.class.settings) if self.class.settings[:action] == :generate
 
     # process settings
     self.class.process

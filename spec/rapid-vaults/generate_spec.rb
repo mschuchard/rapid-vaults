@@ -8,11 +8,18 @@ describe RapidVaults do
 
   context '.generate' do
     it 'generates the key and nonce files from the cli' do
-      Generate.main
+      Generate.main(ui: :cli)
       expect(File.file?('key.txt')).to be true
       expect(File.file?('nonce.txt')).to be true
       expect(File.read('key.txt')).to be_a(String)
       expect(File.read('nonce.txt')).to be_a(String)
+    end
+    it 'outputs an array with the key and nonce from the api' do
+      generate = Generate.main(ui: :api)
+      expect(generate).to be_a(Array)
+      expect(generate[0]).to be_a(String)
+      expect(generate[1]).to be_a(String)
+      expect(generate.length).to eq(2)
     end
   end
 end
