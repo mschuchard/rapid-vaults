@@ -34,10 +34,11 @@ class RapidVaults::CLI
       opts.on('-e', '--encrypt', 'Encrypt a file using a key and nonce and generate a tag.') { RapidVaults.settings[:action] = :encrypt }
       opts.on('-d', '--decrypt', 'Decrypt a file using a key, nonce, and tag.') { RapidVaults.settings[:action] = :decrypt }
 
-      # key, nonce, and tag
+      # key, nonce, password, and tag
       opts.on('-k', '--key key', String, 'Key file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:key] = arg }
       opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:nonce] = arg }
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption.') { |arg| RapidVaults.settings[:tag] = arg }
+      opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption.') { |arg| RapidVaults.settings[:pw] = arg }
     end
 
     opt_parser.parse!(args)
