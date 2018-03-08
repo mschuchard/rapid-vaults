@@ -8,7 +8,7 @@ class Encrypt
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     cipher.key = settings[:key]
     cipher.iv = settings[:nonce]
-    cipher.auth_data = ''
+    cipher.auth_data = settings.key?(:pw) ? settings[:pw] : ''
 
     # output the encrypted file and associated tag
     if settings[:ui] == :cli

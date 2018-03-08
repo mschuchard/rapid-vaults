@@ -12,7 +12,7 @@ class Decrypt
     decipher.key = settings[:key]
     decipher.iv = settings[:nonce]
     decipher.auth_tag = settings[:tag]
-    decipher.auth_data = ''
+    decipher.auth_data = settings.key?(:pw) ? settings[:pw] : ''
 
     # output the decrypted file
     if settings[:ui] == :cli
