@@ -39,6 +39,7 @@ class RapidVaults::CLI
       opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:nonce] = arg }
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption.') { |arg| RapidVaults.settings[:tag] = arg }
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption.') { |arg| RapidVaults.settings[:pw] = arg }
+      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption.') { |arg| RapidVaults.settings[:pw] = File.read(arg) }
     end
 
     opt_parser.parse!(args)
