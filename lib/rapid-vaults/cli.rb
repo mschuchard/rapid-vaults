@@ -24,22 +24,27 @@ class RapidVaults::CLI
 
     # specify cli being used
     RapidVaults.settings[:ui] = :cli
+    # default to openssl algorithm
+    RapidVaults.settings[:algorithm] = :openssl
 
     opt_parser = OptionParser.new do |opts|
       # usage
       opts.banner = 'usage: rapid-vaults [options] file'
 
+      # use gpg instead
+      opts.on('--gpg', 'Use GNUPG/GPG instead of GNUTLS/OpenSSL for encryption/decryption.') { RapidVaults.settings[:algorithm] = :gpgme }
+
       # generate, encrypt, or decrypt
-      opts.on('-g', '--generate', 'Generate a key and nonce for encryption and decryption.') { RapidVaults.settings[:action] = :generate }
-      opts.on('-e', '--encrypt', 'Encrypt a file using a key and nonce and generate a tag.') { RapidVaults.settings[:action] = :encrypt }
-      opts.on('-d', '--decrypt', 'Decrypt a file using a key, nonce, and tag.') { RapidVaults.settings[:action] = :decrypt }
+      opts.on('-g', '--generate', 'Generate a key and nonce for encryption and decryption (GPG: n/a).') { RapidVaults.settings[:action] = :generate }
+      opts.on('-e', '--encrypt', 'Encrypt a file using a key and nonce and generate a tag (GPG: key only).') { RapidVaults.settings[:action] = :encrypt }
+      opts.on('-d', '--decrypt', 'Decrypt a file using a key, nonce, and tag (GPG: key only).') { RapidVaults.settings[:action] = :decrypt }
 
       # key, nonce, password, and tag
       opts.on('-k', '--key key', String, 'Key file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:key] = arg }
-      opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:nonce] = arg }
-      opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption.') { |arg| RapidVaults.settings[:tag] = arg }
-      opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption.') { |arg| RapidVaults.settings[:pw] = arg }
-      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption.') { |arg| RapidVaults.settings[:pw] = File.read(arg) }
+      opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption (GPG: n/a).') { |arg| RapidVaults.settings[:nonce] = arg }
+      opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| RapidVaults.settings[:tag] = arg }
+      opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: n/a).') { |arg| RapidVaults.settings[:pw] = arg }
+      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: n/a).') { |arg| RapidVaults.settings[:pw] = File.read(arg) }
     end
 
     opt_parser.parse!(args)
