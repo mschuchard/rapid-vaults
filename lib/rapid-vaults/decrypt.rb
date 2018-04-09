@@ -2,8 +2,8 @@ require 'openssl'
 
 # decrypts strings using supplied decryption settings
 class Decrypt
-  # decrypts a string
-  def self.main(settings)
+  # decrypts a string with openssl
+  def self.openssl(settings)
     # check tag size
     raise 'Tag is not 16 bytes.' unless settings[:tag].bytesize == 16
 

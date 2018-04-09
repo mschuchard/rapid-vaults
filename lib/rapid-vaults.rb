@@ -20,11 +20,11 @@ class RapidVaults
     # process settings
     self.class.process
 
-    # execute desired action via dynamic call
-    # public_send("#{self.class.settings[:action].capitalize}.main".to_sym)
+    # execute desired action and algorithm via dynamic call
+    # public_send("#{self.class.settings[:action].capitalize}.#{self.class.settings[:algorithm]}".to_sym)
     case self.class.settings[:action]
-    when :encrypt then Encrypt.main(self.class.settings)
-    when :decrypt then Decrypt.main(self.class.settings)
+    when :encrypt then Encrypt.public_send(self.class.settings[:algorithm], self.class.settings)
+    when :decrypt then Decrypt.public_send(self.class.settings[:algorithm], self.class.settings)
     end
   end
 

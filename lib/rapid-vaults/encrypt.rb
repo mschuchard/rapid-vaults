@@ -2,8 +2,8 @@ require 'openssl'
 
 # encrypts strings using supplied encryption settings
 class Encrypt
-  # encrypts a string
-  def self.main(settings)
+  # encrypts a string with openssl
+  def self.openssl(settings)
     # setup the encryption parameters
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     cipher.key = settings[:key]
