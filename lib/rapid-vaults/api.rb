@@ -15,7 +15,7 @@ class RapidVaults::API
   def self.parse(settings)
     # establish settings for api
     settings[:ui] = :api
-    settings[:algorithm] = :openssl
+    settings[:algorithm] = :openssl unless settings.key?(:algorithm)
     settings
   end
 end
