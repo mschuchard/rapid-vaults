@@ -25,4 +25,15 @@ describe Encrypt do
       expect(encrypt.length).to eq(2)
     end
   end
+
+  context '.gpgme' do
+    it 'outputs an encrypted file with the key from the cli' do
+      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '')
+      expect(File.file?('encrypted.txt')).to be true
+    end
+    it 'outputs a string of encrypted content with the key from the api' do
+      encrypt = Encrypt.gpgme(ui: :api, file: "foo: bar\n", key: '')
+      expect(encrypt).to be_a(String)
+    end
+  end
 end

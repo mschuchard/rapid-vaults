@@ -1,9 +1,9 @@
-require 'openssl'
-
 # encrypts strings using supplied encryption settings
 class Encrypt
   # encrypts a string with openssl
   def self.openssl(settings)
+    require 'openssl'
+
     # setup the encryption parameters
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     cipher.key = settings[:key]
@@ -19,6 +19,24 @@ class Encrypt
     elsif settings[:ui] == :api
       # output to array
       [cipher.update(settings[:file]) + cipher.final, cipher.auth_tag]
+    end
+  end
+
+  # encrypts a string with gpgme
+  def self.gpgme(settings)
+    require 'gpgme'
+
+    # setup the encryption parameters
+    crypto = GPGME::Crypto.new(:armor => true)
+
+    # output the encrypted file and associated tag
+    if settings[:ui] == :cli
+      # output to file
+      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true).read)
+      puts 'Your encrypted.txt for this encryption have been generated in your current directory.'
+    elsif settings[:ui] == :api
+      # output to string
+      crypto.encrypt(settings[:file], symmetric: true).read
     end
   end
 end
