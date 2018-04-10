@@ -47,11 +47,11 @@ class RapidVaults
     end
 
     # check for problems with inputs and read in files
+    raise 'Password must be a string.' if @settings.key?(:pw) && !settings[:pw].is_a?(String)
     File.file?(@settings[:file]) ? @settings[:file] = File.read(@settings[:file]) : (raise 'Input file is not an existing file.')
     File.file?(@settings[:key]) ? @settings[:key] = File.read(@settings[:key]) : (raise 'Input key is not an existing file.')
     # gnugp only uses key and file
     return if @settings[:algorithm] == :gpgme
-    raise 'Password must be a string.' if @settings.key?(:pw) && !settings[:pw].is_a?(String)
     File.file?(@settings[:nonce]) ? @settings[:nonce] = File.read(@settings[:nonce]) : (raise 'Input nonce is not an existing file.')
     # only decrypt needs a tag input
     return unless @settings[:action] == :decrypt

@@ -6,8 +6,7 @@ describe RapidVaults do
 
   context '.process' do
     it 'raises an error for a non-string password with openssl' do
-      dummy = fixtures_dir + 'file.yaml'
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: dummy, key: dummy, nonce: dummy, pw: 1)
+      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', pw: 1)
       expect { RapidVaults.process }.to raise_error('Password must be a string.')
     end
     it 'raises an error for a missing argument to encrypt with openssl' do
@@ -39,7 +38,9 @@ describe RapidVaults do
       expect { RapidVaults.process }.to raise_error('Input file is not an existing file.')
     end
     it 'reads in all input files correctly for decryption' do
-      #
+      dummy = fixtures_dir + 'file.yaml'
+      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: dummy, key: dummy, nonce: dummy, pw: 'password')
+      expect { RapidVaults.process }.not_to raise_exception
     end
   end
 end
