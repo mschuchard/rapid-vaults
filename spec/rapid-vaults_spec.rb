@@ -19,7 +19,7 @@ describe RapidVaults do
     end
     it 'raises an error for a missing argument to with gpgme' do
       RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, action: :decrypt, file: 'a')
-      expect { RapidVaults.process }.to raise_error('File and GPG key argument required for encryption or decryption.')
+      expect { RapidVaults.process }.to raise_error('File, key, and password arguments required for encryption or decryption.')
     end
     it 'raises an error for a missing action with openssl' do
       RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, file: 'a', key: 'b', nonce: 'c', tag: 'd')

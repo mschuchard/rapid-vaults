@@ -43,8 +43,8 @@ class RapidVaults::CLI
       opts.on('-k', '--key key', String, 'Key file to be used for encryption or decryption.') { |arg| RapidVaults.settings[:key] = arg }
       opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption (GPG: n/a).') { |arg| RapidVaults.settings[:nonce] = arg }
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| RapidVaults.settings[:tag] = arg }
-      opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: encrypt required/decrypt n/a).') { |arg| RapidVaults.settings[:pw] = arg }
-      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: encrypt required/decrypt n/a).') { |arg| RapidVaults.settings[:pw] = File.read(arg) }
+      opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| RapidVaults.settings[:pw] = arg }
+      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') { |arg| RapidVaults.settings[:pw] = File.read(arg) }
     end
 
     opt_parser.parse!(args)
