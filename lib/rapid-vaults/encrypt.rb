@@ -27,7 +27,7 @@ class Encrypt
     require 'gpgme'
 
     # setup the encryption parameters
-    crypto = GPGME::Crypto.new(:armor => true)
+    crypto = GPGME::Crypto.new(armor: true)
 
     # output the encrypted file and associated tag
     if settings[:ui] == :cli

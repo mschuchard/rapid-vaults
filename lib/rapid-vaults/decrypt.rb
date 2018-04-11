@@ -1,9 +1,9 @@
-require 'openssl'
-
 # decrypts strings using supplied decryption settings
 class Decrypt
   # decrypts a string with openssl
   def self.openssl(settings)
+    require 'openssl'
+
     # check tag size
     raise 'Tag is not 16 bytes.' unless settings[:tag].bytesize == 16
 
@@ -22,6 +22,25 @@ class Decrypt
     elsif settings[:ui] == :api
       # output to string
       decipher.update(settings[:file]) + decipher.final
+    end
+  end
+
+  # decrypts a string with gpgme
+  def self.gpgme(settings)
+    require 'gpgme'
+
+    # setup the decryption parameters
+    encrypted = GPGME::Data.new(settings[:file])
+    crypto = GPGME::Crypto.new(armor: true)
+
+    # output the decrypted file
+    if settings[:ui] == :cli
+      # output to file
+      File.write('decrypted.txt', crypto.decrypt(encrypted).read)
+      puts 'Your decrypted.txt has been written out to the current directory.'
+    elsif settings[:ui] == :api
+      # output to string
+      crypto.decrypt(encrypted).read
     end
   end
 end
