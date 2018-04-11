@@ -27,16 +27,16 @@ class Encrypt
     require 'gpgme'
 
     # setup the encryption parameters
-    crypto = GPGME::Crypto.new(armor: true)
+    crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
     # output the encrypted file and associated tag
     if settings[:ui] == :cli
       # output to file
-      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true).read)
+      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true, password: settings[:password]).read)
       puts 'Your encrypted.txt for this encryption have been generated in your current directory.'
     elsif settings[:ui] == :api
       # output to string
-      crypto.encrypt(settings[:file], symmetric: true).read
+      crypto.encrypt(settings[:file], symmetric: true, password: settings[:password]).read
     end
   end
 end

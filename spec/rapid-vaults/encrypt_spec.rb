@@ -28,11 +28,11 @@ describe Encrypt do
 
   context '.gpgme' do
     it 'outputs an encrypted file with the key from the cli' do
-      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '')
+      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', password: 'foo')
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs a string of encrypted content with the key from the api' do
-      encrypt = Encrypt.gpgme(ui: :api, file: "foo: bar\n", key: '')
+      encrypt = Encrypt.gpgme(ui: :api, file: "foo: bar\n", key: '', password: 'foo')
       expect(encrypt).to be_a(String)
     end
   end

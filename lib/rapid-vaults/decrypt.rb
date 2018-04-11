@@ -31,16 +31,16 @@ class Decrypt
 
     # setup the decryption parameters
     encrypted = GPGME::Data.new(settings[:file])
-    crypto = GPGME::Crypto.new(armor: true)
+    crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
     # output the decrypted file
     if settings[:ui] == :cli
       # output to file
-      File.write('decrypted.txt', crypto.decrypt(encrypted).read)
+      File.write('decrypted.txt', crypto.decrypt(encrypted, password: settings[:password]).read)
       puts 'Your decrypted.txt has been written out to the current directory.'
     elsif settings[:ui] == :api
       # output to string
-      crypto.decrypt(encrypted).read
+      crypto.decrypt(encrypted, password: settings[:password]).read
     end
   end
 end

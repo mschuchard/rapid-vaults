@@ -29,7 +29,7 @@ describe Decrypt do
 
   context '.gpgme' do
     before(:all) do
-      Encrypt.gpgme(ui: :cli, file: "foo: bar\n")
+      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', password: 'foo')
     end
 
     it 'outputs a decrypted file with the key from the cli' do
