@@ -36,11 +36,11 @@ class Decrypt
     # output the decrypted file
     if settings[:ui] == :cli
       # output to file
-      File.write('decrypted.txt', crypto.decrypt(encrypted, password: settings[:password]).read)
+      File.write('decrypted.txt', crypto.decrypt(encrypted, password: settings[:pw]).read)
       puts 'Your decrypted.txt has been written out to the current directory.'
     elsif settings[:ui] == :api
       # output to string
-      crypto.decrypt(encrypted, password: settings[:password]).read
+      crypto.decrypt(encrypted, password: settings[:pw]).read
     end
   end
 end

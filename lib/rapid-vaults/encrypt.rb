@@ -32,11 +32,11 @@ class Encrypt
     # output the encrypted file and associated tag
     if settings[:ui] == :cli
       # output to file
-      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true, password: settings[:password]).read)
+      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
       puts 'Your encrypted.txt for this encryption have been generated in your current directory.'
     elsif settings[:ui] == :api
       # output to string
-      crypto.encrypt(settings[:file], symmetric: true, password: settings[:password]).read
+      crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read
     end
   end
 end

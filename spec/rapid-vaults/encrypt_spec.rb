@@ -13,7 +13,7 @@ describe Encrypt do
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs an encrypted file with the key, nonce, and password from the cli' do
-      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M', password: 'password')
+      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M', pw: 'password')
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
@@ -27,16 +27,16 @@ describe Encrypt do
   end
 
   # travis ci cannot support non-interactive gpg encryption
-  unless File.directory?('/home/travis')
+  #unless File.directory?('/home/travis')
     context '.gpgme' do
       it 'outputs an encrypted file with the key from the cli' do
-        Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', password: 'foo')
+        Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', pw: 'foo')
         expect(File.file?('encrypted.txt')).to be true
       end
       it 'outputs a string of encrypted content with the key from the api' do
-        encrypt = Encrypt.gpgme(ui: :api, file: "foo: bar\n", key: '', password: 'foo')
+        encrypt = Encrypt.gpgme(ui: :api, file: "foo: bar\n", key: '', pw: 'foo')
         expect(encrypt).to be_a(String)
       end
     end
-  end
+  #end
 end
