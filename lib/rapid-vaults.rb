@@ -34,7 +34,8 @@ class RapidVaults
     if @settings[:algorithm] == :gpgme
       raise 'GPG key generation is currently not supported.' if @settings[:action] == :generate
       raise 'Action must be encrypt or decrypt.' unless @settings[:action] == :encrypt || @settings[:action] == :decrypt
-      raise 'File, key, and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:password)
+      puts @settings
+      raise 'File and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:pw)
     else
       case @settings[:action]
       when :encrypt
