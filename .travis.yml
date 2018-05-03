@@ -26,8 +26,8 @@ matrix:
     - rvm: 2.6.0-preview1
       env: TEST='unit system'
   allow_failures:
-    - rvm: 2.4.3
-    - rvm: 2.5.0
+    - rvm: 2.4.4
+    - rvm: 2.5.1
     - rvm: 2.6.0-preview1
 
 # execute tests

@@ -3,8 +3,7 @@ require_relative '../../lib/rapid-vaults/cli'
 
 describe RapidVaults::CLI do
   context '.parse' do
-    it 'correctly parses the arguments for generate' do
-      RapidVaults.instance_variable_set(:@settings, {})
+    it 'correctly parses the arguments for gpg' do
       RapidVaults::CLI.parse(%w[--gpg])
       expect(RapidVaults.instance_variable_get(:@settings)).to eq(algorithm: :gpgme, ui: :cli)
     end

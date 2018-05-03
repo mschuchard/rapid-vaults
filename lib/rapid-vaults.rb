@@ -34,7 +34,7 @@ class RapidVaults
     if @settings[:algorithm] == :gpgme
       raise 'GPG key generation is currently not supported.' if @settings[:action] == :generate
       raise 'Action must be encrypt or decrypt.' unless @settings[:action] == :encrypt || @settings[:action] == :decrypt
-      raise 'File, key, and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:password)
+      raise 'File, key, and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:password)
     else
       case @settings[:action]
       when :encrypt
@@ -49,9 +49,9 @@ class RapidVaults
     # check for problems with inputs and read in files
     raise 'Password must be a string.' if @settings.key?(:pw) && !settings[:pw].is_a?(String)
     File.file?(@settings[:file]) ? @settings[:file] = File.read(@settings[:file]) : (raise 'Input file is not an existing file.')
-    File.file?(@settings[:key]) ? @settings[:key] = File.read(@settings[:key]) : (raise 'Input key is not an existing file.')
-    # gnugp only uses key, password, and file
+    # gnugp only uses password and file
     return if @settings[:algorithm] == :gpgme
+    File.file?(@settings[:key]) ? @settings[:key] = File.read(@settings[:key]) : (raise 'Input key is not an existing file.')
     File.file?(@settings[:nonce]) ? @settings[:nonce] = File.read(@settings[:nonce]) : (raise 'Input nonce is not an existing file.')
     # only decrypt needs a tag input
     return unless @settings[:action] == :decrypt

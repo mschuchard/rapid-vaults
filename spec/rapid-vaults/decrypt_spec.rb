@@ -35,12 +35,12 @@ describe Decrypt do
       end
 
       it 'outputs a decrypted file with the key from the cli' do
-        Decrypt.gpgme(ui: :cli, file: File.read('encrypted.txt'), key: '')
+        Decrypt.gpgme(ui: :cli, file: File.read('encrypted.txt'), key: '', password: 'foo')
         expect(File.file?('decrypted.txt')).to be true
         expect(File.read('decrypted.txt')).to eq("foo: bar\n")
       end
       it 'outputs decrypted content with the key from the api' do
-        decrypt = Decrypt.gpgme(ui: :api, file: File.read('encrypted.txt'), key: '')
+        decrypt = Decrypt.gpgme(ui: :api, file: File.read('encrypted.txt'), key: '', password: 'foo')
         expect(decrypt).to be_a(String)
         expect(decrypt).to eq("foo: bar\n")
       end
