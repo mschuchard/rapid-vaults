@@ -1,11 +1,12 @@
-require 'openssl'
-require_relative '../rapid-vaults'
-
 # generates files necessary for encryption and decryption
 class Generate
   # generates a key and nonce
-  def self.main(settings)
+  def self.openssl(settings)
+    require 'openssl'
+
+    # setup parameters
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
+
     if settings[:ui] == :cli
       # output to file
       File.write('key.txt', cipher.random_key)
@@ -15,5 +16,10 @@ class Generate
       # output to string
       [cipher.random_key, cipher.random_iv]
     end
+  end
+
+  # generates a private and public key
+  def self.gpgme(settings)
+    # stub
   end
 end
