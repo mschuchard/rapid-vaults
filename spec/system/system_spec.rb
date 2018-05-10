@@ -63,6 +63,10 @@ describe RapidVaults do
         # generate and utilize files inside suitable directory
         Dir.chdir(fixtures_dir)
 
+        # generate key
+        RapidVaults::CLI.main(%w[-g --gpg])
+        expect(File.directory?("#{Dir.home}/.gnupg")).to be true
+
         # generate encrypted file
         RapidVaults::CLI.main(%w[--gpg -e -p foo file.yaml])
         expect(File.file?('encrypted.txt')).to be true
@@ -78,6 +82,10 @@ describe RapidVaults do
       it 'encrypts a file and then decrypts a file in order' do
         # generate and utilize files inside suitable directory
         Dir.chdir(fixtures_dir)
+
+        # generate key and nonce
+        RapidVaults::API.main(action: :generate, algorithm: :gpgme)
+        expect(File.directory?("#{Dir.home}/.gnupg")).to be true
 
         # generate encrypted file
         encrypt = RapidVaults::API.main(algorithm: :gpgme, action: :encrypt, file: 'file.yaml', pw: 'password')
