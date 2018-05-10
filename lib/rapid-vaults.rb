@@ -31,7 +31,7 @@ class RapidVaults
     # check for problems with arguments
     if @settings[:algorithm] == :gpgme
       case @settings[:action]
-      when :generate then raise 'GPG key generation is currently not supported.'
+      when :generate then return
       when :decrypt, :encrypt
         raise 'File and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:pw)
       else raise 'Action must be one of generate, encrypt, or decrypt.'
