@@ -27,7 +27,7 @@ describe RapidVaults do
     end
     it 'raises an error for a missing action with gpgme' do
       RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, file: 'a', key: 'b')
-      expect { RapidVaults.process }.to raise_error('Action must be encrypt or decrypt.')
+      expect { RapidVaults.process }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
     end
     it 'raises an error for attempting to generate with gpgme' do
       RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, action: :generate)

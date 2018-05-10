@@ -14,15 +14,13 @@ class RapidVaults
 
   # main runner for software
   def main
-    # short circuit if we are generating
-    return Generate.main(self.class.settings) if self.class.settings[:action] == :generate && self.class.settings[:algorithm] == :openssl
-
     # process settings
     self.class.process
 
     # execute desired action and algorithm via dynamic call
     # public_send("#{self.class.settings[:action].capitalize}.#{self.class.settings[:algorithm]}".to_sym)
     case self.class.settings[:action]
+    when :generate then Generate.public_send(self.class.settings[:algorithm], self.class.settings)
     when :encrypt then Encrypt.public_send(self.class.settings[:algorithm], self.class.settings)
     when :decrypt then Decrypt.public_send(self.class.settings[:algorithm], self.class.settings)
     end
@@ -32,18 +30,19 @@ class RapidVaults
   def self.process
     # check for problems with arguments
     if @settings[:algorithm] == :gpgme
-      raise 'GPG key generation is currently not supported.' if @settings[:action] == :generate
-      raise 'Action must be encrypt or decrypt.' unless @settings[:action] == :encrypt || @settings[:action] == :decrypt
-      puts @settings
-      raise 'File and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:pw)
+      case @settings[:action]
+      when :generate then raise 'GPG key generation is currently not supported.'
+      when :decrypt || :encrypt
+        raise 'File and password arguments required for encryption or decryption.' unless @settings.key?(:file) && @settings.key?(:pw)
+      else raise 'Action must be one of generate, encrypt, or decrypt.'
+      end
     else
       case @settings[:action]
       when :encrypt
         raise 'File, key, and nonce arguments are required for encryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce)
       when :decrypt
         raise 'File, key, nonce, and tag arguments are required for decryption.' unless @settings.key?(:file) && @settings.key?(:key) && @settings.key?(:nonce) && @settings.key?(:tag)
-      else
-        raise 'Action must be one of generate, encrypt, or decrypt.'
+      else raise 'Action must be one of generate, encrypt, or decrypt.'
       end
     end
 
