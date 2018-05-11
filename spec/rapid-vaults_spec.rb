@@ -2,45 +2,34 @@ require_relative 'spec_helper'
 require_relative '../lib/rapid-vaults'
 
 describe RapidVaults do
-  #  let(:rapidvaults) { RapidVaults.new('fixtures/foo.yml', 'fixtures/key.txt', 'fixtures/nonce.txt', 'fixtures/tag.txt') }
-
   context '.process' do
     it 'raises an error for a non-string password with openssl' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', pw: 1)
-      expect { RapidVaults.process }.to raise_error('Password must be a string.')
+      expect { RapidVaults.process(algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', pw: 1) }.to raise_error('Password must be a string.')
     end
     it 'raises an error for a missing argument to encrypt with openssl' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: 'a', key: 'b')
-      expect { RapidVaults.process }.to raise_error('File, key, and nonce arguments are required for encryption.')
+      expect { RapidVaults.process(algorithm: :openssl, action: :encrypt, file: 'a', key: 'b') }.to raise_error('File, key, and nonce arguments are required for encryption.')
     end
     it 'raises an error for a missing argument to decrypt with openssl' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :decrypt, file: 'a', key: 'b', nonce: 'c')
-      expect { RapidVaults.process }.to raise_error('File, key, nonce, and tag arguments are required for decryption.')
+      expect { RapidVaults.process(algorithm: :openssl, action: :decrypt, file: 'a', key: 'b', nonce: 'c') }.to raise_error('File, key, nonce, and tag arguments are required for decryption.')
     end
     it 'raises an error for a missing argument to decrypt with gpgme' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, action: :decrypt, file: 'a')
-      expect { RapidVaults.process }.to raise_error('File and password arguments required for encryption or decryption.')
+      expect { RapidVaults.process(algorithm: :gpgme, action: :decrypt, file: 'a') }.to raise_error('File and password arguments required for encryption or decryption.')
     end
     it 'raises an error for a missing action with openssl' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, file: 'a', key: 'b', nonce: 'c', tag: 'd')
-      expect { RapidVaults.process }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
+      expect { RapidVaults.process(algorithm: :openssl, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
     end
     it 'raises an error for a missing action with gpgme' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, file: 'a', key: 'b')
-      expect { RapidVaults.process }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
+      expect { RapidVaults.process(algorithm: :gpgme, file: 'a', key: 'b') }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
     end
     it 'raises an error for a missing argument to generate with gpgme' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :gpgme, action: :generate)
-      # expect { RapidVaults.process }.to raise_error('GPG key generation is currently not supported.')
+      # expect { RapidVaults.process(algorithm: :gpgme, action: :generate) }.to raise_error('GPG key generation is currently not supported.')
     end
     it 'raises an error for a nonexistent input file' do
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd')
-      expect { RapidVaults.process }.to raise_error('Input file is not an existing file.')
+      expect { RapidVaults.process(algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Input file is not an existing file.')
     end
     it 'reads in all input files correctly for decryption' do
       dummy = fixtures_dir + 'file.yaml'
-      RapidVaults.instance_variable_set(:@settings, algorithm: :openssl, action: :encrypt, file: dummy, key: dummy, nonce: dummy, pw: 'password')
-      expect { RapidVaults.process }.not_to raise_exception
+      expect { RapidVaults.process(algorithm: :openssl, action: :encrypt, file: dummy, key: dummy, nonce: dummy, pw: 'password') }.not_to raise_exception
     end
   end
 end
