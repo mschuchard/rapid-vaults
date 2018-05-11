@@ -4,16 +4,13 @@ require_relative '../rapid-vaults'
 class RapidVaults::API
   # lightweight api
   def self.main(settings)
-    # parse settings in api and denote using api
-    RapidVaults.settings = parse(settings)
-
-    # run RapidVaults with specified file
-    RapidVaults.new.main
+    # parse settings for api and run RapidVaults with specified settings
+    RapidVaults.new.main(parse(settings))
   end
 
   # parse api options
   def self.parse(settings)
-    # establish settings for api
+    # establish settings for api and denote using api
     settings[:ui] = :api
     settings[:algorithm] = :openssl unless settings.key?(:algorithm)
     settings
