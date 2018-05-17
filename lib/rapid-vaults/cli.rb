@@ -47,6 +47,9 @@ class RapidVaults::CLI
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| settings[:tag] = arg }
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = arg }
       opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = File.read(arg) }
+
+      # gpg params file
+      opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
     end
 
     # parse args and return settings

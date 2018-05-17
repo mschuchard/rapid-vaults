@@ -22,7 +22,7 @@ describe RapidVaults do
       expect { RapidVaults.process(algorithm: :gpgme, file: 'a', key: 'b') }.to raise_error('Action must be one of generate, encrypt, or decrypt.')
     end
     it 'raises an error for a missing argument to generate with gpgme' do
-      # expect { RapidVaults.process(algorithm: :gpgme, action: :generate) }.to raise_error('GPG key generation is currently not supported.')
+      expect { RapidVaults.process(algorithm: :gpgme, action: :generate) }.to raise_error('GPG params file argument required for generation.')
     end
     it 'raises an error for a nonexistent input file' do
       expect { RapidVaults.process(algorithm: :openssl, action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Input file is not an existing file.')

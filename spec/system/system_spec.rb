@@ -64,7 +64,7 @@ describe RapidVaults do
         Dir.chdir(fixtures_dir)
 
         # generate key
-        RapidVaults::CLI.main(%w[-g --gpg])
+        RapidVaults::CLI.main(%W[-g --gpg --gpgparams #{fixtures_dir}/file.yaml])
         expect(File.directory?("#{Dir.home}/.gnupg")).to be true
 
         # generate encrypted file
@@ -84,7 +84,7 @@ describe RapidVaults do
         Dir.chdir(fixtures_dir)
 
         # generate key and nonce
-        RapidVaults::API.main(action: :generate, algorithm: :gpgme)
+        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: "foo: bar\n", ui: :cli)
         expect(File.directory?("#{Dir.home}/.gnupg")).to be true
 
         # generate encrypted file
