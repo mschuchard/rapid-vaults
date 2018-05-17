@@ -14,7 +14,7 @@ class Decrypt
     decipher.auth_tag = settings[:tag]
     decipher.auth_data = settings.key?(:pw) ? settings[:pw] : ''
 
-    # output the decrypted file
+    # output the decryption
     if settings[:ui] == :cli
       # output to file
       File.write('decrypted.txt', decipher.update(settings[:file]) + decipher.final)
@@ -33,7 +33,7 @@ class Decrypt
     encrypted = GPGME::Data.new(settings[:file])
     crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
-    # output the decrypted file
+    # output the decryption
     if settings[:ui] == :cli
       # output to file
       File.write('decrypted.txt', crypto.decrypt(encrypted, password: settings[:pw]).read)

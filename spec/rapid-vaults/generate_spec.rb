@@ -31,10 +31,17 @@ describe Generate do
       require 'fileutils'
 
       ENV['GNUPGHOME'] = fixtures_dir
+
       Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"))
-      expect(File.directory?("#{Dir.home}/.gnupg")).to be true
-      %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| File.delete("#{fixtures_dir}/#{file}") }
-      %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r("#{fixtures_dir}/#{dir}") }
+      %w[trustdb.gpg pubring.kbx pubring.kbx~].each do |file|
+        expect(File.file?("#{fixtures_dir}/#{file}")).to be true
+        File.delete("#{fixtures_dir}/#{file}")
+      end
+      %w[openpgp-revocs.d private-keys-v1.d].each do |dir|
+        expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true
+        FileUtils.rm_r("#{fixtures_dir}/#{dir}")
+      end
+      %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.exist?(file) }
     end
   end
 end

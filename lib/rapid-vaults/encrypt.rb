@@ -10,7 +10,7 @@ class Encrypt
     cipher.iv = settings[:nonce]
     cipher.auth_data = settings.key?(:pw) ? settings[:pw] : ''
 
-    # output the encrypted file and associated tag
+    # output the encryption and associated tag
     if settings[:ui] == :cli
       # output to file
       File.write('encrypted.txt', cipher.update(settings[:file]) + cipher.final)
@@ -29,7 +29,7 @@ class Encrypt
     # setup the encryption parameters
     crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
-    # output the encrypted file and associated tag
+    # output the encryption and associated tag
     if settings[:ui] == :cli
       # output to file
       File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)

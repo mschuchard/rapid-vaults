@@ -4,7 +4,11 @@ require_relative '../../lib/rapid-vaults/api'
 
 describe RapidVaults do
   after(:all) do
+    require 'fileutils'
+
     %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
+    %w[S.gpg-agent random_seed pubring.kbx trustdb.gpg pubring.kbx~].each { |file| File.delete(file) }
+    %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r(dir) }
   end
 
   context 'executed as a system from the CLI with settings and a file to be processed' do
@@ -57,15 +61,17 @@ describe RapidVaults do
   unless File.directory?('/home/travis')
     context 'executed wtih gpg as a system from the CLI with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
-        # empty out settings from previous tests
-        RapidVaults.instance_variable_set(:@settings, {})
+        ENV['GNUPGHOME'] = fixtures_dir
 
         # generate and utilize files inside suitable directory
         Dir.chdir(fixtures_dir)
 
-        # generate key
-        RapidVaults::CLI.main(%W[-g --gpg --gpgparams #{fixtures_dir}/file.yaml])
-        expect(File.directory?("#{Dir.home}/.gnupg")).to be true
+        puts fixtures_dir
+
+        # generate keys
+        RapidVaults::CLI.main(%w[-g --gpg --gpgparams gpgparams.txt])
+        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
+        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
 
         # generate encrypted file
         RapidVaults::CLI.main(%w[--gpg -e -p foo file.yaml])
@@ -80,12 +86,15 @@ describe RapidVaults do
 
     context 'executed with gpg as a system from the API with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
+        ENV['GNUPGHOME'] = fixtures_dir
+
         # generate and utilize files inside suitable directory
         Dir.chdir(fixtures_dir)
 
-        # generate key and nonce
-        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: "foo: bar\n", ui: :cli)
-        expect(File.directory?("#{Dir.home}/.gnupg")).to be true
+        # generate keys
+        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: File.read('gpgparams.txt'), ui: :cli)
+        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
+        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
 
         # generate encrypted file
         encrypt = RapidVaults::API.main(algorithm: :gpgme, action: :encrypt, file: 'file.yaml', pw: 'password')
