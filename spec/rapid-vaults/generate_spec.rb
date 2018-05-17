@@ -2,11 +2,11 @@ require_relative '../spec_helper'
 require_relative '../../lib/rapid-vaults/generate'
 
 describe Generate do
-  after(:all) do
-    %w[key.txt nonce.txt].each { |file| File.delete(file) }
-  end
-
   context '.openssl' do
+    after(:all) do
+      %w[key.txt nonce.txt].each { |file| File.delete(file) }
+    end
+
     it 'generates the key and nonce files from the cli' do
       Generate.openssl(ui: :cli)
       expect(File.file?('key.txt')).to be true
@@ -24,13 +24,17 @@ describe Generate do
   end
 
   context '.gpgme' do
-    it 'generates the key files from the cli' do
-      Generate.gpgme(ui: :cli)
-      expect(File.directory?("#{Dir.home}/.gnupg")).to be true
+    it 'raises an error for a missing GNUPGHOME variable' do
+      expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable GNUPGHOME was not set.')
     end
-    it 'outputs an array with the keys from the api' do
-      generate = Generate.gpgme(ui: :api)
+    it 'generates the key files' do
+      require 'fileutils'
+
+      ENV['GNUPGHOME'] = fixtures_dir
+      Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"))
       expect(File.directory?("#{Dir.home}/.gnupg")).to be true
+      %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| File.delete("#{fixtures_dir}/#{file}") }
+      %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r("#{fixtures_dir}/#{dir}") }
     end
   end
 end

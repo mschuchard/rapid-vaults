@@ -20,6 +20,12 @@ class Generate
 
   # generates a private and public key
   def self.gpgme(settings)
-    # stub
+    require 'gpgme'
+
+    # ensure we have a place to store these output files
+    raise 'Environment variable GNUPGHOME was not set.' unless ENV['GNUPGHOME']
+
+    # create gpg keys
+    GPGME::Ctx.new.generate_key(settings[:gpgparams], nil, nil)
   end
 end
