@@ -7,8 +7,10 @@ describe RapidVaults do
     require 'fileutils'
 
     %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
-    %w[S.gpg-agent random_seed pubring.kbx trustdb.gpg pubring.kbx~].each { |file| File.delete(file) }
-    %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r(dir) }
+    unless File.directory?('/home/travis')
+      %w[S.gpg-agent random_seed pubring.kbx trustdb.gpg pubring.kbx~].each { |file| File.delete(file) }
+      %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r(dir) }
+    end
   end
 
   context 'executed as a system from the CLI with settings and a file to be processed' do

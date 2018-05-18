@@ -1,6 +1,4 @@
 # Rapid Vaults
-Currently in beta and can be used without expectation of support.
-
 [![Build Status](https://travis-ci.org/mschuchard/rapid-vaults.svg?branch=master)](https://travis-ci.org/mschuchard/rapid-vaults)
 
 - [Description](#description)
