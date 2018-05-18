@@ -27,21 +27,24 @@ describe Generate do
     it 'raises an error for a missing GNUPGHOME variable' do
       expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable GNUPGHOME was not set.')
     end
-    it 'generates the key files' do
-      require 'fileutils'
+    # travis ci cannot support non-interactive gpg
+    unless File.directory?('/home/travis')
+      it 'generates the key files' do
+        require 'fileutils'
 
-      ENV['GNUPGHOME'] = fixtures_dir
+        ENV['GNUPGHOME'] = fixtures_dir
 
-      Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"))
-      %w[trustdb.gpg pubring.kbx pubring.kbx~].each do |file|
-        expect(File.file?("#{fixtures_dir}/#{file}")).to be true
-        File.delete("#{fixtures_dir}/#{file}")
+        Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"))
+        %w[trustdb.gpg pubring.kbx pubring.kbx~].each do |file|
+          expect(File.file?("#{fixtures_dir}/#{file}")).to be true
+          File.delete("#{fixtures_dir}/#{file}")
+        end
+        %w[openpgp-revocs.d private-keys-v1.d].each do |dir|
+          expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true
+          FileUtils.rm_r("#{fixtures_dir}/#{dir}")
+        end
+        %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.exist?(file) }
       end
-      %w[openpgp-revocs.d private-keys-v1.d].each do |dir|
-        expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true
-        FileUtils.rm_r("#{fixtures_dir}/#{dir}")
-      end
-      %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.exist?(file) }
     end
   end
 end

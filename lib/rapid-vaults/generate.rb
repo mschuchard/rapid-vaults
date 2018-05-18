@@ -27,5 +27,6 @@ class Generate
 
     # create gpg keys
     GPGME::Ctx.new.generate_key(settings[:gpgparams], nil, nil)
+    puts "Your GPG keys have been generated in #{ENV['GNUPGHOME']}." if settings[:ui] == :cli
   end
 end

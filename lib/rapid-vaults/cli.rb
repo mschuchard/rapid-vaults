@@ -33,6 +33,12 @@ class RapidVaults::CLI
       # usage
       opts.banner = 'usage: rapid-vaults [options] file'
 
+      # base options
+      opts.on('--version', 'Display the current version.') do
+        puts 'rapid-vaults 1.1.0'
+        exit 0
+      end
+
       # use gpg instead
       opts.on('--gpg', 'Use GNUPG/GPG instead of GNUTLS/OpenSSL for encryption/decryption.') { settings[:algorithm] = :gpgme }
 
