@@ -26,8 +26,6 @@ class RapidVaults::CLI
     settings = {}
     # specify cli being used
     settings[:ui] = :cli
-    # default to openssl algorithm
-    settings[:algorithm] = :openssl
 
     opt_parser = OptionParser.new do |opts|
       # usage

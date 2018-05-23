@@ -20,6 +20,9 @@ class RapidVaults
 
   # method for processing the settings and inputs
   def self.process(settings)
+    # default to openssl algorithm
+    settings[:algorithm] ||= :openssl
+
     # check for problems with arguments
     if settings[:algorithm] == :gpgme
       case settings[:action]
