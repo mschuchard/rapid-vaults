@@ -23,36 +23,46 @@ class RapidVaults
     # default to openssl algorithm
     settings[:algorithm] ||= :openssl
 
-    # check for problems with arguments
-    if settings[:algorithm] == :gpgme
-      case settings[:action]
-      when :generate
-        raise 'GPG params file argument required for generation.' unless settings.key?(:gpgparams)
-        return
-      when :decrypt, :encrypt
-        raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
-      else raise 'Action must be one of generate, encrypt, or decrypt.'
-      end
-    else
-      case settings[:action]
-      when :generate then return
-      when :encrypt
-        raise 'File, key, and nonce arguments are required for encryption.' unless settings.key?(:file) && settings.key?(:key) && settings.key?(:nonce)
-      when :decrypt
-        raise 'File, key, nonce, and tag arguments are required for decryption.' unless settings.key?(:file) && settings.key?(:key) && settings.key?(:nonce) && settings.key?(:tag)
-      else raise 'Action must be one of generate, encrypt, or decrypt.'
-      end
+    # check for problems with arguments and inputs
+    public_send("process_#{settings[:algorithm]}".to_sym, settings)
+  end
+
+  # processing openssl
+  def self.process_openssl(settings)
+    # check arguments
+    case settings[:action]
+    when :generate then return
+    when :encrypt
+      raise 'File, key, and nonce arguments are required for encryption.' unless settings.key?(:file) && settings.key?(:key) && settings.key?(:nonce)
+    when :decrypt
+      raise 'File, key, nonce, and tag arguments are required for decryption.' unless settings.key?(:file) && settings.key?(:key) && settings.key?(:nonce) && settings.key?(:tag)
+    else raise 'Action must be one of generate, encrypt, or decrypt.'
     end
 
-    # check for problems with inputs and read in files
+    # lambda for input processing
+    process_input = ->(input) { File.file?(settings[input]) ? settings[input] = File.read(settings[input]) : (raise "Input #{input} is not an existing file.") }
+
+    # check inputs and read in files
     raise 'Password must be a string.' if settings.key?(:pw) && !settings[:pw].is_a?(String)
-    File.file?(settings[:file]) ? settings[:file] = File.read(settings[:file]) : (raise 'Input file is not an existing file.')
-    # gnugp only uses password and file
-    return if settings[:algorithm] == :gpgme
-    File.file?(settings[:key]) ? settings[:key] = File.read(settings[:key]) : (raise 'Input key is not an existing file.')
-    File.file?(settings[:nonce]) ? settings[:nonce] = File.read(settings[:nonce]) : (raise 'Input nonce is not an existing file.')
+    %i[file key nonce].each(&process_input)
     # only decrypt needs a tag input
-    return unless settings[:action] == :decrypt
-    File.file?(settings[:tag]) ? settings[:tag] = File.read(settings[:tag]) : (raise 'Input tag is not an existing file.')
+    process_input.call(:tag) if settings[:action] == :decrypt
+  end
+
+  # processing gpgme
+  def self.process_gpgme(settings)
+    # check arguments
+    case settings[:action]
+    when :generate
+      raise 'GPG params file argument required for generation.' unless settings.key?(:gpgparams)
+      return
+    when :decrypt, :encrypt
+      raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
+    else raise 'Action must be one of generate, encrypt, or decrypt.'
+    end
+
+    # check inputs and read in files
+    raise 'Password must be a string.' unless settings[:pw].is_a?(String)
+    File.file?(settings[:file]) ? settings[:file] = File.read(settings[:file]) : (raise 'Input file is not an existing file.')
   end
 end
