@@ -17,7 +17,7 @@ Ansible-Vault is very similar to Rapid Vaults. Both are streamlined and easy to 
 
 ### Non-Comparative Software
 
-Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid Vaults relies upon AES-256-GCM or GPG. Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid Vaults is a lightweight and narrowly focused tool.
+Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid Vaults relies upon AES-256-GCM (OpenSSL) or GPG's algorithms (RSA, SHA-512, etc.). Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid Vaults is a lightweight and narrowly focused tool.
 
 ## Usage
 
@@ -28,10 +28,10 @@ Note trailing information for each flag/argument for possible differences with u
 ```
 usage: rapid-vaults [options] file
         --gpg                        Use GNUPG/GPG instead of GNUTLS/OpenSSL for encryption/decryption.
-    -g, --generate                   Generate a key and nonce for encryption and decryption (GPG: n/a).
-    -e, --encrypt                    Encrypt a file using a key and nonce and generate a tag (GPG: key only).
-    -d, --decrypt                    Decrypt a file using a key, nonce, and tag (GPG: key only).
-    -k, --key key                    Key file to be used for encryption or decryption.
+    -g, --generate                   Generate a key and nonce for encryption and decryption (GPG: keys only).
+    -e, --encrypt                    Encrypt a file using a key and nonce and generate a tag (GPG: key and pw only).
+    -d, --decrypt                    Decrypt a file using a key, nonce, and tag (GPG: key and pw only).
+    -k, --key key                    Key file to be used for encryption or decryption. (GPG: use GNUPGHOME)
     -n, --nonce nonce                Nonce file to be used for encryption or decryption (GPG: n/a).
     -t, --tag tag                    Tag file to be used for decryption (GPG: n/a).
     -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).').
@@ -39,7 +39,7 @@ usage: rapid-vaults [options] file
     --gpgparams                      GPG Key params input file used during generation of keys.
 ```
 
-#### Generate Key and Nonce
+#### Generate Key and Nonce with SSL
 `rapid-vaults -g`
 
 #### Encrypt File with SSL
@@ -50,7 +50,7 @@ usage: rapid-vaults [options] file
 
 `rapid-vaults -d -k cert.key -n nonce.txt -t tag.txt -p secret encrypted.txt`
 
-#### Generate Key with GPG
+#### Generate Keys with GPG
 This is the only situation where a `--gpgparams` flag and argument is required or utilized. The file provided as the argument should look like the following:
 
 ```
@@ -114,7 +114,7 @@ require 'rapid-vaults'
 
 options = {}
 options[:action] = :decrypt
-options[:file] = '/path/to/data.txt'
+options[:file] = '/path/to/encrypted_data.txt'
 options[:key] = '/path/to/cert.key'
 options[:nonce] = '/path/to/nonce.txt'
 options[:tag] = '/path/to/tag.txt'
@@ -176,7 +176,7 @@ ENV['GNUPGHOME'] = '/home/chris/.gnupg'
 options = {}
 options[:action] = :decrypt
 options[:algorithm] = :gpgme
-options[:file] = '/path/to/data.txt'
+options[:file] = '/path/to/encrypted_data.txt'
 options[:pw] = File.read('/path/to/password.txt')
 decrypted_contents = RapidVaults::API.main(options)
 ```

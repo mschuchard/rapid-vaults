@@ -41,12 +41,12 @@ class RapidVaults::CLI
       opts.on('--gpg', 'Use GNUPG/GPG instead of GNUTLS/OpenSSL for encryption/decryption.') { settings[:algorithm] = :gpgme }
 
       # generate, encrypt, or decrypt
-      opts.on('-g', '--generate', 'Generate a key and nonce for encryption and decryption (GPG: n/a).') { settings[:action] = :generate }
-      opts.on('-e', '--encrypt', 'Encrypt a file using a key and nonce and generate a tag (GPG: key only).') { settings[:action] = :encrypt }
-      opts.on('-d', '--decrypt', 'Decrypt a file using a key, nonce, and tag (GPG: key only).') { settings[:action] = :decrypt }
+      opts.on('-g', '--generate', 'Generate a key and nonce for encryption and decryption (GPG: keys only).') { settings[:action] = :generate }
+      opts.on('-e', '--encrypt', 'Encrypt a file using a key and nonce and generate a tag (GPG: key and pw only).') { settings[:action] = :encrypt }
+      opts.on('-d', '--decrypt', 'Decrypt a file using a key, nonce, and tag (GPG: key and pw only).') { settings[:action] = :decrypt }
 
       # key, nonce, password, and tag
-      opts.on('-k', '--key key', String, 'Key file to be used for encryption or decryption.') { |arg| settings[:key] = arg }
+      opts.on('-k', '--key key', String, 'Key file to be used for encryption or decryption. (GPG: use GNUPGHOME)') { |arg| settings[:key] = arg }
       opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption (GPG: n/a).') { |arg| settings[:nonce] = arg }
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| settings[:tag] = arg }
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = arg }
