@@ -10,7 +10,7 @@ class RapidVaults
     self.class.process(settings)
 
     # execute desired action and algorithm via dynamic call
-    # public_send("#{settings[:action].capitalize}.#{settings[:algorithm]}".to_sym)
+    # public_send("#{settings[:action].capitalize}.#{settings[:algorithm]}".to_sym, settings)
     case settings[:action]
     when :generate then Generate.public_send(settings[:algorithm], settings)
     when :encrypt then Encrypt.public_send(settings[:algorithm], settings)
