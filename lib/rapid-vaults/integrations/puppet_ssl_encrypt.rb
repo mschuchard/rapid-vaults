@@ -27,7 +27,7 @@ Puppet::Functions.create_function(:'ssl_encrypt') do
     if password_file.nil?
       hash[:encrypted_contents], hash[:tag] = RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce)
     else
-      hash[:encrypted_contents], hash[:tag] = RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce, password: File.read(password_file))
+      hash[:encrypted_contents], hash[:tag] = RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce, pw: File.read(password_file))
     end
     hash
   end
