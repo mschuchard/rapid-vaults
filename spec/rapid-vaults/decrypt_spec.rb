@@ -3,13 +3,13 @@ require_relative '../../lib/rapid-vaults/encrypt'
 require_relative '../../lib/rapid-vaults/decrypt'
 
 describe Decrypt do
-  after(:all) do
-    %w[tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
-  end
-
   context '.openssl' do
     before(:all) do
       Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M')
+    end
+
+    after(:all) do
+      %w[tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
     end
 
     it 'outputs a decrypted file with the key, nonce, and tag from the cli' do

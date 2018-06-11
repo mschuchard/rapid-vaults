@@ -3,6 +3,9 @@ require_relative '../lib/rapid-vaults'
 
 describe RapidVaults do
   context '.process' do
+    it 'raises an error for a nonexistent output directory' do
+      expect { RapidVaults.process(outdir: '/foo/bar/baz') }.to raise_error('The output directory /foo/bar/baz does not exist or is not a file!')
+    end
     it 'raises an error for a non-string password with openssl' do
       expect { RapidVaults.process(action: :encrypt, file: 'a', key: 'b', nonce: 'c', pw: 1) }.to raise_error('Password must be a string.')
     end

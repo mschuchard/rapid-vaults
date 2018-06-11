@@ -54,7 +54,7 @@ class RapidVaults::CLI
 
       # other
       opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
-      opts.on('-o --outdir', String, 'Optional output directory for generated files. (GPG: optional)') { |arg| settings[:outdir] = arg }
+      opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') { |arg| settings[:outdir] = arg }
     end
 
     # parse args and return settings
