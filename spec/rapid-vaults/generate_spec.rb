@@ -25,7 +25,7 @@ describe Generate do
 
   context '.gpgme' do
     it 'raises an error for a missing GNUPGHOME variable' do
-      expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable GNUPGHOME was not set.')
+      expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable "GNUPGHOME" was not set.')
     end
     # travis ci cannot support non-interactive gpg
     unless File.directory?('/home/travis')

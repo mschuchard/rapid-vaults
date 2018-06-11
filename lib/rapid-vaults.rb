@@ -20,8 +20,9 @@ class RapidVaults
 
   # method for processing the settings and inputs
   def self.process(settings)
-    # default to openssl algorithm
+    # default to openssl algorithm and `pwd` output directory
     settings[:algorithm] ||= :openssl
+    settings[:outdir] ||= Dir.pwd
 
     # check for problems with arguments and inputs
     public_send("process_#{settings[:algorithm]}".to_sym, settings)

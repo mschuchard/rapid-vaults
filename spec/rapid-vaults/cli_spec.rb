@@ -13,7 +13,7 @@ describe RapidVaults::CLI do
       expect(RapidVaults::CLI.parse(%w[-d -k key.txt -n nonce.txt -t tag.txt -p secret file.txt])).to eq(ui: :cli, action: :decrypt, key: 'key.txt', nonce: 'nonce.txt', tag: 'tag.txt', pw: 'secret')
     end
     it 'correctly parses the arguments for openssl generate' do
-      expect(RapidVaults::CLI.parse(%w[-g])).to eq(ui: :cli, action: :generate)
+      expect(RapidVaults::CLI.parse(%w[-g -o /home/bob])).to eq(ui: :cli, action: :generate, outdir: '/home/bob')
     end
     it 'correctly parses the arguments for gpg generate' do
       expect(RapidVaults::CLI.parse(%W[--gpg -g --gpgparams #{fixtures_dir}/file.yaml])).to eq(algorithm: :gpgme, ui: :cli, action: :generate, gpgparams: "foo: bar\n")
