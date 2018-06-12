@@ -22,7 +22,7 @@ class RapidVaults
   def self.process(settings)
     # default to openssl algorithm and `pwd` output directory
     settings[:algorithm] ||= :openssl
-    settings[:outdir] ||= Dir.pwd
+    settings[:outdir] ||= Dir.pwd + '/'
     raise "The output directory #{settings[:outdir]} does not exist or is not a file!" unless File.directory?(settings[:outdir])
 
     # check for problems with arguments and inputs

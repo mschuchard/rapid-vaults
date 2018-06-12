@@ -17,8 +17,8 @@ class Decrypt
     # output the decryption
     if settings[:ui] == :cli
       # output to file
-      File.write('decrypted.txt', decipher.update(settings[:file]) + decipher.final)
-      puts 'Your decrypted.txt has been written out to the current directory.'
+      File.write("#{settings[:outdir]}decrypted.txt", decipher.update(settings[:file]) + decipher.final)
+      puts "Your decrypted.txt has been written out to #{settings[:outdir]}."
     elsif settings[:ui] == :api
       # output to string
       decipher.update(settings[:file]) + decipher.final
@@ -36,8 +36,8 @@ class Decrypt
     # output the decryption
     if settings[:ui] == :cli
       # output to file
-      File.write('decrypted.txt', crypto.decrypt(encrypted, password: settings[:pw]).read)
-      puts 'Your decrypted.txt has been written out to the current directory.'
+      File.write("#{settings[:outdir]}decrypted.txt", crypto.decrypt(encrypted, password: settings[:pw]).read)
+      puts "Your decrypted.txt has been written out to #{settings[:outdir]}."
     elsif settings[:ui] == :api
       # output to string
       crypto.decrypt(encrypted, password: settings[:pw]).read

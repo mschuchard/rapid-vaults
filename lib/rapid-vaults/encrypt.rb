@@ -13,9 +13,9 @@ class Encrypt
     # output the encryption and associated tag
     if settings[:ui] == :cli
       # output to file
-      File.write('encrypted.txt', cipher.update(settings[:file]) + cipher.final)
-      File.write('tag.txt', cipher.auth_tag)
-      puts 'Your encrypted.txt and associated tag.txt for this encryption have been generated in your current directory.'
+      File.write("#{settings[:outdir]}encrypted.txt", cipher.update(settings[:file]) + cipher.final)
+      File.write("#{settings[:outdir]}tag.txt", cipher.auth_tag)
+      puts "Your encrypted.txt and associated tag.txt for this encryption have been generated in #{settings[:outdir]}."
     elsif settings[:ui] == :api
       # output to array
       [cipher.update(settings[:file]) + cipher.final, cipher.auth_tag]
@@ -32,8 +32,8 @@ class Encrypt
     # output the encryption and associated tag
     if settings[:ui] == :cli
       # output to file
-      File.write('encrypted.txt', crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
-      puts 'Your encrypted.txt for this encryption have been generated in your current directory.'
+      File.write("#{settings[:outdir]}encrypted.txt", crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
+      puts "Your encrypted.txt for this encryption have been generated in #{settings[:outdir]}."
     elsif settings[:ui] == :api
       # output to string
       crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read

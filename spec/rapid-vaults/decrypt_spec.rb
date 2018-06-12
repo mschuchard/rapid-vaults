@@ -34,6 +34,10 @@ describe Decrypt do
         Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', pw: 'foo')
       end
 
+      after(:all) do
+        %w[encrypted.txt decrypted.txt].each { |file| File.delete(file) }
+      end
+
       it 'outputs a decrypted file with the key from the cli' do
         Decrypt.gpgme(ui: :cli, file: File.read('encrypted.txt'), key: '', pw: 'foo')
         expect(File.file?('decrypted.txt')).to be true

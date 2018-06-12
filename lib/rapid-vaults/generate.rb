@@ -9,9 +9,9 @@ class Generate
 
     if settings[:ui] == :cli
       # output to file
-      File.write('key.txt', cipher.random_key)
-      File.write('nonce.txt', cipher.random_iv)
-      puts 'Your key.txt and nonce.txt have been generated in your current directory.'
+      File.write("#{settings[:outdir]}key.txt", cipher.random_key)
+      File.write("#{settings[:outdir]}nonce.txt", cipher.random_iv)
+      puts "Your key.txt and nonce.txt have been generated in #{settings[:outdir]}."
     elsif settings[:ui] == :api
       # output to string
       [cipher.random_key, cipher.random_iv]
@@ -23,7 +23,7 @@ class Generate
     require 'gpgme'
 
     # ensure we have a place to store these output files
-    raise 'Environment variable GNUPGHOME was not set.' unless ENV['GNUPGHOME']
+    raise 'Environment variable "GNUPGHOME" was not set.' unless ENV['GNUPGHOME']
 
     # create gpg keys
     GPGME::Ctx.new.generate_key(settings[:gpgparams], nil, nil)
