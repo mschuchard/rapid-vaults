@@ -18,5 +18,8 @@ describe RapidVaults::CLI do
     it 'correctly parses the arguments for gpg generate' do
       expect(RapidVaults::CLI.parse(%W[--gpg -g --gpgparams #{fixtures_dir}/file.yaml])).to eq(algorithm: :gpgme, ui: :cli, action: :generate, gpgparams: "foo: bar\n")
     end
+    it 'correctly parses the arguments for puppet integrations' do
+      expect(RapidVaults::CLI.parse(%w[--puppet -o /dir])).to eq(ui: :cli, action: :integrate, integrate: :puppet, outdir: '/dir')
+    end
   end
 end

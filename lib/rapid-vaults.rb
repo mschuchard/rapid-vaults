@@ -15,15 +15,17 @@ class RapidVaults
     when :generate then Generate.public_send(settings[:algorithm], settings)
     when :encrypt then Encrypt.public_send(settings[:algorithm], settings)
     when :decrypt then Decrypt.public_send(settings[:algorithm], settings)
+    when :integrate then Integrate.public_send(settings[:integrate], settings)
     end
   end
 
   # method for processing the settings and inputs
   def self.process(settings)
     # default to openssl algorithm and `pwd` output directory
-    settings[:algorithm] ||= :openssl
     settings[:outdir] ||= Dir.pwd + '/'
-    raise "The output directory #{settings[:outdir]} does not exist or is not a file!" unless File.directory?(settings[:outdir])
+    raise "The output directory #{settings[:outdir]} does not exist or is not a directory!" unless File.directory?(settings[:outdir])
+    return if settings[:action] == :integrate
+    settings[:algorithm] ||= :openssl
 
     # check for problems with arguments and inputs
     public_send("process_#{settings[:algorithm]}".to_sym, settings)

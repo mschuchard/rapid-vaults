@@ -52,6 +52,9 @@ class RapidVaults::CLI
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = arg }
       opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = File.read(arg) }
 
+      # integrations
+      opts.on('--puppet', String, 'Output files to support Puppet integrations.') { settings[:action] = :integrate; settings[:integrate] = :puppet }
+
       # other
       opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
       opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') { |arg| settings[:outdir] = arg }
