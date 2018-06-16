@@ -14,4 +14,15 @@ describe Integration do
       end
     end
   end
+
+  context '.chef' do
+    after(:all) do
+      File.delete('chef.rb')
+    end
+
+    it 'outputs the chef integrations to the specified directory' do
+      Integration.chef({})
+      expect(File.file?('chef.rb')).to be true
+    end
+  end
 end
