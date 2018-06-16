@@ -33,6 +33,7 @@ class RapidVaults
 
   # processing openssl
   def self.process_openssl(settings)
+    private_class_method :method
     # check arguments
     case settings[:action]
     when :generate then return
@@ -55,6 +56,7 @@ class RapidVaults
 
   # processing gpgme
   def self.process_gpgme(settings)
+    private_class_method :method
     # check arguments
     case settings[:action]
     when :generate

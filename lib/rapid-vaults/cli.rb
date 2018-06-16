@@ -54,6 +54,7 @@ class RapidVaults::CLI
 
       # integrations
       opts.on('--puppet', String, 'Output files to support Puppet integrations.') { settings[:action] = :integrate; settings[:integrate] = :puppet }
+      opts.on('--chef', String, 'Output files to support Chef integrations.') { settings[:action] = :integrate; settings[:integrate] = :chef }
 
       # other
       opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
