@@ -26,6 +26,9 @@ class Encrypt
   def self.gpgme(settings)
     require 'gpgme'
 
+    # check if GPGHOME env was set
+    puts "Environment variable 'GNUPGHOME' was not set. Files in #{ENV['HOME']}/.gnupg will be used for authentication." unless ENV['GNUPGHOME']
+
     # setup the encryption parameters
     crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
