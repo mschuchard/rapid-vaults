@@ -5,6 +5,10 @@
 - [Usage](#usage)
   - [CLI](#cli)
   - [API](#api)
+  - [Ansible](#ansible)
+  - [Puppet](#puppet)
+  - [Hiera](#hiera)
+  - [Chef](#chef)
 - [Contributing](#contributing)
 
 ## Description
@@ -34,9 +38,10 @@ usage: rapid-vaults [options] file
     -k, --key key                    Key file to be used for encryption or decryption. (GPG: use GNUPGHOME)
     -n, --nonce nonce                Nonce file to be used for encryption or decryption (GPG: n/a).
     -t, --tag tag                    Tag file to be used for decryption (GPG: n/a).
-    -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).').
-    -f, --file-password password.txt (optional) Text file containing a password to be used for encryption or decryption (GPG: required).').
+    -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).
+    -f, --file-password password.txt (optional) Text file containing a password to be used for encryption or decryption (GPG: required).
     --gpgparams                      GPG Key params input file used during generation of keys.
+    -o --outdir                      Optional output directory for generated files (default: pwd). (GPG: optional)
 ```
 
 #### Generate Key and Nonce with SSL
@@ -44,11 +49,11 @@ usage: rapid-vaults [options] file
 
 #### Encrypt File with SSL
 
-`rapid-vaults -e -k cert.key -n nonce.txt -p secret unencrypted.txt`
+`rapid-vaults -e -k cert.key -n nonce.txt -p secret -o /output/dir unencrypted.txt`
 
 #### Decrypt a File with SSL
 
-`rapid-vaults -d -k cert.key -n nonce.txt -t tag.txt -p secret encrypted.txt`
+`rapid-vaults -d -k cert.key -n nonce.txt -t tag.txt -p secret -o /output/dir encrypted.txt`
 
 #### Generate Keys with GPG
 This is the only situation where a `--gpgparams` flag and argument is required or utilized. The file provided as the argument should look like the following:
@@ -72,12 +77,16 @@ The environment variable `GNUPGHOME` must be set in the shell prior to generatin
 #### Encrypt File with GPG
 Currently you set the path to the keys and other files via the environment variable `GNUPGHOME` prior to executing. Otherwise, the code will look in the default directory for the current user.
 
-`rapid-vaults --gpg -e -p password unencrypted.txt`
+`rapid-vaults --gpg -e -p password -o /output/dir unencrypted.txt`
 
 #### Decrypt a File with GPG
 Currently you set the path to the keys and other files via the environment variable `GNUPGHOME` prior to executing. Otherwise, the code will look in the default directory for the current user.
 
-`rapid-vaults --gpg -d -p password encrypted.txt`
+`rapid-vaults --gpg -d -p password -o /output/dir encrypted.txt`
+
+#### Output an Integration
+
+`rapid-vaults --puppet -o /output/dir`
 
 ### API
 
@@ -131,7 +140,7 @@ ENV['GNUPGHOME'] = '/home/alice/.gnupg'
 options = {}
 options[:action] = :generate
 options[:algorithm] = :gpgme
-options[:gpgparams] = gpgparams: File.read('gpgparams.txt')
+options[:gpgparams] = File.read('gpgparams.txt')
 RapidVaults::API.main(options)
 ```
 
@@ -156,7 +165,7 @@ Passphrase: abc
 ```ruby
 require 'rapid-vaults'
 
-ENV['GNUPGHOME'] = '/home/bob/.gnupg'
+ENV['GNUPGHOME'] = '/home/bob/.gnupg' # optional
 
 options = {}
 options[:action] = :encrypt
@@ -171,7 +180,7 @@ encrypted_contents = RapidVaults::API.main(options)
 ```ruby
 require 'rapid-vaults'
 
-ENV['GNUPGHOME'] = '/home/chris/.gnupg'
+ENV['GNUPGHOME'] = '/home/chris/.gnupg' # optional
 
 options = {}
 options[:action] = :decrypt
@@ -180,6 +189,22 @@ options[:file] = '/path/to/encrypted_data.txt'
 options[:pw] = File.read('/path/to/password.txt')
 decrypted_contents = RapidVaults::API.main(options)
 ```
+
+### Ansible
+
+forthcoming
+
+### Puppet
+
+Puppet bindings are presented as a 2x2 matrix of custom functions for encryption/decryption and SSL/GPG. The custom functions require a non-obsolete version of Puppet. Documentation pertaining to their usage is done via Puppet Strings within the functions. It is highly recommended to wrap the output of the decryption functions within a `Sensitive` data type so that decrypted secrets are not shown in logs.
+
+### Hiera
+
+forthcoming
+
+### Chef
+
+Chef can access Rapid Vaults directly through the native Ruby API. Therefore, the Chef bindings are presented as example methods for doing so.
 
 ## Contributing
 Code should pass all spec tests. New features should involve new spec tests. Adherence to Rubocop and Reek is expected where not overly onerous or where the check is of dubious cost/benefit.
