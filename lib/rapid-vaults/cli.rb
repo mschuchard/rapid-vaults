@@ -53,8 +53,8 @@ class RapidVaults::CLI
       opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = File.read(arg) }
 
       # integrations
-      opts.on('--puppet', String, 'Output files to support Puppet integrations.') { settings[:action] = :integrate; settings[:integrate] = :puppet }
-      opts.on('--chef', String, 'Output files to support Chef integrations.') { settings[:action] = :integrate; settings[:integrate] = :chef }
+      opts.on('--puppet', 'Output files to support Puppet integrations.') { settings[:action] = :integrate; settings[:integrate] = :puppet }
+      opts.on('--chef', 'Output files to support Chef integrations.') { settings[:action] = :integrate; settings[:integrate] = :chef }
 
       # other
       opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
