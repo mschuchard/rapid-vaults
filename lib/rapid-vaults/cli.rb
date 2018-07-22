@@ -50,15 +50,24 @@ class RapidVaults::CLI
       opts.on('-n', '--nonce nonce', String, 'Nonce file to be used for encryption or decryption (GPG: n/a).') { |arg| settings[:nonce] = arg }
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| settings[:tag] = arg }
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = arg }
-      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = File.read(arg) }
+      opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') do |arg|
+        raise "Password file #{arg} is not an existing file!" unless File.file?(arg)
+        settings[:pw] = File.read(arg)
+      end
 
       # integrations
       opts.on('--puppet', 'Output files to support Puppet integrations.') { settings[:action] = :integrate; settings[:integrate] = :puppet }
       opts.on('--chef', 'Output files to support Chef integrations.') { settings[:action] = :integrate; settings[:integrate] = :chef }
 
       # other
-      opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') { |arg| settings[:gpgparams] = File.read(arg) }
-      opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') { |arg| settings[:outdir] = arg }
+      opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') do |arg|
+        raise "GPG Parameters file #{arg} is not an existing file!" unless File.file?(arg)
+        settings[:gpgparams] = File.read(arg)
+      end
+      opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') do |arg|
+        raise "Output directory #{arg} is not an existing directory!" unless File.directory?(arg)
+        settings[:outdir] = arg
+      end
     end
 
     # parse args and return settings
