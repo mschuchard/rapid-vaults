@@ -4,9 +4,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision 'shell', inline: <<-SHELL
     cd /vagrant
-    zypper install ruby2.1-devel -y
+    zypper install --non-interactive ruby2.1-devel -y
     gem build rapid-vaults.gemspec
-    gem install --no-rdoc --no-ri rake rapid-vaults*.gem
+    gem install --no-document rubocop -v 0.57.2
+    gem install --no-document rapid-vaults*.gem
     rm -f rapid-vaults*.gem
   SHELL
 end

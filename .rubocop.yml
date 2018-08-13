@@ -1,9 +1,15 @@
 ---
 AllCops:
+  TargetRubyVersion: 2.2
+
   Include:
     - 'lib/**/*.rb'
     - 'bin/*.rb'
     - 'spec/**/*.rb'
+    - rapid-vaults.gemspec
+    - Gemfile
+    - Rakefile
+    - Vagrantfile
   Exclude:
     - 'spec/fixtures/**/*'
 
