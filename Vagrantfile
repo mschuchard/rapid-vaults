@@ -4,10 +4,13 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision 'shell', inline: <<-SHELL
     cd /vagrant
-    zypper install --non-interactive ruby2.1-devel -y
+    zypper --non-interactive install ruby2.1-devel
     gem build rapid-vaults.gemspec
-    gem install --no-document rubocop -v 0.57.2
     gem install --no-document rapid-vaults*.gem
     rm -f rapid-vaults*.gem
+    cd /home/vagrant
+    /usr/bin/rapid-vaults.ruby2.1 -g -o .
+    /usr/bin/rapid-vaults.ruby2.1 -e -k key.txt -n nonce.txt -p password -o . /vagrant/spec/fixtures/file.yaml
+    /usr/bin/rapid-vaults.ruby2.1 -d -k key.txt -n nonce.txt -t tag.txt -p password -o . encrypted.txt
   SHELL
 end
