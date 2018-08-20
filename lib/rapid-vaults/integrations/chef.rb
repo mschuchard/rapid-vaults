@@ -42,7 +42,7 @@ def gpg_generate
 end
 
 # returns encrypted_contents
-def gpg_encryot
+def gpg_encrypt
   ENV['GNUPGHOME'] = '/home/bob/.gnupg'
 
   options = {}
