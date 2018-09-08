@@ -5,7 +5,7 @@ Puppet::Functions.create_function(:'ssl_decrypt') do
   # @param [String] key The key file to use for decryption.
   # @param [String] nonce The nonce file to use for decryption.
   # @param [String] tag The tag file to use for decryption.
-  # @param [String] password_file The optional password file to use for decryption.
+  # @optional_param [String] password_file The optional password file to use for decryption.
   # @return [String] Returns a string of decrypted contents.
   # @example Decrypting a file.
   # ssl_decrypt('/path/to/encrypted_data.txt', '/path/to/cert.key', '/path/to/nonce.txt', '/path/to/tag.txt', '/path/to/password.txt') => 'decrypted'

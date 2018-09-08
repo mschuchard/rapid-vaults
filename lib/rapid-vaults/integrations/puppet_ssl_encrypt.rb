@@ -4,7 +4,7 @@ Puppet::Functions.create_function(:'ssl_encrypt') do
   # @param [String] file The file to encrypt.
   # @param [String] key The key file to use for encryption.
   # @param [String] nonce The nonce file to use for encryption.
-  # @param [String] password_file The optional password file to use for encryption.
+  # @optional_param [String] password_file The optional password file to use for encryption.
   # @return [Hash] Returns a hash. First key-value is the encrypted contents and the second is the tag.
   # @example Encrypting a file.
   # ssl_encrypt('/path/to/data.txt', '/path/to/cert.key', '/path/to/nonce.txt', '/path/to/password.txt') => { encrypted_contents => 'asdfnlm34kl5m3lasdf34324fdnfsd', tag => 'fwr32r2ewf' }
