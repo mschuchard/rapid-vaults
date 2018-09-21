@@ -24,5 +24,8 @@ describe RapidVaults::CLI do
     it 'raises an error for a nonexistent gpg parameters file' do
       expect { RapidVaults::CLI.parse(%w[--gpg -g --gpgparams /foo/bar]) }.to raise_error('GPG Parameters file /foo/bar is not an existing file!')
     end
+    it 'raises an error for a nonexistent output directory' do
+      expect { RapidVaults::CLI.parse(%w[-o /foo/bar/baz]) }.to raise_error('The output directory /foo/bar/baz does not exist or is not a directory!')
+    end
   end
 end
