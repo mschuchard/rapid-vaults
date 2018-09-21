@@ -21,8 +21,11 @@ describe RapidVaults::CLI do
     it 'correctly parses the arguments for puppet integrations' do
       expect(RapidVaults::CLI.parse(%w[--puppet -o .])).to eq(ui: :cli, action: :integrate, integrate: :puppet, outdir: '.')
     end
+    it 'raises an error for a nonexistent password file' do
+      expect { RapidVaults::CLI.parse(%w[-f /nopasswordhere]) }.to raise_error('Password file /nopasswordhere is not an existing file!')
+    end
     it 'raises an error for a nonexistent gpg parameters file' do
-      expect { RapidVaults::CLI.parse(%w[--gpg -g --gpgparams /foo/bar]) }.to raise_error('GPG Parameters file /foo/bar is not an existing file!')
+      expect { RapidVaults::CLI.parse(%w[--gpgparams /foo/bar]) }.to raise_error('GPG Parameters file /foo/bar is not an existing file!')
     end
     it 'raises an error for a nonexistent output directory' do
       expect { RapidVaults::CLI.parse(%w[-o /foo/bar/baz]) }.to raise_error('The output directory /foo/bar/baz does not exist or is not a directory!')
