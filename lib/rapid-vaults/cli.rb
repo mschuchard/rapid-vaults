@@ -56,13 +56,9 @@ class RapidVaults::CLI
       end
 
       # bindings
-      opts.on('--puppet', 'Output files to support Puppet bindings.') do
+      opts.on('-b', '--binding binding', String, 'Output files to support bindings for other software languages.') do |arg|
         settings[:action] = :binding
-        settings[:binding] = :puppet
-      end
-      opts.on('--chef', 'Output files to support Chef bindings.') do
-        settings[:action] = :binding
-        settings[:binding] = :chef
+        settings[:binding] = arg.to_sym
       end
 
       # other
