@@ -55,14 +55,14 @@ class RapidVaults::CLI
         settings[:pw] = File.read(arg)
       end
 
-      # integrations
-      opts.on('--puppet', 'Output files to support Puppet integrations.') do
-        settings[:action] = :integrate
-        settings[:integrate] = :puppet
+      # bindings
+      opts.on('--puppet', 'Output files to support Puppet bindings.') do
+        settings[:action] = :binding
+        settings[:binding] = :puppet
       end
-      opts.on('--chef', 'Output files to support Chef integrations.') do
-        settings[:action] = :integrate
-        settings[:integrate] = :chef
+      opts.on('--chef', 'Output files to support Chef bindings.') do
+        settings[:action] = :binding
+        settings[:binding] = :chef
       end
 
       # other

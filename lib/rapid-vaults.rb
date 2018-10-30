@@ -15,7 +15,7 @@ class RapidVaults
     when :generate then Generate.public_send(settings[:algorithm], settings)
     when :encrypt then Encrypt.public_send(settings[:algorithm], settings)
     when :decrypt then Decrypt.public_send(settings[:algorithm], settings)
-    when :integrate then Integrate.public_send(settings[:integrate], settings)
+    when :binding then Binding.public_send(settings[:binding], settings)
     end
   end
 
@@ -28,7 +28,7 @@ class RapidVaults
       settings[:outdir] += '/' unless settings[:outdir][-1] == '/'
     end
 
-    return if settings[:action] == :integrate
+    return if settings[:action] == :binding
     settings[:algorithm] ||= :openssl
 
     # check for problems with arguments and inputs

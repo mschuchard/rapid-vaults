@@ -18,8 +18,8 @@ describe RapidVaults::CLI do
     it 'correctly parses the arguments for gpg generate' do
       expect(RapidVaults::CLI.parse(%W[--gpg -g --gpgparams #{fixtures_dir}/file.yaml])).to eq(algorithm: :gpgme, ui: :cli, action: :generate, gpgparams: "foo: bar\n")
     end
-    it 'correctly parses the arguments for puppet integrations' do
-      expect(RapidVaults::CLI.parse(%w[--puppet -o .])).to eq(ui: :cli, action: :integrate, integrate: :puppet, outdir: '.')
+    it 'correctly parses the arguments for puppet bindings' do
+      expect(RapidVaults::CLI.parse(%w[--puppet -o .])).to eq(ui: :cli, action: :binding, binding: :puppet, outdir: '.')
     end
     it 'raises an error for a nonexistent password file' do
       expect { RapidVaults::CLI.parse(%w[-f /nopasswordhere]) }.to raise_error('Password file /nopasswordhere is not an existing file!')

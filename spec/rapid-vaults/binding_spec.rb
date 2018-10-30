@@ -1,14 +1,14 @@
 require_relative '../spec_helper'
-require_relative '../../lib/rapid-vaults/integration'
+require_relative '../../lib/rapid-vaults/binding'
 
-describe Integration do
+describe Binding do
   context '.puppet' do
     after(:all) do
       %w[puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each { |file| File.delete(file) }
     end
 
-    it 'outputs the puppet integrations to the specified directory' do
-      Integration.puppet({})
+    it 'outputs the puppet bindings to the specified directory' do
+      Binding.puppet({})
       %w[puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each do |file|
         expect(File.file?(file)).to be true
       end
@@ -20,8 +20,8 @@ describe Integration do
       File.delete('chef.rb')
     end
 
-    it 'outputs the chef integrations to the specified directory' do
-      Integration.chef({})
+    it 'outputs the chef bindings to the specified directory' do
+      Binding.chef({})
       expect(File.file?('chef.rb')).to be true
     end
   end
