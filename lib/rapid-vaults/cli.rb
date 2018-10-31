@@ -6,7 +6,7 @@ class RapidVaults::CLI
   def self.main(args)
     # parse args in cli and denote using cli
     settings = parse(args)
-    unless settings[:action] == :generate
+    if settings[:action] == :encrypt || settings[:action] == :decrypt
       args.empty? ? (raise 'rapid-vaults: no file specified; try using --help') : settings[:file] = args.first
     end
 

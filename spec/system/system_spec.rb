@@ -6,7 +6,7 @@ describe RapidVaults do
   after(:all) do
     require 'fileutils'
 
-    %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt].each { |file| File.delete(file) }
+    %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt chef.rb puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each { |file| File.delete(file) }
     unless File.directory?('/home/travis')
       %w[S.gpg-agent random_seed pubring.kbx trustdb.gpg pubring.kbx~].each { |file| File.delete(file) }
       %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r(dir) }
@@ -107,6 +107,19 @@ describe RapidVaults do
         decrypt = RapidVaults::API.main(algorithm: :gpgme, action: :decrypt, file: 'encrypted.txt', pw: 'password')
         expect(decrypt).to be_a(String)
         expect(decrypt).to eq("foo: bar\n")
+      end
+    end
+
+    context 'executed as a system to output bindings from the CLI' do
+      it 'outputs the puppet and chef bindings' do
+        # generate and utilize files inside suitable directory
+        Dir.chdir(fixtures_dir)
+
+        # generate bindings
+        RapidVaults::CLI.main(%w[-b puppet])
+        RapidVaults::CLI.main(%w[-b chef])
+
+        %w[chef.rb puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each { |file| expect(File.file?(file)).to be true }
       end
     end
   end

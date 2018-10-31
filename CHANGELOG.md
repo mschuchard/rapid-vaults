@@ -1,5 +1,6 @@
 ### 1.1.2
 - Added checks on input files and directories.
+- Fix bugs blocking bindings output.
 
 ### 1.1.1
 - Added Puppet and Chef bindings.

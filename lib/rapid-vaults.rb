@@ -1,6 +1,7 @@
 require_relative 'rapid-vaults/decrypt'
 require_relative 'rapid-vaults/encrypt'
 require_relative 'rapid-vaults/generate'
+require_relative 'rapid-vaults/binding'
 
 # interfaces from cli/api, validates settings, and then distributes actions to appropriate classes
 class RapidVaults
