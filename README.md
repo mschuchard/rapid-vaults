@@ -40,6 +40,7 @@ usage: rapid-vaults [options] file
     -t, --tag tag                    Tag file to be used for decryption (GPG: n/a).
     -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).
     -f, --file-password password.txt (optional) Text file containing a password to be used for encryption or decryption (GPG: required).
+    -b, --binding binding            Output files to support bindings for other software languages.
     --gpgparams                      GPG Key params input file used during generation of keys.
     -o --outdir                      Optional output directory for generated files (default: pwd). (GPG: optional)
 ```
@@ -84,9 +85,10 @@ Currently you set the path to the keys and other files via the environment varia
 
 `rapid-vaults --gpg -d -p password -o /output/dir encrypted.txt`
 
-#### Output an Integration
+#### Output a Binding
 
-`rapid-vaults --puppet -o /output/dir`
+`rapid-vaults -b puppet -o /output/dir`  
+`rapid-vaults -b chef -o /path/to/outdir`
 
 ### API
 
@@ -198,10 +200,6 @@ forthcoming
 
 Puppet bindings are presented as a 2x2 matrix of custom functions for encryption/decryption and SSL/GPG. The custom functions require a non-obsolete version of Puppet. Documentation pertaining to their usage is done via Puppet Strings within the functions. It is highly recommended to wrap the output of the decryption functions within a `Sensitive` data type so that decrypted secrets are not shown in logs.
 
-### Hiera
-
-forthcoming
-
 ### Chef
 
 Chef can access Rapid Vaults directly through the native Ruby API. Therefore, the Chef bindings are presented as example methods for doing so.
@@ -210,3 +208,5 @@ Chef can access Rapid Vaults directly through the native Ruby API. Therefore, th
 Code should pass all spec tests. New features should involve new spec tests. Adherence to Rubocop and Reek is expected where not overly onerous or where the check is of dubious cost/benefit.
 
 A [Dockerfile](Dockerfile) is provided for easy rake testing. A [Vagrantfile](Vagrantfile) is provided for easy gem building, installation, and post-installation testing.
+
+Please consult the GitHub Project for the current development roadmap.
