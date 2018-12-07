@@ -1,3 +1,5 @@
+### 1.2.0
+
 ### 1.1.2
 - Added checks on input files and directories.
 - Fix bugs blocking bindings output.

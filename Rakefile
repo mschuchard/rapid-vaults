@@ -22,3 +22,10 @@ desc 'Execute system spec tests'
 RSpec::Core::RakeTask.new(:system) do |task|
   task.pattern = 'spec/system/*_spec.rb'
 end
+
+desc 'Generate gRPC bindings'
+task :grpc do
+  require 'open3'
+  stdout, = Open3.capture2("grpc_tools_ruby_protoc -I #{__dir__}/proto --ruby_out=#{__dir__}/lib/rapid-vaults/bindings --grpc_out=#{__dir__}/lib/rapid-vaults/bindings #{__dir__}/proto/rapid-vaults.proto")
+  puts stdout unless stdout.empty?
+end
