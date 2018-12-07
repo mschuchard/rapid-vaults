@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package rapidvaults;
+
+service RapidVaults {
+  // encrypt with SSL
+  rpc SSLEncrypt(SSLUnencrypted) returns (SSLEncrypted) {}
+
+  // decrypt with SSL
+  rpc SSLDecrypt(SSLUndecrypted) returns (SSLDecrypted) {}
+}
+
+// inputs to encrypt some text
+message SSLUnencrypted {
+  // the text to encrypt
+  string text = 1;
+
+  // the ssl key
+  string key = 2;
+
+  // the ssl nonce
+  string nonce = 3;
+
+  // the password
+  string password = 4;
+}
+
+// outputs of encrypted text
+message SSLEncrypted {
+  // the encrypted text
+  string text = 1;
+
+  // the resulting tag from the encryption
+  string tag = 2;
+}
+
+// inputs to decrypt some text
+message SSLUndecrypted {
+  // the encrypted text
+  string text = 1;
+
+  // the ssl key
+  string key = 2;
+
+  // the ssl nonce
+  string nonce = 3;
+
+  // the tag which resulted form the encryption
+  string tag = 4;
+
+  // the password
+  string password = 5;
+}
+
+// outputs of decrypted text
+message SSLDecrypted {
+  // the decrypted text
+  string text = 1;
+}
