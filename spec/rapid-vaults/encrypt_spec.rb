@@ -3,22 +3,27 @@ require_relative '../../lib/rapid-vaults/encrypt'
 
 describe Encrypt do
   context '.openssl' do
+    # circumvent ruby >= 2.3 issue with proper byte size interpretation
+    require 'securerandom'
+    key = SecureRandom.random_bytes(32).strip
+    nonce = SecureRandom.random_bytes(12).strip
+
     after(:all) do
       %w[tag.txt encrypted.txt].each { |file| File.delete(file) }
     end
 
     it 'outputs an encrypted file with the key and nonce from the cli' do
-      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M')
+      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce)
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs an encrypted file with the key, nonce, and password from the cli' do
-      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M', pw: 'password')
+      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce, pw: 'password')
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs an array of encrypted content and tag with the key and nonce from the api' do
-      encrypt = Encrypt.openssl(ui: :api, file: "foo: bar\n", key: '���b+����R�v�Í%("����=8o/���', nonce: 'Ëá!í^Uë^EÜ<83>oã^M')
+      encrypt = Encrypt.openssl(ui: :api, file: "foo: bar\n", key: key, nonce: nonce)
       expect(encrypt).to be_a(Array)
       expect(encrypt[0]).to be_a(String)
       expect(encrypt[1]).to be_a(String)
