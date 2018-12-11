@@ -3,9 +3,9 @@ require_relative '../../lib/rapid-vaults/encrypt'
 
 describe Encrypt do
   context '.openssl' do
-    # circumvent ruby >= 2.3 issue with proper byte size interpretation
+    # circumvent ruby > 2.3 and 2.2 issues with proper byte size interpretation
     require 'securerandom'
-    key = SecureRandom.random_bytes(32).strip
+    key = RUBY_VERSION =~ /^2\.2/ ? '���b+����R�v�Í%("����=8o/���' : SecureRandom.random_bytes(32).strip
     nonce = SecureRandom.random_bytes(12).strip
 
     after(:all) do

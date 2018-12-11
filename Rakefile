@@ -2,7 +2,7 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'reek/rake/task'
 
-task default: %i[rubocop reek unit system]
+task default: %i[rubocop reek grpc unit system]
 
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.formatters = ['simple']

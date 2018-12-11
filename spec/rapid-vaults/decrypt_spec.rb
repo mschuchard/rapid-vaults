@@ -4,9 +4,9 @@ require_relative '../../lib/rapid-vaults/decrypt'
 
 describe Decrypt do
   context '.openssl' do
-    # circumvent ruby >= 2.3 issue with proper byte size interpretation
+    # circumvent ruby > 2.3 and 2.2 issues with proper byte size interpretation
     require 'securerandom'
-    key = SecureRandom.random_bytes(32).strip
+    key = RUBY_VERSION =~ /^2\.2/ ? '���b+����R�v�Í%("����=8o/���' : SecureRandom.random_bytes(32).strip
     nonce = SecureRandom.random_bytes(12).strip
 
     before(:all) do
@@ -28,7 +28,7 @@ describe Decrypt do
       expect(decrypt).to eq("foo: bar\n")
     end
     it 'raises an error for an invalid tag size' do
-      expect { Decrypt.openssl(file: File.read('encrypted.txt'), key: key, nonce: 'Ëá!í^Uë^EÜ<83>oã^M', tag: "�a����e�O_H|�\n") }.to raise_error('Tag is not 16 bytes.')
+      expect { Decrypt.openssl(file: File.read('encrypted.txt'), key: key, nonce: nonce, tag: "�a����e�O_H|�\n") }.to raise_error('Tag is not 16 bytes.')
     end
   end
 
