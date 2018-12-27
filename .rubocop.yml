@@ -12,6 +12,7 @@ AllCops:
     - Vagrantfile
   Exclude:
     - 'spec/fixtures/**/*'
+    - 'lib/rapid-vaults/bindings/rapid-vaults*.rb'
 
 Metrics:
   Enabled: false

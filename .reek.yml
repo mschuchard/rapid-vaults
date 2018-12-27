@@ -1,6 +1,7 @@
 ---
 exclude_paths:
   - spec/fixtures
+  - 'lib/rapid-vaults/bindings/rapid-vaults*.rb'
 
 detectors:
   TooManyStatements:

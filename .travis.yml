@@ -1,5 +1,5 @@
 # setup environment
-dist: trusty
+dist: xenial
 sudo: false
 language: ruby
 cache: bundler
@@ -13,22 +13,18 @@ git:
 # setup tests
 matrix:
   include:
-    - rvm: 2.1.10
+    - rvm: 2.1
       env: TEST='unit system'
-    - rvm: 2.2.10
+    - rvm: 2.2
+      env: TEST='unit system'
+    - rvm: 2.3
       env: TEST=default
-    - rvm: 2.3.7
+    - rvm: 2.4
       env: TEST='unit system'
-    - rvm: 2.4.4
+    - rvm: 2.5
       env: TEST='unit system'
-    - rvm: 2.5.1
+    - rvm: 2.6
       env: TEST='unit system'
-    - rvm: 2.6.0-preview2
-      env: TEST='unit system'
-  allow_failures:
-    - rvm: 2.4.4
-    - rvm: 2.5.1
-    - rvm: 2.6.0-preview2
 
 # execute tests
 before_install: gem update --no-document bundler
