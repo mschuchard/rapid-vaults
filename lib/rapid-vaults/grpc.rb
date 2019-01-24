@@ -1,4 +1,5 @@
 require_relative '../rapid-vaults'
+require_relative 'bindings/rapid-vaults_services_pb'
 
 # provides a grpc server
 class RapidVaults::GRPC < Rapidvaults::RapidVaults::Service
