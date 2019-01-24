@@ -1,7 +1,16 @@
 require_relative '../rapid-vaults'
 
 # provides a grpc server
-class GRPC < Rapidvaults::RapidVaults::Service
+class RapidVaults::GRPC < Rapidvaults::RapidVaults::Service
+  # start the server
+  def server
+    addr = '0.0.0.0:8080'
+    server = GRPC::RpcServer.new
+    server.add_http2_port(addr, :this_port_is_insecure)
+    server.handle(RapidVaults.new)
+    server.run_till_terminated
+  end
+
   # grpc api for generate openssl
   def ssl_generate(geninputs, _call)
     settings = geninputs.to_hash
