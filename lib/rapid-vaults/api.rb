@@ -4,7 +4,7 @@ require_relative '../rapid-vaults'
 class RapidVaults::API
   # lightweight api
   def self.main(settings)
-    # parse settings for api and run RapidVaults with specified settings
+    # parse pass-by-value settings for api and run RapidVaults with specified settings
     RapidVaults.new.main(parse(settings))
   end
 

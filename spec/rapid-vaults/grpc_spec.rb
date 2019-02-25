@@ -1,4 +1,4 @@
-require_relative '../../lib/grpc'
+require_relative '../../lib/rapid-vaults/grpc'
 
 stub = Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080')
 

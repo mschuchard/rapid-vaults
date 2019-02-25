@@ -7,7 +7,7 @@ require_relative 'rapid-vaults/binding'
 class RapidVaults
   # main runner for software
   def main(settings)
-    # process settings
+    # process settings via pass-by-reference
     self.class.process(settings)
 
     # execute desired action and algorithm via dynamic call

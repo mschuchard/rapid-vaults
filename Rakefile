@@ -28,4 +28,6 @@ task :grpc do
   require 'open3'
   stdout, = Open3.capture2("grpc_tools_ruby_protoc -I #{__dir__}/proto --ruby_out=#{__dir__}/lib/rapid-vaults/bindings --grpc_out=#{__dir__}/lib/rapid-vaults/bindings #{__dir__}/proto/rapid-vaults.proto")
   puts stdout unless stdout.empty?
+  grpc_services_text_fix = File.read("#{__dir__}/lib/rapid-vaults/bindings/rapid-vaults_services_pb.rb").gsub(/require 'rapid/, 'require_relative \'rapid')
+  File.write("#{__dir__}/lib/rapid-vaults/bindings/rapid-vaults_services_pb.rb", grpc_services_text_fix)
 end
