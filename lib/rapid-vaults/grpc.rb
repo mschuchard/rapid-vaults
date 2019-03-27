@@ -4,8 +4,7 @@ require_relative 'bindings/rapid-vaults_services_pb'
 # provides a grpc server
 class RapidVaults::GRPC < Rapidvaults::RapidVaults::Service
   # start the server
-  def server
-    addr = '0.0.0.0:8080'
+  def server(addr = '0.0.0.0:8080')
     server = GRPC::RpcServer.new
     server.add_http2_port(addr, :this_port_is_insecure)
     server.handle(RapidVaults.new)

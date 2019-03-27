@@ -1,6 +1,6 @@
 # RapidVaults: testing gem build, install, and execution
 Vagrant.configure(2) do |config|
-  config.vm.box = 'opensuse/openSUSE-42.2-x86_64'
+  config.vm.box = 'opensuse/openSUSE-42.3-x86_64'
 
   config.vm.provision 'shell', inline: <<-SHELL
     cd /vagrant
