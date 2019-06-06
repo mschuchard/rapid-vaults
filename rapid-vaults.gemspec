@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'reek', '> 4.0', '< 6'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.51'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.0'
 end

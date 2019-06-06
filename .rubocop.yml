@@ -1,7 +1,7 @@
 ---
-AllCops:
-  TargetRubyVersion: 2.2
+require: rubocop-performance
 
+AllCops:
   Include:
     - 'lib/**/*.rb'
     - 'bin/*.rb'
@@ -18,4 +18,8 @@ Metrics:
   Enabled: false
 
 Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+# probably can remove after rails cops removed from core
+Style/FrozenStringLiteralComment:
   Enabled: false
