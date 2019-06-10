@@ -1,5 +1,5 @@
 # mymodule/lib/puppet/functions/gpg_encrypt.rb
-Puppet::Functions.create_function(:'gpg_encrypt') do
+Puppet::Functions.create_function(:gpg_encrypt) do
   # Encrypts a file with GnuPG.
   # @param [String] file The file to encrypt.
   # @param [String] gpghome The path to the GnuPG home directory containing the credentials.

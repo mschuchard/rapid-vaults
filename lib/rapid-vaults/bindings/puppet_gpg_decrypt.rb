@@ -1,5 +1,5 @@
 # mymodule/lib/puppet/functions/gpg_decrypt.rb
-Puppet::Functions.create_function(:'gpg_decrypt') do
+Puppet::Functions.create_function(:gpg_decrypt) do
   # Decrypts a file with GnuPG.
   # @param [String] file The file to decrypt.
   # @param [String] gpghome The path to the GnuPG home directory containing the credentials.

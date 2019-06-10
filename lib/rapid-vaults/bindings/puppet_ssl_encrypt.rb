@@ -1,5 +1,5 @@
 # mymodule/lib/puppet/functions/ssl_encrypt.rb
-Puppet::Functions.create_function(:'ssl_encrypt') do
+Puppet::Functions.create_function(:ssl_encrypt) do
   # Encrypts a file with OpenSSL.
   # @param [String] file The file to encrypt.
   # @param [String] key The key file to use for encryption.

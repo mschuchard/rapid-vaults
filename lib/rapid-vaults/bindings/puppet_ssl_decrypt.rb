@@ -1,5 +1,5 @@
 # mymodule/lib/puppet/functions/ssl_decrypt.rb
-Puppet::Functions.create_function(:'ssl_decrypt') do
+Puppet::Functions.create_function(:ssl_decrypt) do
   # Decrypts a file with OpenSSL.
   # @param [String] file The file to decrypt.
   # @param [String] key The key file to use for decryption.
