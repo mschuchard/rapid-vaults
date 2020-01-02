@@ -1,6 +1,5 @@
 # setup environment
 dist: xenial
-sudo: false
 language: ruby
 cache: bundler
 
@@ -23,6 +22,10 @@ matrix:
       env: TEST='grpc unit system'
     - rvm: 2.6
       env: TEST='grpc unit system'
+    - rvm: 2.7
+      env: TEST='grpc unit system'
+  allow_failures:
+    - rvm: 2.7
 
 # execute tests
 before_install: gem update --no-document bundler
