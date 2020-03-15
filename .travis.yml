@@ -1,7 +1,11 @@
 # setup environment
-dist: xenial
+dist: bionic
 language: ruby
 cache: bundler
+
+branches:
+  only:
+  - master
 
 notifications:
   email: false
