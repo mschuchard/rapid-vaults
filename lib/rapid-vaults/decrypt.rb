@@ -15,11 +15,12 @@ class Decrypt
     decipher.auth_data = settings.key?(:pw) ? settings[:pw] : ''
 
     # output the decryption
-    if settings[:ui] == :cli
+    case settings[:ui]
+    when :cli
       # output to file
       File.write("#{settings[:outdir]}decrypted.txt", decipher.update(settings[:file]) + decipher.final)
       puts "Your decrypted.txt has been written out to #{settings[:outdir]}."
-    elsif settings[:ui] == :api
+    when :api
       # output to string
       decipher.update(settings[:file]) + decipher.final
     end
@@ -37,11 +38,12 @@ class Decrypt
     crypto = GPGME::Crypto.new(armor: true, pinentry_mode: GPGME::PINENTRY_MODE_LOOPBACK)
 
     # output the decryption
-    if settings[:ui] == :cli
+    case settings[:ui]
+    when :cli
       # output to file
       File.write("#{settings[:outdir]}decrypted.txt", crypto.decrypt(encrypted, password: settings[:pw]).read)
       puts "Your decrypted.txt has been written out to #{settings[:outdir]}."
-    elsif settings[:ui] == :api
+    when :api
       # output to string
       crypto.decrypt(encrypted, password: settings[:pw]).read
     end

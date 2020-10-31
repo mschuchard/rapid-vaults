@@ -28,11 +28,11 @@ describe RapidVaults do
       expect { RapidVaults.process(action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Input file is not an existing file.')
     end
     it 'reads in all input files correctly for openssl encryption' do
-      dummy = fixtures_dir + 'file.yaml'
+      dummy = "#{fixtures_dir}file.yaml"
       expect { RapidVaults.process(action: :encrypt, file: dummy, key: dummy, nonce: dummy, pw: 'password') }.not_to raise_exception
     end
     it 'reads in all input files correctly for gpgme decryption' do
-      dummy = fixtures_dir + 'file.yaml'
+      dummy = "#{fixtures_dir}file.yaml"
       expect { RapidVaults.process(algorithm: :gpgme, action: :decrypt, file: dummy, pw: 'password') }.not_to raise_exception
     end
   end

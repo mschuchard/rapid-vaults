@@ -7,12 +7,13 @@ class Generate
     # setup parameters
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
 
-    if settings[:ui] == :cli
+    case settings[:ui]
+    when :cli
       # output to file
       File.write("#{settings[:outdir]}key.txt", cipher.random_key)
       File.write("#{settings[:outdir]}nonce.txt", cipher.random_iv)
       puts "Your key.txt and nonce.txt have been generated in #{settings[:outdir]}."
-    elsif settings[:ui] == :api
+    when :api
       # output to string
       [cipher.random_key, cipher.random_iv]
     end
