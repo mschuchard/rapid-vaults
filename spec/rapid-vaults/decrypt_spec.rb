@@ -6,7 +6,7 @@ describe Decrypt do
   context '.openssl' do
     # circumvent ruby > 2.3 and 2.2 issues with proper byte size interpretation
     require 'securerandom'
-    key = RUBY_VERSION =~ /^2\.2/ ? '���b+����R�v�Í%("����=8o/���' : SecureRandom.random_bytes(32).strip
+    key = /^2\.2/.match?(RUBY_VERSION) ? '���b+����R�v�Í%("����=8o/���' : SecureRandom.random_bytes(32).strip
     nonce = SecureRandom.random_bytes(12).strip
 
     before(:all) do
