@@ -1,0 +1,41 @@
+---
+version: 2.1
+
+jobs:
+  test:
+    working_directory: /tmp/project
+    parameters:
+      ruby-version:
+        type: string
+    docker:
+    - image: ruby:<< parameters.ruby-version >>-slim
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - rapid-vaults-ruby-<< parameters.ruby-version >>
+    - run:
+        name: bundler install
+        command: bundle install --retry=3
+    - save_cache:
+        paths:
+        - ~/.bundle
+        key: rapid-vaults-ruby-<< parameters.ruby-version >>
+    - run:
+        name: execute tests
+        command: bundle exec rake grpc unit system
+
+workflows:
+  execute_tests:
+    jobs:
+    - test:
+        matrix:
+          parameters:
+            ruby-version:
+            - '2.2'
+            - '2.3'
+            - '2.4'
+            - '2.5'
+            - '2.6'
+            - '2.7'
+            #- '3.0'
