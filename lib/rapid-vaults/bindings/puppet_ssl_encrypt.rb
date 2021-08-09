@@ -23,12 +23,14 @@ Puppet::Functions.create_function(:ssl_encrypt) do
       raise 'Rapid Vaults is required to be installed on the puppet master to use this custom function!'
     end
 
-    hash = {}
-    if password_file.nil?
-      hash[:encrypted_contents], hash[:tag] = RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce)
-    else
-      hash[:encrypted_contents], hash[:tag] = RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce, pw: File.read(password_file))
-    end
-    hash
+    # initialize settings and return
+    settings = { action: :encrypt, file: file, key: key, nonce: nonce }
+    return_hash = {}
+    # update settings with password if input
+    settings[pw: File.read(password_file)] unless password_file.nil?
+
+    return_hash[:encrypted_contents], return_hash[:tag] = RapidVaults::API.main(settings)
+
+    return_hash
   end
 end

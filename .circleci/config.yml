@@ -16,7 +16,7 @@ jobs:
         - rapid-vaults-ruby-<< parameters.ruby-version >>
     - run:
         name: package prereqs install
-        command: apt-get update && apt-get install -y gcc
+        command: apt-get update && apt-get install -y gcc libgpgme-dev
     - run:
         name: bundler install
         command: bundle config build.gpgme --use-system-libraries && bundle install --retry=3

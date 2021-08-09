@@ -25,10 +25,11 @@ Puppet::Functions.create_function(:ssl_decrypt) do
       raise 'Rapid Vaults is required to be installed on the puppet master to use this custom function!'
     end
 
-    if password_file.nil?
-      RapidVaults::API.main(action: :decrypt, file: file, key: key, nonce: nonce, tag: tag)
-    else
-      RapidVaults::API.main(action: :encrypt, file: file, key: key, nonce: nonce, tag: tag, pw: File.read(password_file))
-    end
+    # initialize settings
+    settings = { action: :decrypt, file: file, key: key, nonce: nonce, tag: tag }
+    # update settings with password if input
+    settings[pw: File.read(password_file)] unless password_file.nil?
+
+    RapidVaults::API.main(settings)
   end
 end
