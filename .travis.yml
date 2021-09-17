@@ -1,5 +1,5 @@
 # setup environment
-dist: bionic
+dist: focal
 language: ruby
 cache: bundler
 
