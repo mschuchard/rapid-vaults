@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^spec/})
   spec.require_paths = Dir['lib']
 
-  spec.required_ruby_version = '>= 2.2.0'
+  spec.required_ruby_version = '>= 2.4.0'
   spec.add_dependency 'gpgme', '~> 2.0'
   spec.add_development_dependency 'grpc', '~> 1.0'
   spec.add_development_dependency 'grpc-tools', '~> 1.0'
