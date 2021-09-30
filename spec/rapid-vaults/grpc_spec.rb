@@ -1,9 +1,7 @@
-if RUBY_VERSION.to_f >= 2.3
-  require_relative '../../lib/rapid-vaults/grpc'
+require_relative '../../lib/rapid-vaults/grpc'
 
-  # TODO: use RapidVaults::GRPC.server instead?
-  stub = Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080', :this_channel_is_insecure)
-end
+# TODO: use RapidVaults::GRPC.server instead?
+stub = Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080', :this_channel_is_insecure)
 
 # need to create class with encode member method to pass in as dummy
 # ssl generate
