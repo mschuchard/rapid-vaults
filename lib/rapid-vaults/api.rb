@@ -1,4 +1,4 @@
-require_relative '../rapid-vaults'
+require_relative '../rapid_vaults'
 
 # provides an application programming interface to interact with rapid vaults
 class RapidVaults::API
