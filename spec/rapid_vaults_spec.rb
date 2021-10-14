@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-require_relative '../lib/rapid-vaults'
+require_relative '../lib/rapid_vaults'
 
 describe RapidVaults do
   context '.process' do

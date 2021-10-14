@@ -1,4 +1,4 @@
-require_relative '../rapid-vaults'
+require_relative '../rapid_vaults'
 
 # provides a command line interface to interact with rapid vaults
 class RapidVaults::CLI

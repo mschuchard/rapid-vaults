@@ -4,7 +4,7 @@ require 'rspec'
 module Variables
   extend RSpec::SharedContext
 
-  let(:fixtures_dir) { File.dirname(__FILE__) + '/fixtures/' }
+  let(:fixtures_dir) { "#{File.dirname(__FILE__)}/fixtures/" }
 end
 
 RSpec.configure do |config|

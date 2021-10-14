@@ -1,2 +1,2 @@
-lib/rapid-vaults/bindings/rapid-vaults_*pb.rb
+lib/rapid-vaults/bindings/rapid_vaults_*pb.rb
 .vagrant
