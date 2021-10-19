@@ -1,6 +1,6 @@
 ### 1.2.0
 - Add GRPC support.
-- Bump minimum Ruby version to 2.2.
+- Bump minimum Ruby version to 2.4.
 
 ### 1.1.2
 - Added checks on input files and directories.
