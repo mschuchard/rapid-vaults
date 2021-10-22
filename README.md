@@ -1,13 +1,14 @@
 # Rapid Vaults
 [![Build Status](https://travis-ci.org/mschuchard/rapid-vaults.svg?branch=master)](https://travis-ci.org/mschuchard/rapid-vaults)
+[![CircleCI](https://circleci.com/gh/mschuchard/rapid-vaults.svg?style=svg)](https://circleci.com/gh/mschuchard/rapid-vaults)
 
 - [Description](#description)
 - [Usage](#usage)
   - [CLI](#cli)
   - [API](#api)
+  - [gRPC](#grpc)
   - [Ansible](#ansible)
   - [Puppet](#puppet)
-  - [Hiera](#hiera)
   - [Chef](#chef)
 - [Contributing](#contributing)
 
@@ -21,7 +22,7 @@ Ansible-Vault is very similar to Rapid Vaults. Both are streamlined and easy to 
 
 ### Non-Comparative Software
 
-Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid Vaults relies upon AES-256-GCM (OpenSSL) or GPG's algorithms (RSA, SHA-512, etc.). Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid Vaults is a lightweight and narrowly focused tool.
+Rapid Vaults is not similar to tools like RbNaCl or Hashicorp's Vault. RbNaCl offers advanced encryption techniques by providing bindings to libsodium. Rapid Vaults relies upon AES-256-GCM (OpenSSL) or GPG's algorithms (RSA, SHA-512, etc.). Hashicorp's Vault is Enterprise level software with many powerful features and conveniences. Rapid Vaults is a lightweight and narrowly focused tool. However, Rapid Vaults can be considered algorithmically very similar to Vault's Transit secret engine.
 
 ## Usage
 
@@ -191,6 +192,10 @@ options[:file] = '/path/to/encrypted_data.txt'
 options[:pw] = File.read('/path/to/password.txt')
 decrypted_contents = RapidVaults::API.main(options)
 ```
+
+### gRPC
+
+forthcoming
 
 ### Ansible
 
