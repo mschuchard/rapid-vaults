@@ -7,6 +7,7 @@
   - [CLI](#cli)
   - [API](#api)
   - [gRPC](#grpc)
+  - [Docker](#docker)
   - [Ansible](#ansible)
   - [Puppet](#puppet)
   - [Chef](#chef)
@@ -192,6 +193,10 @@ options[:file] = '/path/to/encrypted_data.txt'
 options[:pw] = File.read('/path/to/password.txt')
 decrypted_contents = RapidVaults::API.main(options)
 ```
+
+### Docker
+
+A supported [Docker image](https://hub.docker.com/r/matthewschuchard/rapid-vaults) of Rapid-Vaults is now available from the public Docker Hub registry. Please consult the repository documentation for further usage information.
 
 ### gRPC
 
