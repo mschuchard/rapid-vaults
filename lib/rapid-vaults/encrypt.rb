@@ -18,7 +18,7 @@ class Encrypt
       File.write("#{settings[:outdir]}tag.txt", cipher.auth_tag)
       puts "Your encrypted.txt and associated tag.txt for this encryption have been generated in #{settings[:outdir]}."
     when :api
-      # output to array
+      # return as array
       [cipher.update(settings[:file]) + cipher.final, cipher.auth_tag]
     end
   end
@@ -40,7 +40,7 @@ class Encrypt
       File.write("#{settings[:outdir]}encrypted.txt", crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
       puts "Your encrypted.txt for this encryption have been generated in #{settings[:outdir]}."
     when :api
-      # output to string
+      # return as string
       crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read
     end
   end

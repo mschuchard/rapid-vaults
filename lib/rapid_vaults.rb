@@ -50,7 +50,7 @@ class RapidVaults
     end
 
     # lambda for input processing
-    process_input = ->(input) { File.file?(settings[input]) ? settings[input] = File.read(settings[input]) : (raise "Input #{input} is not an existing file.") }
+    process_input = ->(input) { File.readable?(settings[input]) ? settings[input] = File.read(settings[input]) : (raise "Input #{input} is not an existing readable file.") }
 
     # check inputs and read in files
     raise 'Password must be a string.' if settings.key?(:pw) && !settings[:pw].is_a?(String)
@@ -66,7 +66,6 @@ class RapidVaults
     case settings[:action]
     when :generate
       raise 'GPG params file argument required for generation.' unless settings.key?(:gpgparams)
-      return
     when :decrypt, :encrypt
       raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
     else raise 'Action must be one of generate, encrypt, or decrypt.'
@@ -74,6 +73,6 @@ class RapidVaults
 
     # check inputs and read in files
     raise 'Password must be a string.' unless settings[:pw].is_a?(String)
-    File.file?(settings[:file]) ? settings[:file] = File.read(settings[:file]) : (raise 'Input file is not an existing file.')
+    File.readable?(settings[:file]) ? settings[:file] = File.read(settings[:file]) : (raise 'Input file is not an existing readable file.')
   end
 end

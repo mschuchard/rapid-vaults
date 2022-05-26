@@ -14,7 +14,7 @@ class Generate
       File.write("#{settings[:outdir]}nonce.txt", cipher.random_iv)
       puts "Your key.txt and nonce.txt have been generated in #{settings[:outdir]}."
     when :api
-      # output to string
+      # return as array
       [cipher.random_key, cipher.random_iv]
     end
   end

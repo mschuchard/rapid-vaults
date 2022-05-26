@@ -11,7 +11,6 @@ class RapidVaults::API
   # parse api options; this is mostly here for unit testing
   def self.parse(settings)
     # establish settings for api and denote using api
-    settings[:ui] = :api
-    settings
+    settings.merge({ ui: :api })
   end
 end
