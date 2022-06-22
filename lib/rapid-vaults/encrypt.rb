@@ -38,7 +38,7 @@ class Encrypt
     when :cli
       # output to file
       File.write("#{settings[:outdir]}encrypted.txt", crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
-      puts "Your encrypted.txt for this encryption have been generated in #{settings[:outdir]}."
+      puts "Your encrypted.txt for this encryption has been generated in #{settings[:outdir]}."
     when :api
       # return as string
       crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read

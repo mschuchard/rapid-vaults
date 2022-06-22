@@ -52,11 +52,11 @@ usage: rapid-vaults [options] file
 
 #### Encrypt File with SSL
 
-`rapid-vaults -e -k cert.key -n nonce.txt -p secret -o /output/dir unencrypted.txt`
+`rapid-vaults -e -k key.txt -n nonce.txt -p secret -o /output/dir unencrypted.txt`
 
 #### Decrypt a File with SSL
 
-`rapid-vaults -d -k cert.key -n nonce.txt -t tag.txt -p secret -o /output/dir encrypted.txt`
+`rapid-vaults -d -k key.txt -n nonce.txt -t tag.txt -p secret -o /output/dir encrypted.txt`
 
 #### Generate Keys with GPG
 This is the only situation where a `--gpgparams` flag and argument is required or utilized. The file provided as the argument should look like the following:
@@ -114,7 +114,7 @@ require 'rapid-vaults'
 options = {}
 options[:action] = :encrypt
 options[:file] = '/path/to/data.txt'
-options[:key] = '/path/to/cert.key'
+options[:key] = '/path/to/key.txt'
 options[:nonce] = '/path/to/nonce.txt'
 options[:pw] = File.read('/path/to/password.txt') # optional
 encrypted_contents, tag = RapidVaults::API.main(options)
@@ -128,7 +128,7 @@ require 'rapid-vaults'
 options = {}
 options[:action] = :decrypt
 options[:file] = '/path/to/encrypted_data.txt'
-options[:key] = '/path/to/cert.key'
+options[:key] = '/path/to/key.txt'
 options[:nonce] = '/path/to/nonce.txt'
 options[:tag] = '/path/to/tag.txt'
 options[:pw] = File.read('/path/to/password.txt') # optional

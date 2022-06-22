@@ -25,7 +25,7 @@ describe RapidVaults do
       expect { RapidVaults.process(algorithm: :gpgme, action: :generate) }.to raise_error('GPG params file argument required for generation.')
     end
     it 'raises an error for a nonexistent input file' do
-      expect { RapidVaults.process(action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Input file is not an existing file.')
+      expect { RapidVaults.process(action: :encrypt, file: 'a', key: 'b', nonce: 'c', tag: 'd') }.to raise_error('Input file is not an existing readable file.')
     end
     it 'reads in all input files correctly for openssl encryption' do
       dummy = "#{fixtures_dir}file.yaml"
