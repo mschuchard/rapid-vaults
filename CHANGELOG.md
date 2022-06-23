@@ -1,5 +1,5 @@
 ### 1.2.0 (Next)
-- Add GRPC support.
+- Add GRPC support (alpha).
 - Bump minimum Ruby version to 2.4.
 - Add additional validation for key, nonce, and encrypted file contents.
 

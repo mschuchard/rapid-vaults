@@ -4,10 +4,10 @@ require_relative '../../lib/rapid-vaults/decrypt'
 
 describe Decrypt do
   context '.openssl' do
-    # circumvent ruby > 2.3 and 2.2 issues with proper byte size interpretation
-    require 'securerandom'
-    key = SecureRandom.random_bytes(32).strip
-    nonce = SecureRandom.random_bytes(12).strip
+    require 'openssl'
+    cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
+    key = cipher.random_key
+    nonce = cipher.random_iv
 
     before(:all) do
       Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce)
