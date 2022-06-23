@@ -4,7 +4,10 @@ class Decrypt
   def self.openssl(settings)
     require 'openssl'
 
-    # check tag size
+    # validate key, nonce, encrypted, and tag
+    raise 'The key is not a valid 32 byte key.' unless settings[:key].bytesize == 32
+    raise 'The nonce is not a valid 12 byte nonce.' unless settings[:nonce].bytesize == 12
+    raise 'The encrypted data is not a valid multiple of 9 bytes.' unless (settings[:file].bytesize % 9).zero?
     raise 'Tag is not 16 bytes.' unless settings[:tag].bytesize == 16
 
     # setup the decryption parameters

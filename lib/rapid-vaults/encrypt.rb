@@ -4,6 +4,10 @@ class Encrypt
   def self.openssl(settings)
     require 'openssl'
 
+    # validate key and nonce
+    raise 'The key is not a valid 32 byte key.' unless settings[:key].bytesize == 32
+    raise 'The nonce is not a valid 12 byte nonce.' unless settings[:nonce].bytesize == 12
+
     # setup the encryption parameters
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     cipher.key = settings[:key]
