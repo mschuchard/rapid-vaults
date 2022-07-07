@@ -5,6 +5,7 @@ require_relative '../../lib/rapid-vaults/decrypt'
 describe Decrypt do
   context '.openssl' do
     require 'openssl'
+    require 'securerandom'
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     key = cipher.random_key
     nonce = cipher.random_iv
@@ -28,7 +29,16 @@ describe Decrypt do
       expect(decrypt).to eq("foo: bar\n")
     end
     it 'raises an error for an invalid tag size' do
-      expect { Decrypt.openssl(file: File.read('encrypted.txt'), key: key, nonce: nonce, tag: "�a����e�O_H|�\n") }.to raise_error('Tag is not 16 bytes.')
+      expect { Decrypt.openssl(file: File.read('encrypted.txt'), key: key, nonce: nonce, tag: SecureRandom.random_bytes(24).strip) }.to raise_error('Tag is not 16 bytes.')
+    end
+    it 'raises an error for an invalid key size' do
+      expect { Decrypt.openssl(key: SecureRandom.random_bytes(64).strip) }.to raise_error('The key is not a valid 32 byte key.')
+    end
+    it 'raises an error for an invalid nonce size' do
+      expect { Decrypt.openssl(key: key, nonce: SecureRandom.random_bytes(24).strip) }.to raise_error('The nonce is not a valid 12 byte nonce.')
+    end
+    it 'raises an error for corrupted encrypted file content' do
+      expect { Decrypt.openssl(file: SecureRandom.random_bytes(16).strip, key: key, nonce: nonce) }.to raise_error('The encrypted data is not a valid multiple of 9 bytes.')
     end
   end
 
