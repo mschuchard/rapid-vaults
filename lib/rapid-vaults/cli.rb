@@ -31,7 +31,7 @@ class RapidVaults::CLI
 
       # base options
       opts.on('--version', 'Display the current version.') do
-        puts 'rapid-vaults 1.1.2'
+        puts 'rapid-vaults 1.2.0'
         exit 0
       end
 
