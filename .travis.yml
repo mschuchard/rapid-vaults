@@ -16,8 +16,6 @@ git:
 # setup tests
 matrix:
   include:
-  - rvm: 2.4
-    env: TEST='grpc unit system'
   - rvm: 2.5
     env: TEST='grpc unit system'
   - rvm: 2.6
