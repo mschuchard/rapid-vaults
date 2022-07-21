@@ -18,13 +18,10 @@ jobs:
         - '3.0'
         - '3.1'
     runs-on: ubuntu-latest
+    container: ruby:${{ matrix.ruby_version }}-slim
     steps:
     - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby_version }}
-        bundler-cache: true
+      uses: actions/checkout@v3
     - name: install some pre-requisite packages
       run: sudo apt-get update && sudo apt-get install -y gcc libgpgme-dev make
     - name: bundler install
