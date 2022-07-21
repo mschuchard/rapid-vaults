@@ -13,7 +13,7 @@ describe RapidVaults do
     end
   end
 
-  context 'executed as a system from the CLI with settings and a file to be processed' do
+  context 'executed with openssl algorithm as a system from the CLI with settings and a file to be processed' do
     it 'generates key and nonce, encrypts a file, and then decrypts a file in order' do
       # generate and utilize files inside suitable directory
       Dir.chdir(fixtures_dir)
@@ -35,7 +35,7 @@ describe RapidVaults do
     end
   end
 
-  context 'executed as a system from the API with settings and a file to be processed' do
+  context 'executed with openssl algorithm as a system from the API with settings and a file to be processed' do
     it 'generates key and nonce, encrypts a file, and then decrypts a file in order' do
       # generate and utilize files inside suitable directory
       Dir.chdir(fixtures_dir)
@@ -61,7 +61,7 @@ describe RapidVaults do
 
   # travis ci cannot support non-interactive gpg encryption
   unless File.directory?('/home/travis')
-    context 'executed wtih gpg as a system from the CLI with settings and a file to be processed' do
+    context 'executed wtih gpg algorithm as a system from the CLI with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
         ENV['GNUPGHOME'] = fixtures_dir
 
@@ -86,7 +86,7 @@ describe RapidVaults do
       end
     end
 
-    context 'executed with gpg as a system from the API with settings and a file to be processed' do
+    context 'executed with gpg algorithm as a system from the API with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
         ENV['GNUPGHOME'] = fixtures_dir
 
@@ -94,7 +94,7 @@ describe RapidVaults do
         Dir.chdir(fixtures_dir)
 
         # generate keys
-        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: File.read('gpgparams.txt'), ui: :cli)
+        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: File.read('gpgparams.txt'))
         %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
         %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
 
