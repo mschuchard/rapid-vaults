@@ -67,12 +67,11 @@ class RapidVaults
     when :generate
       raise 'GPG params file argument required for generation.' unless settings.key?(:gpgparams)
     when :decrypt, :encrypt
+      # check inputs and read in files
       raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
       raise 'Password must be a string.' unless settings[:pw].is_a?(String)
+      settings[:file] = File.readable?(settings[:file]) ? File.read(settings[:file]) : (raise 'Input file is not an existing readable file.')
     else raise 'Action must be one of generate, encrypt, or decrypt.'
     end
-
-    # check inputs and read in files
-    File.readable?(settings[:file]) ? settings[:file] = File.read(settings[:file]) : (raise 'Input file is not an existing readable file.')
   end
 end
