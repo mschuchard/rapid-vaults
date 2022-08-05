@@ -39,7 +39,7 @@ describe Encrypt do
   end
 
   # travis ci cannot support non-interactive gpg encryption
-  unless File.directory?('/home/travis')
+  unless ENV['TRAVIS'] == 'true'
     context '.gpgme' do
       it 'outputs an encrypted file with the key from the cli' do
         Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', pw: 'foo')

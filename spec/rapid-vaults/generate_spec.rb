@@ -28,7 +28,7 @@ describe Generate do
       expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable "GNUPGHOME" was not set.')
     end
     # travis ci cannot support non-interactive gpg
-    unless File.directory?('/home/travis')
+    unless ENV['TRAVIS'] == 'true'
       it 'generates the key files' do
         require 'fileutils'
 
