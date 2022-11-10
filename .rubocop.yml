@@ -2,6 +2,7 @@
 require: rubocop-performance
 
 AllCops:
+  TargetRubyVersion: 2.5
   Include:
     - 'lib/**/*.rb'
     - 'bin/*.rb'
@@ -26,6 +27,8 @@ Layout/EmptyLineAfterGuardClause:
 Naming/RescuedExceptionsVariableName:
   Enabled: false
 
-# probably can remove after rails cops removed from core
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
   Enabled: false
