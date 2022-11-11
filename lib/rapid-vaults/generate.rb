@@ -24,10 +24,10 @@ class Generate
     require 'gpgme'
 
     # ensure we have a place to store these output files
-    raise 'Environment variable "GNUPGHOME" was not set.' unless ENV['GNUPGHOME']
+    raise 'Environment variable "GNUPGHOME" was not set.' unless ENV.fetch('GNUPGHOME', false)
 
     # create gpg keys
     GPGME::Ctx.new.generate_key(settings[:gpgparams], nil, nil)
-    puts "Your GPG keys have been generated in #{ENV['GNUPGHOME']}." if settings[:ui] == :cli
+    puts "Your GPG keys have been generated in #{ENV.fetch['GNUPGHOME']}." if settings[:ui] == :cli
   end
 end
