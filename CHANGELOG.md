@@ -1,3 +1,6 @@
+### 1.3.0 (Next)
+- Bump minimum Ruby version to 2.6.
+
 ### 1.2.0
 - Add GRPC support (alpha).
 - Bump minimum Ruby version to 2.5.
