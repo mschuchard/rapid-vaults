@@ -1,10 +1,10 @@
 # RapidVaults: testing gem build, install, and execution
 Vagrant.configure(2) do |config|
-  config.vm.box = 'debian/buster64'
+  config.vm.box = 'debian/bullseye64'
 
   config.vm.provision 'shell', inline: <<-SHELL
     cd /vagrant
-    apt-get install -y ruby-dev make gcc
+    apt-get install -y ruby-dev gcc libgpgme-dev make pkg-config
     gem build rapid-vaults.gemspec
     gem install --no-document rapid-vaults*.gem
     rm -f rapid-vaults*.gem
