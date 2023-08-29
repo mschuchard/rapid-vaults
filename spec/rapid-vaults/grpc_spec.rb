@@ -1,7 +1,15 @@
 require_relative '../../lib/rapid-vaults/grpc'
 
 # TODO: use RapidVaults::GRPC.server instead?
-stub = Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080', :this_channel_is_insecure)
+
+# stub = Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080', :this_channel_is_insecure)
+describe GRPC do
+  context '.Stub' do
+    it 'starts a rapaid-vaults api local server' do
+      expect { Rapidvaults::RapidVaults::Stub.new('localhost:0.0.0.0:8080', :this_channel_is_insecure) }.not_to raise_error
+    end
+  end
+end
 
 # need to create class with encode member method to pass in as dummy
 # ssl generate
