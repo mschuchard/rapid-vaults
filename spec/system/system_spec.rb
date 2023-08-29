@@ -7,7 +7,7 @@ describe RapidVaults do
     require 'fileutils'
 
     %w[key.txt nonce.txt tag.txt encrypted.txt decrypted.txt chef.rb puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each { |file| File.delete(file) }
-    unless ENV['TRAVIS'] == 'true' || ENV['CIRCLECI'] == 'true' || ENV['GITHUB_ACTIONS'] == 'true'
+    unless ENV['CIRCLECI'] == 'true' || ENV['GITHUB_ACTIONS'] == 'true'
       %w[random_seed pubring.kbx trustdb.gpg pubring.kbx~].each { |file| File.delete(file) }
       %w[openpgp-revocs.d private-keys-v1.d].each { |dir| FileUtils.rm_r(dir) }
     end
@@ -59,16 +59,14 @@ describe RapidVaults do
     end
   end
 
-  # all three ci cannot support end-to-end gpg generate/encrypt/decrypt
-  unless ENV['TRAVIS'] == 'true' || ENV['CIRCLECI'] == 'true' || ENV['GITHUB_ACTIONS'] == 'true'
+  # ci platforms cannot support end-to-end gpg generate/encrypt/decrypt
+  unless ENV['CIRCLECI'] == 'true' || ENV['GITHUB_ACTIONS'] == 'true'
     context 'executed wtih gpg algorithm as a system from the CLI with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
         ENV['GNUPGHOME'] = fixtures_dir
 
         # generate and utilize files inside suitable directory
         Dir.chdir(fixtures_dir)
-
-        puts fixtures_dir
 
         # generate keys
         RapidVaults::CLI.main(%w[-g --gpg --gpgparams gpgparams.txt])
