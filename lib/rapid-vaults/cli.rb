@@ -31,7 +31,9 @@ class RapidVaults::CLI
 
       # base options
       opts.on('--version', 'Display the current version.') do
-        puts 'rapid-vaults 1.2.0'
+        require 'rubygems'
+
+        puts Gem::Specification.load("#{File.dirname(__FILE__)}/../../rapid-vaults.gemspec").version
         exit 0
       end
 
