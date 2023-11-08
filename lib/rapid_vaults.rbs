@@ -1,0 +1,40 @@
+# Classes
+class Binding
+  CRYPT: [String, String]
+  ACTION: [String, String]
+
+  def self.puppet: (Hash[Symbol, untyped]) -> nil
+  def self.chef: (Hash[Symbol, untyped]) -> nil
+end
+
+class Decrypt
+  def self.openssl: (Hash[Symbol, untyped]) -> String?
+  def self.gpgme: (Hash[Symbol, untyped]) -> String?
+end
+
+class Encrypt
+  def self.openssl: (Hash[Symbol, untyped]) -> [String, String]?
+  def self.gpgme: (Hash[Symbol, untyped]) -> String?
+end
+
+class Generate
+  def self.openssl: (Hash[Symbol, untyped]) -> [String, String]?
+  def self.gpgme: (Hash[Symbol, untyped]) -> nil
+end
+
+class RapidVaults
+  def main: (Hash[Symbol, untyped]) -> nil
+  def self.process: (Hash[Symbol, untyped]) -> nil
+  def self.process_openssl: (Hash[Symbol, untyped]) -> nil
+  def self.process_gpgme: (Hash[Symbol, untyped]) -> nil
+
+  class API
+    def self.main: (Hash[Symbol, untyped]) -> nil
+    def self.parse: (Hash[Symbol, untyped]) -> Hash[Symbol, untyped]
+  end
+
+  class CLI
+    def self.main: ([String]) -> Integer
+    def self.parse: ([String]) -> Hash[Symbol, untyped]
+  end
+end
