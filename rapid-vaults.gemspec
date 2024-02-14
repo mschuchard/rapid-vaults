@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'rapid-vaults'
-  spec.version       = '1.2.0'
+  spec.version       = '1.3.0'
   spec.authors       = ['Matt Schuchard']
   spec.description   = 'Ad-hoc encrypt and decrypt data behind multiple layers of protection via OpenSSL or GPG.'
   spec.summary       = 'Ad-hoc encrypt and decrypt data.'
@@ -18,6 +18,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'reek', '~> 6.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '>= 0.58', '< 2'
+  spec.add_development_dependency 'rubocop', '>= 0.58'
   spec.add_development_dependency 'rubocop-performance', '~> 1.0'
 end

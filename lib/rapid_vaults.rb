@@ -33,7 +33,7 @@ class RapidVaults
     settings[:algorithm] ||= :openssl
 
     # check for problems with arguments and inputs
-    public_send("process_#{settings[:algorithm]}".to_sym, settings)
+    public_send(:"process_#{settings[:algorithm]}", settings)
   end
 
   # processing openssl
