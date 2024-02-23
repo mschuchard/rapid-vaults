@@ -15,9 +15,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'gpgme', '~> 2.0'
   spec.add_development_dependency 'grpc', '~> 1.0'
   spec.add_development_dependency 'grpc-tools', '~> 1.0'
-  spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'reek', '~> 6.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '>= 0.58'
+  spec.add_development_dependency 'rubocop', '~> 1.0'
   spec.add_development_dependency 'rubocop-performance', '~> 1.0'
 end
