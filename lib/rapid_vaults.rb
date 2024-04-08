@@ -54,8 +54,17 @@ class RapidVaults
     # check inputs and read in files
     raise 'Password must be a string.' if settings.key?(:pw) && !settings[:pw].is_a?(String)
     %i[file key nonce].each(&process_input)
-    # only decrypt needs a tag input
+
+    # validate key and nonce
+    raise 'The key is not a valid 32 byte key.' unless settings[:key].bytesize == 32
+    raise 'The nonce is not a valid 12 byte nonce.' unless settings[:nonce].bytesize == 12
+
+    # decrypt: check inputs and read in files, and validate encrypted and tag
+    return unless settings[:action] == :decrypt
     process_input.call(:tag) if settings[:action] == :decrypt
+
+    raise 'The encrypted data is not a valid multiple of 9 bytes.' unless (settings[:file].bytesize % 9).zero?
+    raise 'Tag is not 16 bytes.' unless settings[:tag].bytesize == 16
   end
 
   # processing gpgme
