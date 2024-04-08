@@ -98,8 +98,7 @@ Currently you set the path to the keys and other files via the environment varia
 ```ruby
 require 'rapid-vaults'
 
-options = {}
-options[:action] = :generate
+options = { action: :generate }
 key, nonce = RapidVaults::API.main(options)
 File.write('key.txt', key)
 File.write('nonce.txt', nonce)
@@ -110,12 +109,13 @@ File.write('nonce.txt', nonce)
 ```ruby
 require 'rapid-vaults'
 
-options = {}
-options[:action] = :encrypt
-options[:file] = '/path/to/data.txt'
-options[:key] = '/path/to/key.txt'
-options[:nonce] = '/path/to/nonce.txt'
-options[:pw] = File.read('/path/to/password.txt') # optional
+options = {
+  action: :encrypt,
+  file: '/path/to/data.txt',
+  key: '/path/to/key.txt',
+  nonce: '/path/to/nonce.txt',
+  pw: File.read('/path/to/password.txt') # optional
+}
 encrypted_contents, tag = RapidVaults::API.main(options)
 ```
 
@@ -124,13 +124,14 @@ encrypted_contents, tag = RapidVaults::API.main(options)
 ```ruby
 require 'rapid-vaults'
 
-options = {}
-options[:action] = :decrypt
-options[:file] = '/path/to/encrypted_data.txt'
-options[:key] = '/path/to/key.txt'
-options[:nonce] = '/path/to/nonce.txt'
-options[:tag] = '/path/to/tag.txt'
-options[:pw] = File.read('/path/to/password.txt') # optional
+options = {
+  action: :decrypt,
+  file: '/path/to/encrypted_data.txt',
+  key: '/path/to/key.txt',
+  nonce: '/path/to/nonce.txt',
+  tag: '/path/to/tag.txt',
+  pw: File.read('/path/to/password.txt') # optional
+}
 decrypted_contents = RapidVaults::API.main(options)
 ```
 
@@ -140,10 +141,11 @@ require 'rapid-vaults'
 
 ENV['GNUPGHOME'] = '/home/alice/.gnupg'
 
-options = {}
-options[:action] = :generate
-options[:algorithm] = :gpgme
-options[:gpgparams] = File.read('gpgparams.txt')
+options = {
+  action: :generate,
+  algorithm: :gpgme,
+  gpgparams: File.read('gpgparams.txt')
+}
 RapidVaults::API.main(options)
 ```
 
@@ -170,11 +172,12 @@ require 'rapid-vaults'
 
 ENV['GNUPGHOME'] = '/home/bob/.gnupg' # optional
 
-options = {}
-options[:action] = :encrypt
-options[:algorithm] = :gpgme
-options[:file] = '/path/to/data.txt'
-options[:pw] = File.read('/path/to/password.txt')
+options = {
+  action: :encrypt,
+  algorithm: :gpgme,
+  file: '/path/to/data.txt',
+  pw: File.read('/path/to/password.txt')
+}
 encrypted_contents = RapidVaults::API.main(options)
 ```
 
@@ -185,11 +188,12 @@ require 'rapid-vaults'
 
 ENV['GNUPGHOME'] = '/home/chris/.gnupg' # optional
 
-options = {}
-options[:action] = :decrypt
-options[:algorithm] = :gpgme
-options[:file] = '/path/to/encrypted_data.txt'
-options[:pw] = File.read('/path/to/password.txt')
+options = {
+  action: :decrypt,
+  algorithm: :gpgme,
+  file: '/path/to/encrypted_data.txt',
+  pw: File.read('/path/to/password.txt')
+}
 decrypted_contents = RapidVaults::API.main(options)
 ```
 

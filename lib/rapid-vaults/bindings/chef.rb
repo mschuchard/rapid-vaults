@@ -2,31 +2,32 @@ require 'rapid-vaults'
 
 # returns key, nonce
 def ssl_generate
-  options = {}
-  options[:action] = :generate
+  options = { action: :generate }
   RapidVaults::API.main(options)
 end
 
 # returns encrypted_contents, tag
 def ssl_encrypt
-  options = {}
-  options[:action] = :encrypt
-  options[:file] = '/path/to/data.txt'
-  options[:key] = '/path/to/cert.key'
-  options[:nonce] = '/path/to/nonce.txt'
-  options[:pw] = File.read('/path/to/password.txt') # optional
+  options = {
+    action: :encrypt,
+    file: '/path/to/data.txt',
+    key: '/path/to/key.txt',
+    nonce: '/path/to/nonce.txt',
+    pw: File.read('/path/to/password.txt') # optional
+  }
   RapidVaults::API.main(options)
 end
 
 # returns decrypted_contents
 def ssl_decrypt
-  options = {}
-  options[:action] = :decrypt
-  options[:file] = '/path/to/encrypted_data.txt'
-  options[:key] = '/path/to/cert.key'
-  options[:nonce] = '/path/to/nonce.txt'
-  options[:tag] = '/path/to/tag.txt'
-  options[:pw] = File.read('/path/to/password.txt') # optional
+  options = {
+    action: :decrypt,
+    file: '/path/to/encrypted_data.txt',
+    key: '/path/to/key.txt',
+    nonce: '/path/to/nonce.txt',
+    tag: '/path/to/tag.txt',
+    pw: File.read('/path/to/password.txt') # optional
+  }
   RapidVaults::API.main(options)
 end
 
@@ -34,10 +35,11 @@ end
 def gpg_generate
   ENV['GNUPGHOME'] = '/home/alice/.gnupg'
 
-  options = {}
-  options[:action] = :generate
-  options[:algorithm] = :gpgme
-  options[:gpgparams] = File.read('gpgparams.txt')
+  options = {
+    action: :generate,
+    algorithm: :gpgme,
+    gpgparams: File.read('gpgparams.txt')
+  }
   RapidVaults::API.main(options)
 end
 
@@ -45,11 +47,12 @@ end
 def gpg_encrypt
   ENV['GNUPGHOME'] = '/home/bob/.gnupg'
 
-  options = {}
-  options[:action] = :encrypt
-  options[:algorithm] = :gpgme
-  options[:file] = '/path/to/data.txt'
-  options[:pw] = File.read('/path/to/password.txt')
+  options = {
+    action: :encrypt,
+    algorithm: :gpgme,
+    file: '/path/to/data.txt',
+    pw: File.read('/path/to/password.txt')
+  }
   RapidVaults::API.main(options)
 end
 
@@ -57,10 +60,11 @@ end
 def gpg_decrypt
   ENV['GNUPGHOME'] = '/home/chris/.gnupg'
 
-  options = {}
-  options[:action] = :decrypt
-  options[:algorithm] = :gpgme
-  options[:file] = '/path/to/encrypted_data.txt'
-  options[:pw] = File.read('/path/to/password.txt')
+  options = {
+    action: :decrypt,
+    algorithm: :gpgme,
+    file: '/path/to/encrypted_data.txt',
+    pw: File.read('/path/to/password.txt')
+  }
   RapidVaults::API.main(options)
 end
