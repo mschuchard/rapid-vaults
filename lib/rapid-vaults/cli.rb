@@ -51,7 +51,7 @@ class RapidVaults::CLI
       opts.on('-t', '--tag tag', String, 'Tag file to be used for decryption (GPG: n/a).') { |arg| settings[:tag] = arg }
       opts.on('-p', '--password password', String, '(optional) Password to be used for encryption or decryption (GPG: required).') { |arg| settings[:pw] = arg }
       opts.on('-f', '--file-password password.txt', String, '(optional) Text file containing a password to be used for encryption or decryption (GPG: required).') do |arg|
-        raise "Password file #{arg} is not an existing file!" unless File.file?(arg)
+        raise "Password file #{arg} is not an existing readable file!" unless File.readable?(arg)
         settings[:pw] = File.read(arg)
       end
 
@@ -63,7 +63,7 @@ class RapidVaults::CLI
 
       # other
       opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') do |arg|
-        raise "GPG Parameters file #{arg} is not an existing file!" unless File.file?(arg)
+        raise "GPG Parameters file #{arg} is not an existing readable file!" unless File.readable?(arg)
         settings[:gpgparams] = File.read(arg)
       end
       opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') do |arg|

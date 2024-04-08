@@ -11,7 +11,6 @@ class RapidVaults
     self.class.process(settings)
 
     # execute desired action and algorithm via dynamic call
-    # public_send("#{settings[:action].capitalize}.#{settings[:algorithm]}".to_sym, settings)
     case settings[:action]
     when :generate then Generate.public_send(settings[:algorithm], settings)
     when :encrypt then Encrypt.public_send(settings[:algorithm], settings)
@@ -22,9 +21,9 @@ class RapidVaults
 
   # method for processing the settings and inputs
   def self.process(settings)
-    # :outdir only relevant for :cli
+    # default to openssl algorithm and `pwd` output directory
     if settings[:ui] == :cli
-      # default to openssl algorithm and `pwd` output directory
+      # :outdir only relevant for :cli
       settings[:outdir] ||= Dir.pwd
       settings[:outdir] += '/' unless settings[:outdir][-1] == '/'
     end
