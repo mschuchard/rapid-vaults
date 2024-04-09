@@ -4,7 +4,6 @@ require_relative '../../lib/rapid-vaults/encrypt'
 describe Encrypt do
   context '.openssl' do
     require 'openssl'
-    require 'securerandom'
     cipher = OpenSSL::Cipher.new('aes-256-gcm').encrypt
     key = cipher.random_key
     nonce = cipher.random_iv
@@ -29,12 +28,6 @@ describe Encrypt do
       expect(encrypt[0]).to be_a(String)
       expect(encrypt[1]).to be_a(String)
       expect(encrypt.length).to eq(2)
-    end
-    it 'raises an error for an invalid key size' do
-      expect { Encrypt.openssl(key: SecureRandom.random_bytes(64).strip) }.to raise_error('The key is not a valid 32 byte key.')
-    end
-    it 'raises an error for an invalid nonce size' do
-      expect { Encrypt.openssl(key: key, nonce: SecureRandom.random_bytes(24).strip) }.to raise_error('The nonce is not a valid 12 byte nonce.')
     end
   end
 

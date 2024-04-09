@@ -22,10 +22,10 @@ describe RapidVaults::CLI do
       expect(RapidVaults::CLI.parse(%w[-b puppet -o .])).to eq(ui: :cli, action: :binding, binding: :puppet, outdir: '.')
     end
     it 'raises an error for a nonexistent password file' do
-      expect { RapidVaults::CLI.parse(%w[-f /nopasswordhere]) }.to raise_error('Password file /nopasswordhere is not an existing file!')
+      expect { RapidVaults::CLI.parse(%w[-f /nopasswordhere]) }.to raise_error('Password file /nopasswordhere is not an existing readable file!')
     end
     it 'raises an error for a nonexistent gpg parameters file' do
-      expect { RapidVaults::CLI.parse(%w[--gpgparams /foo/bar]) }.to raise_error('GPG Parameters file /foo/bar is not an existing file!')
+      expect { RapidVaults::CLI.parse(%w[--gpgparams /foo/bar]) }.to raise_error('GPG Parameters file /foo/bar is not an existing readable file!')
     end
     it 'raises an error for a nonexistent output directory' do
       expect { RapidVaults::CLI.parse(%w[-o /foo/bar/baz]) }.to raise_error('The output directory /foo/bar/baz does not exist or is not a directory!')
