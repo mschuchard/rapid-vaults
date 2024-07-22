@@ -6,6 +6,7 @@ task default: %i[rubocop reek grpc unit system]
 
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.formatters = ['simple']
+  task.requires << 'rubocop-performance'
   task.fail_on_error = false
 end
 

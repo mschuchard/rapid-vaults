@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://www.github.com/mschuchard/rapid-vaults'
   spec.license       = 'MIT'
 
-  spec.files         = Dir['bin/**/*', 'lib/**/*', 'spec/**/*', 'README.md']
+  spec.files         = Dir['bin/**/*', 'lib/**/*', 'spec/**/*', 'CHANGELOG.md', 'LICENSE.md', 'README.md', 'rapid-vaults.gemspec']
   spec.executables   = spec.files.grep(%r{^bin/}) { |file| File.basename(file) }
   spec.require_paths = Dir['lib']
 
