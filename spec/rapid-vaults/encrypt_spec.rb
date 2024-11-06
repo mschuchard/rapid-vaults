@@ -25,9 +25,9 @@ describe Encrypt do
     it 'outputs an array of encrypted content and tag with the key and nonce from the api' do
       encrypt = Encrypt.openssl(ui: :api, file: "foo: bar\n", key: key, nonce: nonce)
       expect(encrypt).to be_a(Array)
+      expect(encrypt.length).to eq(2)
       expect(encrypt[0]).to be_a(String)
       expect(encrypt[1]).to be_a(String)
-      expect(encrypt.length).to eq(2)
     end
   end
 

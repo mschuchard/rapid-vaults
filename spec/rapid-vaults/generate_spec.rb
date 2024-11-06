@@ -17,9 +17,9 @@ describe Generate do
     it 'outputs an array with the key and nonce from the api' do
       generate = Generate.openssl(ui: :api)
       expect(generate).to be_a(Array)
+      expect(generate.length).to eq(2)
       expect(generate[0]).to be_a(String)
       expect(generate[1]).to be_a(String)
-      expect(generate.length).to eq(2)
     end
   end
 
@@ -41,7 +41,7 @@ describe Generate do
         expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true
         FileUtils.rm_r("#{fixtures_dir}/#{dir}")
       end
-      %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.exist?(file) }
+      %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.file?(file) }
     end
   end
 end
