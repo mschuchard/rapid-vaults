@@ -1,6 +1,4 @@
 # Rapid Vaults
-[![CircleCI](https://circleci.com/gh/mschuchard/rapid-vaults.svg?style=svg)](https://circleci.com/gh/mschuchard/rapid-vaults)
-
 - [Description](#description)
 - [Usage](#usage)
   - [CLI](#cli)

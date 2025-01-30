@@ -37,4 +37,4 @@ workflows:
           parameters:
             ruby-version:
             - '2.6'
-            - '3.3'
+            - '3.4'
