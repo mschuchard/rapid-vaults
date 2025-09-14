@@ -1,4 +1,4 @@
-### 1.3.0 (Next)
+### 1.3.0
 - Bump minimum Ruby version to 2.6.
 - Code optimization and validation improvements.
 
