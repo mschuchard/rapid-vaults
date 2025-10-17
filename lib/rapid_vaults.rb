@@ -35,9 +35,10 @@ class RapidVaults
     public_send(:"process_#{settings[:algorithm]}", settings)
   end
 
+  private
+
   # processing openssl
   def self.process_openssl(settings)
-    private_class_method :method
     # check arguments
     case settings[:action]
     when :generate then return
@@ -49,7 +50,7 @@ class RapidVaults
     end
 
     # lambda for input processing
-    process_input = ->(input) { File.readable?(settings[input]) ? settings[input] = File.read(settings[input]) : (raise "Input file '#{settings[input]}' for argument '#{input}' is not an existing readable file.") }
+    process_input = ->(input) { File.readable?(settings[input]) ? settings[input] = File.binread(settings[input]) : (raise "Input file '#{settings[input]}' for argument '#{input}' is not an existing readable file.") }
 
     # check inputs and read in files
     raise 'Password must be a string.' if settings.key?(:pw) && !settings[:pw].is_a?(String)
@@ -69,7 +70,6 @@ class RapidVaults
 
   # processing gpgme
   def self.process_gpgme(settings)
-    private_class_method :method
     # check arguments
     case settings[:action]
     when :generate
