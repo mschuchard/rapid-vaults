@@ -63,7 +63,7 @@ class RapidVaults
     return unless settings[:action] == :decrypt
     process_input.call(:tag) if settings[:action] == :decrypt
 
-    raise 'The encrypted data is not a valid multiple of 9 bytes.' unless (settings[:file].bytesize % 9).zero?
+    raise 'The encrypted data is empty.' if settings[:file].empty?
     raise 'Tag is not 16 bytes.' unless settings[:tag].bytesize == 16
   end
 

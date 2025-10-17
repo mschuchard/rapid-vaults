@@ -12,8 +12,8 @@ describe RapidVaults do
       File.write('nonce_good.txt', SecureRandom.random_bytes(12).strip)
       File.write('tag_bad.txt', SecureRandom.random_bytes(24).strip)
       File.write('tag_good.txt', SecureRandom.random_bytes(16).strip)
-      File.write('encrypted_bad.txt', SecureRandom.random_bytes(16).strip)
-      File.write('encrypted_good.txt', '')
+      File.write('encrypted_bad.txt', '')
+      File.write('encrypted_good.txt', SecureRandom.random_bytes(16).strip)
     end
 
     after(:all) do
@@ -60,7 +60,7 @@ describe RapidVaults do
       expect { RapidVaults.process(action: :decrypt, file: 'encrypted_good.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_bad.txt') }.to raise_error('Tag is not 16 bytes.')
     end
     it 'raises an error for corrupted encrypted file content' do
-      expect { RapidVaults.process(action: :decrypt, file: 'encrypted_bad.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_good.txt') }.to raise_error('The encrypted data is not a valid multiple of 9 bytes.')
+      expect { RapidVaults.process(action: :decrypt, file: 'encrypted_bad.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_good.txt') }.to raise_error('The encrypted data is empty.')
     end
     it 'reads in all input files correctly for openssl encryption' do
       expect { RapidVaults.process(action: :decrypt, file: 'encrypted_good.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_good.txt', pw: 'password') }.not_to raise_exception
