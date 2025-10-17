@@ -1,3 +1,6 @@
+### 1.3.1 (Next)
+- Fix GPG keys output path message.
+
 ### 1.3.0
 - Bump minimum Ruby version to 2.6.
 - Code optimization and validation improvements.
