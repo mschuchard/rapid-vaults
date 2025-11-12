@@ -2,6 +2,7 @@
 - Fix GPG keys output path message.
 - Fix encrypted data validation.
 - Enforce non-empty password when input.
+- Validate API settings analogous to CLI.
 
 ### 1.3.0
 - Bump minimum Ruby version to 2.6.

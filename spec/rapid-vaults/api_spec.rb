@@ -15,5 +15,11 @@ describe RapidVaults::API do
     it 'correctly overrides the algorithm setting' do
       expect(RapidVaults::API.parse(algorithm: :gpgme)).to eq(algorithm: :gpgme, ui: :api)
     end
+    it 'raises an error for encrypt action with no file' do
+      expect { RapidVaults::API.parse(action: :encrypt) }.to raise_error('no file specified for encryption or decryption')
+    end
+    it 'raises an error for an empty password' do
+      expect { RapidVaults::API.parse(action: :encrypt, file: 'file.txt', pw: '') }.to raise_error('input password cannot be empty')
+    end
   end
 end
