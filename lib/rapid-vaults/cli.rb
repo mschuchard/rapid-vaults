@@ -6,9 +6,13 @@ class RapidVaults::CLI
   def self.main(args)
     # parse args in cli and denote using cli
     settings = parse(args)
+
+    # validate args
     if %i[encrypt decrypt].include?(settings[:action])
       args.empty? ? (raise 'rapid-vaults: no file specified; try using --help') : settings[:file] = args.first
     end
+
+    raise 'input password cannot be empty' if settings.key?(:pw) && settings[:pw].empty?
 
     # run RapidVaults with specified file
     RapidVaults.new.main(settings)
