@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'rapid-vaults'
-  spec.version       = '1.3.0'
+  spec.version       = '1.3.1'
   spec.authors       = ['Matt Schuchard']
   spec.description   = 'Ad-hoc encrypt and decrypt data behind multiple layers of protection via OpenSSL or GPG.'
   spec.summary       = 'Ad-hoc encrypt and decrypt data.'

@@ -1,4 +1,4 @@
-### 1.3.1 (Next)
+### 1.3.1
 - Fix GPG keys output path message.
 - Fix encrypted data validation.
 - Enforce non-empty password when input.
