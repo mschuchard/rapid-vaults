@@ -74,7 +74,7 @@ class RapidVaults::CLI
         raise "The output directory #{arg} does not exist or is not a directory!" unless File.directory?(arg)
         settings[:outdir] = arg
       end
-      opts.on('--force', 'Force overwrite of existing files during generation.') { settings[:force] = true }
+      opts.on('--force', 'Force overwrite of existing files during generation, encryption, and decryption.') { settings[:force] = true }
     end
 
     # parse args and return settings

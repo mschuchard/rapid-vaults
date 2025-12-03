@@ -9,10 +9,18 @@ class Generate
 
     case settings[:ui]
     when :cli
+      # efficiency assignment
+      outdir = settings[:outdir]
+
+      # check if already exists and no force flag
+      if File.exist?("#{outdir}key.txt") || File.exist?("#{outdir}nonce.txt")
+        raise "key.txt or nonce.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+      end
+
       # output to file
-      File.write("#{settings[:outdir]}key.txt", cipher.random_key)
-      File.write("#{settings[:outdir]}nonce.txt", cipher.random_iv)
-      puts "Your key.txt and nonce.txt have been generated in #{settings[:outdir]}."
+      File.write("#{outdir}key.txt", cipher.random_key)
+      File.write("#{outdir}nonce.txt", cipher.random_iv)
+      puts "Your key.txt and nonce.txt have been generated in #{outdir}."
     when :api
       # return as array
       [cipher.random_key, cipher.random_iv]
@@ -25,6 +33,11 @@ class Generate
 
     # ensure we have a place to store these output files
     raise 'Environment variable "GNUPGHOME" was not set.' unless ENV.fetch('GNUPGHOME', false)
+
+    # check if already exists and no force flag
+    if Dir.exist?(ENV['GNUPGHOME']) && !Dir.empty?(ENV['GNUPGHOME'])
+      raise "GPG keyring in #{ENV['GNUPGHOME']} already exists and is not empty. Use the --force flag to overwrite existing files." unless settings[:force]
+    end
 
     # create gpg keys
     GPGME::Ctx.new.generate_key(settings[:gpgparams], nil, nil)
