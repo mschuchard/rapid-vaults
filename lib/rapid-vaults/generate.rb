@@ -11,15 +11,17 @@ class Generate
     when :cli
       # efficiency assignment
       outdir = settings[:outdir]
+      keyfile = File.join(outdir, 'key.txt')
+      noncefile = File.join(outdir, 'nonce.txt')
 
       # check if already exists and no force flag
-      if File.exist?("#{outdir}key.txt") || File.exist?("#{outdir}nonce.txt")
+      if File.exist?(keyfile) || File.exist?(noncefile)
         raise "key.txt or nonce.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
-      File.write("#{outdir}key.txt", cipher.random_key)
-      File.write("#{outdir}nonce.txt", cipher.random_iv)
+      File.write(keyfile, cipher.random_key)
+      File.write(noncefile, cipher.random_iv)
       puts "Your key.txt and nonce.txt have been generated in #{outdir}."
     when :api
       # return as array

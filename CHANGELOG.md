@@ -1,5 +1,6 @@
 ### 1.3.2 (Next)
 - Add `--force` CLI flag, and do not overwrite files by default.
+- Improve output file pathing.
 
 ### 1.3.1
 - Fix GPG keys output path message.

@@ -15,15 +15,17 @@ class Encrypt
     when :cli
       # efficiency assignment
       outdir = settings[:outdir]
+      encryptfile = File.join(outdir, 'encrypted.txt')
+      tagfile = File.join(outdir, 'tag.txt')
 
       # check if already exists and no force flag
-      if File.exist?("#{outdir}encrypted.txt") || File.exist?("#{outdir}tag.txt")
+      if File.exist?(encryptfile) || File.exist?(tagfile)
         raise "encrypted.txt or tag.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
-      File.write("#{outdir}encrypted.txt", cipher.update(settings[:file]) + cipher.final)
-      File.write("#{outdir}tag.txt", cipher.auth_tag)
+      File.write(encryptfile, cipher.update(settings[:file]) + cipher.final)
+      File.write(tagfile, cipher.auth_tag)
       puts "Your encrypted.txt and associated tag.txt for this encryption have been generated in #{outdir}."
     when :api
       # return as array
@@ -46,14 +48,15 @@ class Encrypt
     when :cli
       # efficiency assignment
       outdir = settings[:outdir]
+      encryptfile = File.join(outdir, 'encrypted.txt')
 
       # check if already exists and no force flag
-      if File.exist?("#{outdir}encrypted.txt")
+      if File.exist?(encryptfile)
         raise "encrypted.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
-      File.write("#{outdir}encrypted.txt", crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
+      File.write(encryptfile, crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
       puts "Your encrypted.txt for this encryption has been generated in #{outdir}."
     when :api
       # return as string

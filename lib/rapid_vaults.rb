@@ -25,7 +25,6 @@ class RapidVaults
     if settings[:ui] == :cli
       # :outdir only relevant for :cli
       settings[:outdir] ||= Dir.pwd
-      settings[:outdir] += '/' unless settings[:outdir][-1] == '/'
     end
 
     return if settings[:action] == :binding
