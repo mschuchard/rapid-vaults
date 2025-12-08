@@ -8,7 +8,7 @@ describe Generate do
     end
 
     it 'generates the key and nonce files from the cli' do
-      Generate.openssl(ui: :cli)
+      Generate.openssl(ui: :cli, outdir: Dir.pwd)
       expect(File.file?('key.txt')).to be true
       expect(File.file?('nonce.txt')).to be true
       expect(File.read('key.txt')).to be_a(String)
@@ -32,7 +32,7 @@ describe Generate do
 
       ENV['GNUPGHOME'] = fixtures_dir
 
-      Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"))
+      Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"), force: true)
       %w[trustdb.gpg pubring.kbx pubring.kbx~].each do |file|
         expect(File.file?("#{fixtures_dir}/#{file}")).to be true
         File.delete("#{fixtures_dir}/#{file}")
