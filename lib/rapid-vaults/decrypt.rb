@@ -24,7 +24,7 @@ class Decrypt
       end
 
       # output to file
-      File.write("#{outdir}decrypted.txt", decipher.update(settings[:file]) + decipher.final)
+      File.write(decryptfile, decipher.update(settings[:file]) + decipher.final)
       puts "Your decrypted.txt has been written out to #{outdir}."
     when :api
       # output to string
