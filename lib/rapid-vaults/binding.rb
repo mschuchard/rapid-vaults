@@ -10,7 +10,7 @@ class Binding
     CRYPT.each do |algo|
       ACTION.each do |action|
         content = File.read("#{__dir__}/bindings/puppet_#{algo}_#{action}.rb")
-        File.write("#{settings[:outdir]}puppet_#{algo}_#{action}.rb", content)
+        File.write(File.join(settings[:outdir], "puppet_#{algo}_#{action}.rb"), content)
       end
     end
   end
@@ -19,6 +19,6 @@ class Binding
   def self.chef(settings)
     # output chef bindings to output directory
     content = File.read("#{__dir__}/bindings/chef.rb")
-    File.write("#{settings[:outdir]}chef.rb", content)
+    File.write(File.join(settings[:outdir], 'chef.rb'), content)
   end
 end
