@@ -69,12 +69,12 @@ describe RapidVaults do
         Dir.chdir(fixtures_dir)
 
         # generate keys
-        RapidVaults::CLI.main(%w[-g --gpg --gpgparams gpgparams.txt])
+        RapidVaults::CLI.main(%w[-g --gpg --force --gpgparams gpgparams.txt])
         %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
         %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
 
         # generate encrypted file
-        RapidVaults::CLI.main(%w[--gpg -e -p foo file.yaml])
+        RapidVaults::CLI.main(%w[--gpg -e --force -p foo file.yaml])
         expect(File.file?('encrypted.txt')).to be true
 
         # generate decrypted file
@@ -92,7 +92,7 @@ describe RapidVaults do
         Dir.chdir(fixtures_dir)
 
         # generate keys
-        RapidVaults::API.main(action: :generate, algorithm: :gpgme, gpgparams: File.read('gpgparams.txt'))
+        RapidVaults::API.main(action: :generate, algorithm: :gpgme, force: true, gpgparams: File.read('gpgparams.txt'))
         %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
         %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
 
