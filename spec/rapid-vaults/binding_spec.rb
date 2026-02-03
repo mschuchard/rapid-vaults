@@ -8,7 +8,7 @@ describe Binding do
     end
 
     it 'outputs the puppet bindings to the specified directory' do
-      Binding.puppet({})
+      Binding.puppet({outdir: Dir.pwd})
       %w[puppet_gpg_decrypt.rb puppet_gpg_encrypt.rb puppet_ssl_decrypt.rb puppet_ssl_encrypt.rb].each do |file|
         expect(File.file?(file)).to be true
       end
@@ -21,7 +21,7 @@ describe Binding do
     end
 
     it 'outputs the chef bindings to the specified directory' do
-      Binding.chef({})
+      Binding.chef({outdir: Dir.pwd})
       expect(File.file?('chef.rb')).to be true
     end
   end
