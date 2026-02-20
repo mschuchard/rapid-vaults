@@ -70,7 +70,7 @@ class RapidVaults::CLI
         raise "GPG Parameters file #{arg} is not an existing readable file!" unless File.readable?(arg)
         settings[:gpgparams] = File.read(arg)
       end
-      opts.on('-o --outdir', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') do |arg|
+      opts.on('-o', '--outdir output_directory', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') do |arg|
         raise "The output directory #{arg} does not exist or is not a directory!" unless File.directory?(arg)
         settings[:outdir] = arg
       end
