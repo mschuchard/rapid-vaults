@@ -1,6 +1,7 @@
 ### 1.3.2 (Next)
 - Add `--force` CLI flag, and do not overwrite files by default.
 - Improve output file pathing.
+- Fix password file setting in Puppet bindings.
 
 ### 1.3.1
 - Fix GPG keys output path message.

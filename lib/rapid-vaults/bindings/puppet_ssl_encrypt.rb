@@ -27,7 +27,7 @@ Puppet::Functions.create_function(:ssl_encrypt) do
     settings = { action: :encrypt, file: file, key: key, nonce: nonce }
     return_hash = {}
     # update settings with password if input
-    settings[pw: File.read(password_file)] unless password_file.nil?
+    settings[:pw] = File.read(password_file) unless password_file.nil?
 
     return_hash[:encrypted_contents], return_hash[:tag] = RapidVaults::API.main(settings)
 
