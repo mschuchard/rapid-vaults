@@ -51,10 +51,10 @@ describe RapidVaults do
       expect { RapidVaults.process(algorithm: :gpgme, action: :encrypt, file: 'a', pw: 'password') }.to raise_error('Input file \'a\' for argument \'file\' is not an existing readable file.')
     end
     it 'raises an error for an invalid key size' do
-      expect { RapidVaults.process(action: :encrypt, file: "#{fixtures_dir}file.yaml", key: 'key_bad.txt', nonce: 'nonce_good.txt') }.to raise_error('The key is not a valid 32 byte key.')
+      expect { RapidVaults.process(action: :encrypt, file: "#{FIXTURES_DIR}file.yaml", key: 'key_bad.txt', nonce: 'nonce_good.txt') }.to raise_error('The key is not a valid 32 byte key.')
     end
     it 'raises an error for an invalid nonce size' do
-      expect { RapidVaults.process(action: :encrypt, file: "#{fixtures_dir}file.yaml", key: 'key_good.txt', nonce: 'nonce_bad.txt') }.to raise_error('The nonce is not a valid 12 byte nonce.')
+      expect { RapidVaults.process(action: :encrypt, file: "#{FIXTURES_DIR}file.yaml", key: 'key_good.txt', nonce: 'nonce_bad.txt') }.to raise_error('The nonce is not a valid 12 byte nonce.')
     end
     it 'raises an error for an invalid tag size' do
       expect { RapidVaults.process(action: :decrypt, file: 'encrypted_good.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_bad.txt') }.to raise_error('Tag is not 16 bytes.')
@@ -66,7 +66,7 @@ describe RapidVaults do
       expect { RapidVaults.process(action: :decrypt, file: 'encrypted_good.txt', key: 'key_good.txt', nonce: 'nonce_good.txt', tag: 'tag_good.txt', pw: 'password') }.not_to raise_exception
     end
     it 'reads in all input files correctly for gpgme decryption' do
-      dummy = "#{fixtures_dir}file.yaml"
+      dummy = "#{FIXTURES_DIR}file.yaml"
       expect { RapidVaults.process(algorithm: :gpgme, action: :decrypt, file: dummy, pw: 'password') }.not_to raise_exception
     end
   end

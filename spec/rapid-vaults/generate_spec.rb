@@ -25,23 +25,23 @@ describe Generate do
 
   context '.gpgme' do
     it 'raises an error for a missing GNUPGHOME variable' do
-      expect { Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt")) }.to raise_error('Environment variable "GNUPGHOME" was not set.')
+      expect { Generate.gpgme(gpgparams: File.read("#{FIXTURES_DIR}/gpgparams.txt")) }.to raise_error('Environment variable "GNUPGHOME" was not set.')
     end
     it 'generates the key files' do
       require 'fileutils'
 
-      ENV['GNUPGHOME'] = fixtures_dir
+      ENV['GNUPGHOME'] = FIXTURES_DIR
 
-      Generate.gpgme(gpgparams: File.read("#{fixtures_dir}/gpgparams.txt"), force: true)
+      Generate.gpgme(gpgparams: File.read("#{FIXTURES_DIR}/gpgparams.txt"), force: true)
       %w[trustdb.gpg pubring.kbx pubring.kbx~].each do |file|
-        expect(File.file?("#{fixtures_dir}/#{file}")).to be true
-        File.delete("#{fixtures_dir}/#{file}")
+        expect(File.file?("#{FIXTURES_DIR}/#{file}")).to be true
+        File.delete("#{FIXTURES_DIR}/#{file}")
       end
       %w[openpgp-revocs.d private-keys-v1.d].each do |dir|
-        expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true
-        FileUtils.rm_r("#{fixtures_dir}/#{dir}")
+        expect(File.directory?("#{FIXTURES_DIR}/#{dir}")).to be true
+        FileUtils.rm_r("#{FIXTURES_DIR}/#{dir}")
       end
-      %w[S.gpg-agent random_seed].each { |file| File.delete("#{fixtures_dir}/#{file}") if File.file?(file) }
+      %w[S.gpg-agent random_seed].each { |file| File.delete("#{FIXTURES_DIR}/#{file}") if File.file?(file) }
     end
   end
 end

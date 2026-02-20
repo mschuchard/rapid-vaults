@@ -16,7 +16,7 @@ describe RapidVaults do
   context 'executed with openssl algorithm as a system from the CLI with settings and a file to be processed' do
     it 'generates key and nonce, encrypts a file, and then decrypts a file in order' do
       # generate and utilize files inside suitable directory
-      Dir.chdir(fixtures_dir)
+      Dir.chdir(FIXTURES_DIR)
 
       # generate key and nonce
       RapidVaults::CLI.main(%w[-g])
@@ -38,7 +38,7 @@ describe RapidVaults do
   context 'executed with openssl algorithm as a system from the API with settings and a file to be processed' do
     it 'generates key and nonce, encrypts a file, and then decrypts a file in order' do
       # generate and utilize files inside suitable directory
-      Dir.chdir(fixtures_dir)
+      Dir.chdir(FIXTURES_DIR)
 
       # generate key and nonce
       RapidVaults::API.main(action: :generate)
@@ -63,15 +63,15 @@ describe RapidVaults do
   unless ENV['CIRCLECI'] == 'true' || ENV['GITHUB_ACTIONS'] == 'true'
     context 'executed wtih gpg algorithm as a system from the CLI with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
-        ENV['GNUPGHOME'] = fixtures_dir
+        ENV['GNUPGHOME'] = FIXTURES_DIR
 
         # generate and utilize files inside suitable directory
-        Dir.chdir(fixtures_dir)
+        Dir.chdir(FIXTURES_DIR)
 
         # generate keys
         RapidVaults::CLI.main(%w[-g --gpg --force --gpgparams gpgparams.txt])
-        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
-        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
+        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{FIXTURES_DIR}/#{file}")).to be true }
+        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{FIXTURES_DIR}/#{dir}")).to be true }
 
         # generate encrypted file
         RapidVaults::CLI.main(%w[--gpg -e --force -p foo file.yaml])
@@ -86,15 +86,15 @@ describe RapidVaults do
 
     context 'executed with gpg algorithm as a system from the API with settings and a file to be processed' do
       it 'encrypts a file and then decrypts a file in order' do
-        ENV['GNUPGHOME'] = fixtures_dir
+        ENV['GNUPGHOME'] = FIXTURES_DIR
 
         # generate and utilize files inside suitable directory
-        Dir.chdir(fixtures_dir)
+        Dir.chdir(FIXTURES_DIR)
 
         # generate keys
         RapidVaults::API.main(action: :generate, algorithm: :gpgme, force: true, gpgparams: File.read('gpgparams.txt'))
-        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{fixtures_dir}/#{file}")).to be true }
-        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{fixtures_dir}/#{dir}")).to be true }
+        %w[trustdb.gpg pubring.kbx pubring.kbx~].each { |file| expect(File.file?("#{FIXTURES_DIR}/#{file}")).to be true }
+        %w[openpgp-revocs.d private-keys-v1.d].each { |dir| expect(File.directory?("#{FIXTURES_DIR}/#{dir}")).to be true }
 
         # generate encrypted file
         encrypt = RapidVaults::API.main(algorithm: :gpgme, action: :encrypt, file: 'file.yaml', pw: 'password')
@@ -112,7 +112,7 @@ describe RapidVaults do
   context 'executed as a system to output bindings from the CLI' do
     it 'outputs the puppet and chef bindings' do
       # generate and utilize files inside suitable directory
-      Dir.chdir(fixtures_dir)
+      Dir.chdir(FIXTURES_DIR)
 
       # generate bindings
       RapidVaults::CLI.main(%w[-b puppet])

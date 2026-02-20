@@ -16,7 +16,7 @@ describe RapidVaults::CLI do
       expect(RapidVaults::CLI.parse(%w[-g -o .])).to eq(ui: :cli, action: :generate, outdir: '.')
     end
     it 'correctly parses the arguments for gpg generate' do
-      expect(RapidVaults::CLI.parse(%W[--gpg -g --gpgparams #{fixtures_dir}/file.yaml])).to eq(algorithm: :gpgme, ui: :cli, action: :generate, gpgparams: "foo: bar\n")
+      expect(RapidVaults::CLI.parse(%W[--gpg -g --gpgparams #{FIXTURES_DIR}/file.yaml])).to eq(algorithm: :gpgme, ui: :cli, action: :generate, gpgparams: "foo: bar\n")
     end
     it 'correctly parses the arguments for puppet bindings' do
       expect(RapidVaults::CLI.parse(%w[-b puppet -o .])).to eq(ui: :cli, action: :binding, binding: :puppet, outdir: '.')
