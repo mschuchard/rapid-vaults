@@ -1,4 +1,4 @@
-### 1.3.2 (Next)
+### 1.3.2
 - Add `--force` CLI flag, and do not overwrite files by default.
 - Improve output file pathing.
 - Fix password file setting in Puppet bindings.
