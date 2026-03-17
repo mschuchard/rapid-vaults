@@ -13,12 +13,12 @@ describe Encrypt do
     nonce = cipher.random_iv
 
     it 'outputs an encrypted file with the key and nonce from the cli' do
-      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce, outdir: Dir.pwd)
+      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce, outdir: Dir.pwd, name: '')
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs an encrypted file with the key, nonce, and password from the cli' do
-      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce, pw: 'password', outdir: Dir.pwd, force: true)
+      Encrypt.openssl(ui: :cli, file: "foo: bar\n", key: key, nonce: nonce, pw: 'password', outdir: Dir.pwd, name: '', force: true)
       expect(File.file?('tag.txt')).to be true
       expect(File.file?('encrypted.txt')).to be true
     end
@@ -33,7 +33,7 @@ describe Encrypt do
 
   context '.gpgme' do
     it 'outputs an encrypted file with the key from the cli' do
-      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', pw: 'foo', outdir: Dir.pwd, force: true)
+      Encrypt.gpgme(ui: :cli, file: "foo: bar\n", key: '', pw: 'foo', outdir: Dir.pwd, name: '', force: true)
       expect(File.file?('encrypted.txt')).to be true
     end
     it 'outputs a string of encrypted content with the key from the api' do

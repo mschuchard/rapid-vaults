@@ -14,19 +14,18 @@ class Encrypt
     case settings[:ui]
     when :cli
       # efficiency assignment
-      outdir = settings[:outdir]
-      encryptfile = File.join(outdir, 'encrypted.txt')
-      tagfile = File.join(outdir, 'tag.txt')
+      encryptfile = File.join(settings[:outdir], "#{settings[:name]}encrypted.txt")
+      tagfile = File.join(settings[:outdir], "#{settings[:name]}tag.txt")
 
       # check if already exists and no force flag
       if File.exist?(encryptfile) || File.exist?(tagfile)
-        raise "encrypted.txt or tag.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+        raise "#{encryptfile} or #{tagfile} already exists. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
       File.write(encryptfile, cipher.update(settings[:file]) + cipher.final)
       File.write(tagfile, cipher.auth_tag)
-      puts "Your encrypted.txt and associated tag.txt for this encryption have been generated in #{outdir}."
+      puts "Your #{encryptfile} and associated #{tagfile} for this encryption have been generated."
     when :api
       # return as array
       [cipher.update(settings[:file]) + cipher.final, cipher.auth_tag]
@@ -46,18 +45,16 @@ class Encrypt
     # output the encryption and associated tag
     case settings[:ui]
     when :cli
-      # efficiency assignment
-      outdir = settings[:outdir]
-      encryptfile = File.join(outdir, 'encrypted.txt')
+      encryptfile = File.join(settings[:outdir], "#{settings[:name]}encrypted.txt")
 
       # check if already exists and no force flag
       if File.exist?(encryptfile)
-        raise "encrypted.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+        raise "#{encryptfile} already exists. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
       File.write(encryptfile, crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read)
-      puts "Your encrypted.txt for this encryption has been generated in #{outdir}."
+      puts "Your #{encryptfile} for this encryption has been generated."
     when :api
       # return as string
       crypto.encrypt(settings[:file], symmetric: true, password: settings[:pw]).read
