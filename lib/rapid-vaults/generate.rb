@@ -10,19 +10,18 @@ class Generate
     case settings[:ui]
     when :cli
       # efficiency assignment
-      outdir = settings[:outdir]
-      keyfile = File.join(outdir, 'key.txt')
-      noncefile = File.join(outdir, 'nonce.txt')
+      keyfile = File.join(settings[:outdir], "#{settings[:name]}key.txt")
+      noncefile = File.join(settings[:outdir], "#{settings[:name]}nonce.txt")
 
       # check if already exists and no force flag
       if File.exist?(keyfile) || File.exist?(noncefile)
-        raise "key.txt or nonce.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+        raise "#{keyfile} or #{noncefile} already exists. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
       File.write(keyfile, cipher.random_key)
       File.write(noncefile, cipher.random_iv)
-      puts "Your key.txt and nonce.txt have been generated in #{outdir}."
+      puts "Your #{keyfile} and #{noncefile} have been generated."
     when :api
       # return as array
       [cipher.random_key, cipher.random_iv]
