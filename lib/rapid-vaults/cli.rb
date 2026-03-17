@@ -65,16 +65,19 @@ class RapidVaults::CLI
         settings[:binding] = arg.to_sym
       end
 
-      # other
-      opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') do |arg|
-        raise "GPG Parameters file #{arg} is not an existing readable file!" unless File.readable?(arg)
-        settings[:gpgparams] = File.read(arg)
-      end
+      # outputs
       opts.on('-o', '--outdir output_directory', String, 'Optional output directory for generated files (default: pwd). (GPG: optional)') do |arg|
         raise "The output directory #{arg} does not exist or is not a directory!" unless File.directory?(arg)
         settings[:outdir] = arg
       end
       opts.on('--force', 'Force overwrite of existing files during generation, encryption, and decryption.') { settings[:force] = true }
+      opts.on('--name name', String, 'Base name for generated files (default: empty string).') { |arg| settings[:name] = arg }
+
+      # other
+      opts.on('--gpgparams params.txt', String, 'GPG Key params input file used during generation of keys.') do |arg|
+        raise "GPG Parameters file #{arg} is not an existing readable file!" unless File.readable?(arg)
+        settings[:gpgparams] = File.read(arg)
+      end
     end
 
     # parse args and return settings

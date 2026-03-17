@@ -24,6 +24,9 @@ describe RapidVaults::CLI do
     it 'correctly parses the arguments with force option' do
       expect(RapidVaults::CLI.parse(%w[--force])).to eq(ui: :cli, force: true)
     end
+    it 'correctly parses the arguments with name option' do
+      expect(RapidVaults::CLI.parse(%w[--name myfile])).to eq(ui: :cli, name: 'myfile')
+    end
     it 'raises an error for a nonexistent password file' do
       expect { RapidVaults::CLI.parse(%w[-f /nopasswordhere]) }.to raise_error('Password file /nopasswordhere is not an existing readable file!')
     end

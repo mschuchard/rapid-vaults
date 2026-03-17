@@ -30,6 +30,7 @@ Note trailing information for each flag/argument for possible differences with u
 
 ```
 usage: rapid-vaults [options] file
+        --version                    Display the current version.
         --gpg                        Use GNUPG/GPG instead of GNUTLS/OpenSSL for encryption/decryption.
     -g, --generate                   Generate a key and nonce for encryption and decryption (GPG: keys only).
     -e, --encrypt                    Encrypt a file using a key and nonce and generate a tag (GPG: key and pw only).
@@ -40,8 +41,9 @@ usage: rapid-vaults [options] file
     -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).
     -f, --file-password password.txt (optional) Text file containing a password to be used for encryption or decryption (GPG: required).
     -b, --binding binding            Output files to support bindings for other software languages.
-    --gpgparams                      GPG Key params input file used during generation of keys.
-    -o --outdir                      Optional output directory for generated files (default: pwd). (GPG: optional)
+        --gpgparams params.txt       GPG Key params input file used during generation of keys.
+    -o, --outdir output_directory    Optional output directory for generated files (default: pwd). (GPG: optional)
+        --force                      Force overwrite of existing files during generation, encryption, and decryption.
 ```
 
 #### Generate Key and Nonce with SSL
@@ -86,7 +88,7 @@ Currently you set the path to the keys and other files via the environment varia
 
 #### Output a Binding
 
-`rapid-vaults -b puppet -o /output/dir`  
+`rapid-vaults -b puppet -o /output/dir`
 `rapid-vaults -b chef -o /path/to/outdir`
 
 ### API
