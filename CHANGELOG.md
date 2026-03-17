@@ -1,3 +1,6 @@
+### 1.4.0 (Next)
+- Support specifying a custom basename for output files.
+
 ### 1.3.2
 - Add `--force` CLI flag, and do not overwrite files by default.
 - Improve output file pathing.

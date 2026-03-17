@@ -15,17 +15,16 @@ class Decrypt
     case settings[:ui]
     when :cli
       # efficiency assignment
-      outdir = settings[:outdir]
-      decryptfile = File.join(outdir, 'decrypted.txt')
+      decryptfile = File.join(settings[:outdir], "#{settings[:name]}decrypted.txt")
 
       # check if already exists and no force flag
       if File.exist?(decryptfile)
-        raise "decrypted.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+        raise "#{decryptfile} already exists. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
       File.write(decryptfile, decipher.update(settings[:file]) + decipher.final)
-      puts "Your decrypted.txt has been written out to #{outdir}."
+      puts "Your #{decryptfile} has been written out."
     when :api
       # output to string
       decipher.update(settings[:file]) + decipher.final
@@ -47,17 +46,16 @@ class Decrypt
     case settings[:ui]
     when :cli
       # efficiency assignment
-      outdir = settings[:outdir]
-      decryptfile = File.join(outdir, 'decrypted.txt')
+      decryptfile = File.join(settings[:outdir], "#{settings[:name]}decrypted.txt")
 
       # check if already exists and no force flag
       if File.exist?(decryptfile)
-        raise "decrypted.txt already exists in #{outdir}. Use the --force flag to overwrite existing files." unless settings[:force]
+        raise "#{decryptfile} already exists. Use the --force flag to overwrite existing files." unless settings[:force]
       end
 
       # output to file
       File.write(decryptfile, crypto.decrypt(encrypted, password: settings[:pw]).read)
-      puts "Your decrypted.txt has been written out to #{outdir}."
+      puts "Your #{decryptfile} has been written out."
     when :api
       # output to string
       crypto.decrypt(encrypted, password: settings[:pw]).read

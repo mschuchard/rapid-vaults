@@ -18,7 +18,7 @@ describe Decrypt do
     end
 
     it 'outputs a decrypted file with the key, nonce, and tag from the cli' do
-      Decrypt.openssl(ui: :cli, file: File.read('encrypted.txt'), key: key, nonce: nonce, tag: File.read('tag.txt'), outdir: Dir.pwd)
+      Decrypt.openssl(ui: :cli, file: File.read('encrypted.txt'), key: key, nonce: nonce, tag: File.read('tag.txt'), outdir: Dir.pwd, name: '')
       expect(File.file?('decrypted.txt')).to be true
       expect(File.read('decrypted.txt')).to eq("foo: bar\n")
     end
@@ -35,7 +35,7 @@ describe Decrypt do
     end
 
     it 'outputs a decrypted file with the key from the cli' do
-      Decrypt.gpgme(ui: :cli, file: File.read('encrypted.txt'), key: '', pw: 'foo', outdir: Dir.pwd, force: true)
+      Decrypt.gpgme(ui: :cli, file: File.read('encrypted.txt'), key: '', pw: 'foo', outdir: Dir.pwd, name: '', force: true)
       expect(File.file?('decrypted.txt')).to be true
       expect(File.read('decrypted.txt')).to eq("foo: bar\n")
     end
