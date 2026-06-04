@@ -21,7 +21,7 @@ class RapidVaults
 
   # method for processing the settings and inputs
   def self.process(settings)
-    # default to openssl algorithm and `pwd` output directory
+    # default to openssl algorithm, empty basename, and `pwd` output directory
     if settings[:ui] == :cli
       # :outdir only relevant for :cli
       settings[:outdir] ||= Dir.pwd
@@ -29,6 +29,7 @@ class RapidVaults
 
     return if settings[:action] == :binding
     settings[:algorithm] ||= :openssl
+    settings[:name] ||= ''
 
     # check for problems with arguments and inputs
     public_send(:"process_#{settings[:algorithm]}", settings)
