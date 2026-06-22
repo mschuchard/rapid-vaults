@@ -23,13 +23,15 @@ class Generate
 end
 
 class RapidVaults
-  def main: (Hash[Symbol, untyped]) -> nil
+  type action_result = [String, String] | String | nil
+
+  def main: (Hash[Symbol, untyped]) -> action_result
   def self.process: (Hash[Symbol, untyped]) -> nil
   def self.process_openssl: (Hash[Symbol, untyped]) -> nil
   def self.process_gpgme: (Hash[Symbol, untyped]) -> nil
 
   class API
-    def self.main: (Hash[Symbol, untyped]) -> nil
+    def self.main: (Hash[Symbol, untyped]) -> action_result
     def self.parse: (Hash[Symbol, untyped]) -> Hash[Symbol, untyped]
   end
 
