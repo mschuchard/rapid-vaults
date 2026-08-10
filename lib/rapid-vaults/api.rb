@@ -10,11 +10,6 @@ class RapidVaults::API
 
   # parse api options; this is mostly here for unit testing
   def self.parse(settings)
-    # validate args
-    if %i[encrypt decrypt].include?(settings[:action])
-      raise 'no file specified for encryption or decryption' if !settings.key?(:file)
-    end
-
     # establish settings for api and denote using api
     settings.merge({ ui: :api })
   end

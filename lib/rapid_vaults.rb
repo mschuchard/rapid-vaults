@@ -82,7 +82,7 @@ class RapidVaults
     when :decrypt, :encrypt
       # check inputs and read in files
       raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
-      settings[:file] = File.readable?(settings[:file]) ? File.read(settings[:file]) : (raise "Input file '#{settings[:file]}' for argument 'file' is not an existing readable file.")
+      settings[:file] = File.readable?(settings[:file]) ? File.binread(settings[:file]) : (raise "Input file '#{settings[:file]}' for argument 'file' is not an existing readable file.")
     else raise 'Action must be one of generate, encrypt, or decrypt.'
     end
   end
