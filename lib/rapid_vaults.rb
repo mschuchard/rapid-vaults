@@ -21,6 +21,12 @@ class RapidVaults
 
   # method for processing the settings and inputs
   def self.process(settings)
+    # validate password
+    if settings.key?(:pw)
+      raise 'input password cannot be empty' if settings[:pw].empty?
+      raise 'Password must be a string.' unless settings[:pw].is_a?(String)
+    end
+
     # default to openssl algorithm, empty basename, and `pwd` output directory
     if settings[:ui] == :cli
       # :outdir only relevant for :cli
@@ -53,7 +59,6 @@ class RapidVaults
     process_input = ->(input) { File.readable?(settings[input]) ? settings[input] = File.binread(settings[input]) : (raise "Input file '#{settings[input]}' for argument '#{input}' is not an existing readable file.") }
 
     # check inputs and read in files
-    raise 'Password must be a string.' if settings.key?(:pw) && !settings[:pw].is_a?(String)
     %i[file key nonce].each(&process_input)
 
     # validate key and nonce
@@ -77,7 +82,6 @@ class RapidVaults
     when :decrypt, :encrypt
       # check inputs and read in files
       raise 'File and password arguments required for encryption or decryption.' unless settings.key?(:file) && settings.key?(:pw)
-      raise 'Password must be a string.' unless settings[:pw].is_a?(String)
       settings[:file] = File.readable?(settings[:file]) ? File.read(settings[:file]) : (raise "Input file '#{settings[:file]}' for argument 'file' is not an existing readable file.")
     else raise 'Action must be one of generate, encrypt, or decrypt.'
     end
