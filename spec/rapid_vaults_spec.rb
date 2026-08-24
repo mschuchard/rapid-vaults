@@ -20,6 +20,9 @@ describe RapidVaults do
       %w[key nonce tag encrypted].each { |file| File.delete("#{file}_bad.txt", "#{file}_good.txt") }
     end
 
+    it 'raises an error for an empty password' do
+      expect { RapidVaults.process(action: :encrypt, file: 'file.txt', pw: '') }.to raise_error('input password cannot be empty')
+    end
     it 'raises an error for a non-string password with openssl' do
       expect { RapidVaults.process(action: :encrypt, file: 'a', key: 'b', nonce: 'c', pw: 1) }.to raise_error('Password must be a string.')
     end

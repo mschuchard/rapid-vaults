@@ -23,8 +23,8 @@ class RapidVaults
   def self.process(settings)
     # validate password
     if settings.key?(:pw)
-      raise 'input password cannot be empty' if settings[:pw].empty?
       raise 'Password must be a string.' unless settings[:pw].is_a?(String)
+      raise 'input password cannot be empty' if settings[:pw].empty?
     end
 
     # default to openssl algorithm, empty basename, and `pwd` output directory
