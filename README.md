@@ -41,9 +41,10 @@ usage: rapid-vaults [options] file
     -p, --password password          (optional) Password to be used for encryption or decryption (GPG: required).
     -f, --file-password password.txt (optional) Text file containing a password to be used for encryption or decryption (GPG: required).
     -b, --binding binding            Output files to support bindings for other software languages.
-        --gpgparams params.txt       GPG Key params input file used during generation of keys.
     -o, --outdir output_directory    Optional output directory for generated files (default: pwd). (GPG: optional)
-        --force                      Force overwrite of existing files during generation, encryption, and decryption.
+    --force                      Force overwrite of existing files during generation, encryption, and decryption.
+    --name name                  Base name for generated files (default: empty string).
+    --gpgparams params.txt       GPG Key params input file used during generation of keys.
 ```
 
 #### Generate Key and Nonce with SSL
@@ -114,7 +115,7 @@ options = {
   file: '/path/to/data.txt',
   key: '/path/to/key.txt',
   nonce: '/path/to/nonce.txt',
-  pw: File.read('/path/to/password.txt') # optional
+  pw: 'secret_password' # optional
 }
 encrypted_contents, tag = RapidVaults::API.main(options)
 ```
@@ -130,7 +131,7 @@ options = {
   key: '/path/to/key.txt',
   nonce: '/path/to/nonce.txt',
   tag: '/path/to/tag.txt',
-  pw: File.read('/path/to/password.txt') # optional
+  pw: 'secret_password' # optional
 }
 decrypted_contents = RapidVaults::API.main(options)
 ```
@@ -144,25 +145,21 @@ ENV['GNUPGHOME'] = '/home/alice/.gnupg'
 options = {
   action: :generate,
   algorithm: :gpgme,
-  gpgparams: File.read('gpgparams.txt')
+  gpgparams: <<~GPGPARAMS
+    <GnupgKeyParms format="internal">
+    Key-Type: DSA
+    Key-Length: 1024
+    Subkey-Type: ELG-E
+    Subkey-Length: 1024
+    Name-Real: Joe Tester
+    Name-Comment: with stupid passphrase
+    Name-Email: joe@foo.bar
+    Expire-Date: 0
+    Passphrase: abc
+    </GnupgKeyParms>
+  GPGPARAMS
 }
 RapidVaults::API.main(options)
-```
-
-The `:gpgparams` string should look like the following:
-
-```
-<GnupgKeyParms format="internal">
-Key-Type: DSA
-Key-Length: 1024
-Subkey-Type: ELG-E
-Subkey-Length: 1024
-Name-Real: Joe Tester
-Name-Comment: with stupid passphrase
-Name-Email: joe@foo.bar
-Expire-Date: 0
-Passphrase: abc
-</GnupgKeyParms>
 ```
 
 #### Encrypt with GPG
@@ -176,7 +173,7 @@ options = {
   action: :encrypt,
   algorithm: :gpgme,
   file: '/path/to/data.txt',
-  pw: File.read('/path/to/password.txt')
+  pw: 'secret_password'
 }
 encrypted_contents = RapidVaults::API.main(options)
 ```
@@ -192,7 +189,7 @@ options = {
   action: :decrypt,
   algorithm: :gpgme,
   file: '/path/to/encrypted_data.txt',
-  pw: File.read('/path/to/password.txt')
+  pw: 'secret_password'
 }
 decrypted_contents = RapidVaults::API.main(options)
 ```

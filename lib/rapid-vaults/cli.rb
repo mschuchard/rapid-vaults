@@ -12,8 +12,6 @@ class RapidVaults::CLI
       args.empty? ? (raise 'rapid-vaults: no file specified; try using --help') : settings[:file] = args.first
     end
 
-    raise 'input password cannot be empty' if settings.key?(:pw) && settings[:pw].empty?
-
     # run RapidVaults with specified file
     RapidVaults.new.main(settings)
     0
